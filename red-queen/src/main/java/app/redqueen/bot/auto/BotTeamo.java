@@ -276,13 +276,4 @@ public class BotTeamo implements Runnable
             logger.error(ex.getMessage());
         }
     }
-
-//    synchronized public List<BotPhraseType> getPhraseTypeList() {
-//        return phraseTypeList;
-//    }
-//
-//    synchronized public void setMessagesToUsers(Map<UserTeamo, Queue<BotPhrase>> messagesToUsers)
-//    {
-//        this.messagesToUsers = messagesToUsers;
-//    }
 }
