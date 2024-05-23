@@ -1,0 +1,580 @@
+{
+    "status": "OK",
+    "result": {
+        "profile": {
+            "id": "21798270",
+            "network_status": "online",
+            "sms_status": "offline",
+            "name": "Елена",
+            "age": 37,
+            "sex": "2",
+            "distance": 0,
+            "phone": 1,
+            "last_visit": "2024-03-22 03:07:42",
+            "last_visit_ts": 1711066062,
+            "deleted_at": null,
+            "photos_count": "1",
+            "personal_photos_count": "1",
+            "sent_greeting": null,
+            "is_unseen": null,
+            "is_colored": 0,
+            "second_thumb_url": null,
+            "thumb_url": "https://img05.teamo.ru/v2/crop?height=300&url=http://img05.teamo.ru:8080/c/n/38148600.jpg&width=300&sign=k3yDfB6gZQmuUEz3xK%2BiFTuWGwJN97ICBkgJvwbdAow%3D",
+            "photo": {
+                "id": "38148600",
+                "server_id": "4",
+                "updated_at": "2024-02-27 08:04:17"
+            },
+            "photo_id": "38148600",
+            "location": "Хабаровск",
+            "location_id": "2085",
+            "city": "Хабаровск",
+            "zodiac": "Телец",
+            "zodiac_class": 4,
+            "zodiac_id": 4,
+            "is_premium": false,
+            "bodytype": "0",
+            "height": "160",
+            "body_class": "med",
+            "body_info": "",
+            "height_class": "med",
+            "is_blocked_by_me": false,
+            "block_status": 0,
+            "is_favorited_by_me": false,
+            "user_greeting_sent": false,
+            "compatibility": {
+                "total": 92,
+                "show_action": "show_total"
+            },
+            "communication": false,
+            "unseen": true,
+            "is_new": 1,
+            "banned_at": null,
+            "premium_till": null,
+            "premium_till_ts": false,
+            "super_premium_till": false,
+            "super_premium_till_ts": false,
+            "show_photo_popup": false,
+            "can_show_photo_gallery": true,
+            "user_photos_request": false,
+            "user_photos_request_date": "",
+            "user_life_attitude_request": false,
+            "user_life_attitude_request_date": "",
+            "user_i_like_request": false,
+            "user_i_like_request_date": "",
+            "user_i_dislike_request": false,
+            "user_i_dislike_request_date": "",
+            "user_i_find_request": false,
+            "user_i_find_request_date": "",
+            "is_liked_by_me": 3,
+            "user_smile_sent": false,
+            "can_read_person_speech": false,
+            "status_message": "Главное,чтоб у партнёров совпадали ценности и жизненные цели,иначе смысла не вижу.",
+            "is_status_message_liked_by_me": false,
+            "is_compatibility_liked_by_me": false,
+            "is_geo_liked_by_me": false,
+            "is_geo_request_can_send": true,
+            "user_questions_sent": false,
+            "show_dialog_action": "dialog",
+            "birthday_is_need_send_congratulation": false,
+            "birthday_congratulation_status": null
+        },
+        "visit_person": true,
+        "general_v2": {
+            "fields": [
+                {
+                    "name": "education",
+                    "value": "2",
+                    "value_text": "неоконченное высшее"
+                },
+                {
+                    "name": "field_of_activity",
+                    "value": "13",
+                    "value_text": "административный персонал"
+                },
+                {
+                    "name": "marital_status",
+                    "value": "1",
+                    "value_text": "в браке не состою"
+                },
+                {
+                    "name": "children",
+                    "value": "2",
+                    "value_text": "несовершеннолетние дети, живем вместе"
+                },
+                {
+                    "name": "religion",
+                    "value": "1",
+                    "value_text": "атеизм"
+                },
+                {
+                    "name": "height",
+                    "value": "160",
+                    "value_text": "160"
+                },
+                {
+                    "name": "smoking",
+                    "value": "1",
+                    "value_text": "не курю"
+                },
+                {
+                    "name": "alcohol",
+                    "value": "2",
+                    "value_text": "иногда"
+                }
+            ]
+        },
+        "photos_v2": {
+            "photos": [
+                {
+                    "id": "38148600",
+                    "is_main": true,
+                    "url": {
+                        "gallery": "https://img05.teamo.ru/v2/fit?height=800&url=http://img05.teamo.ru:8080/c/n/38148600.jpg&width=800&sign=jG947hfbi8Q4oFM4ubqPFh1G5BaOKPrMqcvLzZ4CXdk%3D"
+                    },
+                    "is_approved": 1,
+                    "is_approved_for_main": 1,
+                    "is_liked": 0
+                }
+            ],
+            "status": "show_only_main_photo",
+            "is_photo_requested": false,
+            "need_action": "add_2_photos",
+            "need_action_for": "for_see_person_photos_album",
+            "need_action_params": {
+                "required_photos_count": 2
+            }
+        },
+        "lifestyle": {
+            "events": {
+                "text": "Пару лет назад я познакомилась с такими словами ,как коучинг,психология,НЛП и понеслось,завертелось....",
+                "is_liked_by_me": false,
+                "label": "Это очень повлияло на мою жизнь и, возможно, изменило ее"
+            },
+            "people": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Окружающие видят меня так"
+            },
+            "best_in": {
+                "text": "То что я умею делать лучше всего)))",
+                "is_liked_by_me": false,
+                "label": "Лучше всего у меня получается"
+            },
+            "activities": {
+                "text": "Очень не хватает одиночества)))",
+                "is_liked_by_me": false,
+                "label": "Сценарий идеального выходного"
+            },
+            "musthave": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Я не смогу прожить без"
+            },
+            "life_goals": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Я хочу научиться"
+            },
+            "secrets": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Моя фишка - это"
+            },
+            "more": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Это всегда заставляет меня смеяться"
+            },
+            "mistakes_ok": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Это я могу простить, если говорить про проступки партнера"
+            },
+            "heroes": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Любимый персонаж из фильмов/сериалов/мемов"
+            },
+            "religion": {
+                "text": "Не верю ни в одну из представленных человечеству и этому есть куча аргументов",
+                "is_liked_by_me": false,
+                "label": "Что для меня религия?"
+            },
+            "best_place": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Идеальное место для жизни - это"
+            },
+            "bad_things": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Самое ужасное - это"
+            },
+            "cuisine": {
+                "text": "Мясо",
+                "is_liked_by_me": false,
+                "label": "Лучшая еда - это"
+            },
+            "drinks": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Что лучше всего выпить жарким днем или томным вечером?"
+            }
+        },
+        "likes": {
+            "likes": [
+                {
+                    "id": "54",
+                    "class": "features",
+                    "name": "Чувство юмора",
+                    "text": "мне нужен человек с острым чувством юмора, способный видеть смешную сторону жизни"
+                },
+                {
+                    "id": "55",
+                    "class": "features",
+                    "name": "Разговоры по душам",
+                    "text": "я должен знать, что мой партнер может поделиться со мной самыми глубокими переживаниями и желаниями"
+                },
+                {
+                    "id": "56",
+                    "class": "features",
+                    "name": "Эмоциональная стабильность",
+                    "text": "мне нужен эмоционально стабильный партнер, готовый разделить обыденную жизнь с другим человеком"
+                },
+                {
+                    "id": "57",
+                    "class": "features",
+                    "name": "Спонтанные поступки",
+                    "text": "Мне нужен партнер, который способен на спонтанные красивые поступки."
+                },
+                {
+                    "id": "60",
+                    "class": "features",
+                    "name": "Веселые вечеринки",
+                    "text": "мне нужен человек, который не боится рисковать и воспринимает жизнь как приключение"
+                },
+                {
+                    "id": "63",
+                    "class": "features",
+                    "name": "Ухоженная внешность",
+                    "text": "мне нужен человек с высокими стандартами личной гигиены, опрятный и любящий порядок"
+                },
+                {
+                    "id": "65",
+                    "class": "features",
+                    "name": "Активный образ жизни",
+                    "text": "мне нужен человек, который соответствует моему уровню энергичности"
+                },
+                {
+                    "id": "66",
+                    "class": "features",
+                    "name": "Интеллект",
+                    "text": "мне нужен партнер с живым умом, который разделит со мной мое представление о мире и сможет поддержать интересную беседу"
+                },
+                {
+                    "id": "67",
+                    "class": "features",
+                    "name": "Уверенность в себе",
+                    "text": "мне нужен партнер, который уверен в себе и своих силах, независимо от того, что предлагает ему жизнь"
+                },
+                {
+                    "id": "68",
+                    "class": "features",
+                    "name": "Готовность принимать помощь",
+                    "text": "мне нужен человек, готовый принимать помощь извне, когда дело касается серьезных вопросов"
+                },
+                {
+                    "id": "70",
+                    "class": "features",
+                    "name": "Открытость новому",
+                    "text": "мне нужен человек, умеющий приспособиться к любой жизненной ситуации"
+                },
+                {
+                    "id": "71",
+                    "class": "features",
+                    "name": "Доброта",
+                    "text": "мне нужен деликатный и дружелюбный партнер"
+                },
+                {
+                    "id": "72",
+                    "class": "features",
+                    "name": "Организованность",
+                    "text": "мне нужен партнер, который ценит структурированность в жизни"
+                },
+                {
+                    "id": "73",
+                    "class": "features",
+                    "name": "Терпимость",
+                    "text": "мне нужен человек, способный слушать и слышать чужие точки зрения"
+                },
+                {
+                    "id": "81",
+                    "class": "values",
+                    "name": "Мода и стиль",
+                    "text": "мне нужен человек, которому не все равно, как он выглядит, и у которого есть чувство стиля"
+                },
+                {
+                    "id": "83",
+                    "class": "values",
+                    "name": "Благотворительность",
+                    "text": "мне важно, чтобы мой партнер разделял мои стремления помогать другим"
+                },
+                {
+                    "id": "85",
+                    "class": "values",
+                    "name": "Общие хобби",
+                    "text": "мне нужен человек, который разделит мои интересы и пристрастия"
+                },
+                {
+                    "id": "91",
+                    "class": "social",
+                    "name": "Новые знакомства",
+                    "text": "мне нужен человек, которому интересно находиться в окружении людей и общаться с ними"
+                },
+                {
+                    "id": "96",
+                    "class": "finance",
+                    "name": "Финансовая грамотность",
+                    "text": "мой партнер должен быть ответственным в вопросах денег"
+                },
+                {
+                    "id": "98",
+                    "class": "finance",
+                    "name": "Амбициозность",
+                    "text": "мне нужен человек, который будет разделять со мной мое желание добиться многого в карьере и финансовом благополучии"
+                },
+                {
+                    "id": "102",
+                    "class": "sexuality",
+                    "name": "Сексуальные эксперименты",
+                    "text": "мне нужен человек, который разделит мое желание сексуально экспериментировать и примет его с пониманием и воодушевлением"
+                }
+            ],
+            "is_liked_by_me": false
+        },
+        "dislikes": {
+            "dislikes": [
+                {
+                    "id": "5",
+                    "class": "features",
+                    "name": "Вспыльчивость",
+                    "text": "я не люблю людей, которые не в состоянии справиться со своим гневом, позволяют себе крик и грубость в адрес других"
+                },
+                {
+                    "id": "6",
+                    "class": "features",
+                    "name": "Грубость",
+                    "text": "мне не нравится, когда человек ведет себя мелочно, нетерпеливо и озлобленно по отношению к другим людям"
+                },
+                {
+                    "id": "7",
+                    "class": "features",
+                    "name": "Нытье",
+                    "text": "Не люблю людей, которым что-то не нравится и они постоянно жалуются на это, ничего не делая"
+                },
+                {
+                    "id": "8",
+                    "class": "features",
+                    "name": "Безответственность",
+                    "text": "я не люблю, когда человек не умеет признавать свои ошибки и не готов брать вину на себя"
+                },
+                {
+                    "id": "12",
+                    "class": "features",
+                    "name": "Нетерпимость",
+                    "text": "я понимаю, что верность своим убеждениям – важная характеристика личности, однако, неприятие чужих точек зрения и уверенность, что есть только одна правильная – своя – мне не нравится"
+                },
+                {
+                    "id": "13",
+                    "class": "features",
+                    "name": "Сознание жертвы",
+                    "text": "я понимаю, что время от времени нам всем необходимо пожалеть себя, но мне не нравятся люди, которые постоянно чувствуют себя жертвой"
+                },
+                {
+                    "id": "14",
+                    "class": "features",
+                    "name": "Жадность",
+                    "text": "мне не нравятся мелочные люди, не готовые делиться с другими"
+                },
+                {
+                    "id": "15",
+                    "class": "features",
+                    "name": "Подлость",
+                    "text": "не люблю людей, готовых на подлость"
+                },
+                {
+                    "id": "16",
+                    "class": "features",
+                    "name": "Финансовая безответственность",
+                    "text": "мне не нравятся люди, которые не умеют управлять своими деньгами"
+                },
+                {
+                    "id": "18",
+                    "class": "features",
+                    "name": "Неряшливость",
+                    "text": "Не люблю неухоженных, не аккуратных людей"
+                },
+                {
+                    "id": "19",
+                    "class": "features",
+                    "name": "Азартные игры",
+                    "text": "я не терплю людей, которые увлекаются азартными играми"
+                },
+                {
+                    "id": "20",
+                    "class": "features",
+                    "name": "Неделикатные родственники",
+                    "text": "мне не нравятся люди, чьи родственники не знают рамок приличия и постоянно вторгаются в чужую жизнь"
+                },
+                {
+                    "id": "23",
+                    "class": "features",
+                    "name": "Эгоцентризм",
+                    "text": "не люблю, когда человек постоянно делает себя главным объектом для обсуждений"
+                },
+                {
+                    "id": "25",
+                    "class": "features",
+                    "name": "Инфантилизм",
+                    "text": "я не терплю эмоционально незрелых людей"
+                },
+                {
+                    "id": "26",
+                    "class": "features",
+                    "name": "Дотошность",
+                    "text": "не терплю людей, зацикленных на недостатках"
+                },
+                {
+                    "id": "28",
+                    "class": "features",
+                    "name": "Наркотики",
+                    "text": "я не выношу людей, которые употребляют нелегальные наркотики как способ расслабиться"
+                },
+                {
+                    "id": "30",
+                    "class": "values",
+                    "name": "Телевизионная зависимость",
+                    "text": "я не понимаю людей, которые не могут жить без телевизора"
+                },
+                {
+                    "id": "31",
+                    "class": "values",
+                    "name": "Отсутствие гигиены",
+                    "text": "не люблю неопрятность и неаккуратность в личных вещах и гигиене"
+                },
+                {
+                    "id": "35",
+                    "class": "values",
+                    "name": "Непостоянство",
+                    "text": "мне не нравятся люди, на которых никогда нельзя положиться"
+                },
+                {
+                    "id": "41",
+                    "class": "values",
+                    "name": "Безразличие к сексу",
+                    "text": "мне не понравится человек, который не любит регулярный секс с постоянным партнером"
+                },
+                {
+                    "id": "47",
+                    "class": "values",
+                    "name": "Рассеянность",
+                    "text": "Мне не нравятся люди, с которыми невозможно о чем-то договориться, потому что они постоянно все забывают"
+                },
+                {
+                    "id": "48",
+                    "class": "values",
+                    "name": "Чрезмерная экономия",
+                    "text": "мне не нравятся люди, которые стараются быть настолько прижимистыми, что доходят до абсурда"
+                },
+                {
+                    "id": "50",
+                    "class": "values",
+                    "name": "Пессимизм",
+                    "text": "не люблю людей, для которых стакан всегда наполовину пуст"
+                }
+            ],
+            "is_liked_by_me": false
+        },
+        "looking_for": {
+            "age": "30:45",
+            "user_looking_for_from": "30",
+            "user_looking_for_to": "45",
+            "height": "175:185",
+            "height_from": "175",
+            "height_to": "185",
+            "location_id": "2085",
+            "education": "2,3,6,5",
+            "photo": true,
+            "marital_status": "1,4",
+            "children": "1,3,5",
+            "religion": "1,8,2",
+            "income": "1",
+            "smoking": null,
+            "drugs": null,
+            "alcohol": null,
+            "country": null,
+            "region": null,
+            "distance": null,
+            "my_country": 0,
+            "location_name": "Хабаровск, Хабаровский край, Россия"
+        },
+        "locked_fields": [],
+        "extended_compatibility": {
+            "user_result": {
+                "radical_1": "9",
+                "radical_2": "16",
+                "radical_3": "26",
+                "radical_4": "5",
+                "radical_5": "12",
+                "radical_6": "21",
+                "radical_7": "12"
+            },
+            "person_result": {
+                "radical_1": "3",
+                "radical_2": "16",
+                "radical_3": "16",
+                "radical_4": "26",
+                "radical_5": "16",
+                "radical_6": "23",
+                "radical_7": "0"
+            },
+            "common_result": {
+                "radical_1": 94,
+                "radical_2": 100,
+                "radical_3": 90,
+                "radical_4": 79,
+                "radical_5": 96,
+                "radical_6": 98,
+                "radical_7": 88
+            },
+            "radicals": {
+                "radical_1": "Перфекционизм",
+                "radical_2": "Непредсказуемость",
+                "radical_3": "Лидерство",
+                "radical_4": "Демонстративность",
+                "radical_5": "Общительность",
+                "radical_6": "Осторожность",
+                "radical_7": "Альтруизм"
+            },
+            "percent": 92,
+            "compatibility": {
+                "total": 92,
+                "show_action": "show_total"
+            }
+        },
+        "credits": {
+            "count": 0
+        },
+        "config": null,
+        "last_premium_purchase_at": null,
+        "is_super_premium": false
+    },
+    "error": {
+        "code": 0,
+        "message": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blacklist</title>
+</head>
+<body>
+    <h1>Blacklist</h1>
+
+    <p th:each="user : ${users}"
+       th:text="@{${user.getBlacklistOwnerId()} +' have in blacklist : '+ ${user.getUserInBlacklistId()}}">
+    <p/>
+</body>
+</html>

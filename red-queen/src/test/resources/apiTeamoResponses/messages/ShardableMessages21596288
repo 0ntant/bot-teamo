@@ -1,0 +1,147 @@
+{
+    "status": "OK",
+    "result": {
+        "messages": [
+            {
+                "id": "181038644",
+                "person_message_id": "180903355",
+                "message_text": "You and Аня have a match, which means you can chat for free!",
+                "user_id": "21593632",
+                "person_id": "21596288",
+                "date": 1704201621,
+                "is_read": 1,
+                "type": "55",
+                "sender_id": "21596288",
+                "can_not_be_read": 0
+            },
+            {
+                "id": "181072316",
+                "person_message_id": "180927835",
+                "message_text": "I am the storm that is approaching",
+                "user_id": "21593632",
+                "person_id": "21596288",
+                "date": 1711335308,
+                "is_read": 0,
+                "type": "1",
+                "sender_id": "21593632",
+                "can_not_be_read": 0
+            },
+            {
+                "id": "181072317",
+                "person_message_id": "180927836",
+                "message_text": "Provoking black clouds in isolation",
+                "user_id": "21593632",
+                "person_id": "21596288",
+                "date": 1711335324,
+                "is_read": 0,
+                "type": "1",
+                "sender_id": "21593632",
+                "can_not_be_read": 0
+            },
+            {
+                "id": "181072318",
+                "person_message_id": "180927837",
+                "message_text": "I am reclaimer of my name",
+                "user_id": "21593632",
+                "person_id": "21596288",
+                "date": 1711335367,
+                "is_read": 0,
+                "type": "1",
+                "sender_id": "21593632",
+                "can_not_be_read": 0
+            },
+            {
+                "id": "181072319",
+                "person_message_id": "180927838",
+                "message_text": "Born in flames, I have been blessed",
+                "user_id": "21593632",
+                "person_id": "21596288",
+                "date": 1711335376,
+                "is_read": 0,
+                "type": "1",
+                "sender_id": "21593632",
+                "can_not_be_read": 0
+            }
+        ],
+        "force_prices": {
+            "message": "19",
+            "greeting": "19",
+            "smile": "19",
+            "question": "19",
+            "gift": "29",
+            "one_communication_service": "40"
+        },
+        "additionl_prices": {
+            "highlighting": "25",
+            "get_status": "10"
+        },
+        "state": {
+            "chat": "show_messages",
+            "send_message": "enabled",
+            "send_smile": "enabled",
+            "smiles_limit": 1
+        },
+        "person": {
+            "id": "21596288",
+            "network_status": "offline",
+            "sms_status": "offline",
+            "name": "Аня",
+            "age": 28,
+            "sex": "2",
+            "distance": 0,
+            "phone": 0,
+            "last_visit": "2023-12-30 18:51:30",
+            "last_visit_ts": 1703951490,
+            "deleted_at": null,
+            "photos_count": "1",
+            "personal_photos_count": "1",
+            "sent_greeting": null,
+            "is_unseen": null,
+            "is_colored": 0,
+            "second_thumb_url": null,
+            "thumb_url": "https://img05.teamo.ru/v2/crop?height=300&url=http://img05.teamo.ru:8080/l/7/37732017.jpg&width=300&sign=G7GVjPtVq09ZkD6rTnXkHfTOIgW%2FGeCzWNccjFlevWk%3D",
+            "photo": {
+                "id": "37732017",
+                "server_id": "4",
+                "updated_at": "2023-12-30 15:19:50"
+            },
+            "photo_id": "37732017",
+            "location": "Хабаровск",
+            "location_id": "2085",
+            "city": "Хабаровск",
+            "zodiac": "Pisces",
+            "zodiac_class": 2,
+            "zodiac_id": 2,
+            "is_premium": false,
+            "bodytype": "0",
+            "height": "173",
+            "body_class": "med",
+            "body_info": "",
+            "height_class": "med",
+            "is_blocked_by_me": false,
+            "block_status": 0,
+            "is_favorited_by_me": false,
+            "user_greeting_sent": true,
+            "compatibility": {
+                "total": 92,
+                "show_action": "show_total"
+            },
+            "communication": true,
+            "unseen": false,
+            "is_new": 0,
+            "can_communicate_with_person": true,
+            "is_smile_available": true,
+            "is_greeting_available": false,
+            "is_highlighted": false,
+            "is_got_status": false
+        }
+    },
+    "error": {
+        "code": 0,
+        "message": "",
+        "message_tech": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

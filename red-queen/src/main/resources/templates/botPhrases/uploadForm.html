@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script
+            th:src ="@{/scripts/botPhraseUpload.js}">
+    </script>
+    <title>Bot phrase upload form</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <h1>Bot phrase upload form</h1>
+    <form>
+        <p>
+            <label>Bot phrase type:</label>
+            <select id="bot_phrase_type_id" name="bot_phrase_type_id">
+                <tr th:each="botPhraseType: ${botPhraseTypes}">
+                    <option th:value="${botPhraseType.getId()}"/>
+                    <td th:text="${botPhraseType.getId()}"/>
+                    <td th:text="${botPhraseType.getTitle()}"/>
+                    </option>
+                </tr>
+            </select>
+        </p>
+        <p>
+            <label>Gender:</label>
+            <select name="gender" id="gender">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+            </select>
+        </p>
+        <p>
+            <label>Body:</label>
+            <textarea id="bot_phrase_body" name="bot_phrase_body" style="height: 202px; width: 414px;"></textarea><br>
+        </p>
+        <input type="submit" id="submit_button" name="submit_button" onclick="handleClick(event)"><br>
+    </form>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script
+            th:src ="@{/scripts/botPhraseTypeUpload.js}">
+    </script>
+    <title>Bot Phrase type upload form</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <h1>Bot Phrase type upload form</h1>
+    <form>
+        <p>Title:</p>
+        <input type="text" id="title" name="title"><br>
+        <input type="submit" id="submit_button" name="submit_button" onclick="handleFile(event)"><br>
+    </form>
+</body>
+</html>

@@ -1,0 +1,423 @@
+{
+    "status": "OK",
+    "result": {
+        "profile": {
+            "id": "17941241",
+            "network_status": "online",
+            "sms_status": "offline",
+            "name": "Evgenia",
+            "age": 30,
+            "sex": "2",
+            "distance": 0,
+            "phone": 1,
+            "last_visit": "2024-03-21 16:55:47",
+            "last_visit_ts": 1711029347,
+            "deleted_at": null,
+            "photos_count": "2",
+            "personal_photos_count": "2",
+            "sent_greeting": null,
+            "is_unseen": null,
+            "is_colored": 0,
+            "second_thumb_url": null,
+            "thumb_url": "https://img05.teamo.ru/v2/crop?height=300&url=http://img05.teamo.ru:8080/u/2/37765542.jpg&width=300&sign=Kykh3ohqKxxENyQHeLNVw0p4nlvDjZKZ4RSfzd2Cy%2BE%3D",
+            "photo": {
+                "id": "37765542",
+                "server_id": "4",
+                "updated_at": "2024-01-04 17:02:26"
+            },
+            "photo_id": "37765542",
+            "location": "Хабаровск",
+            "location_id": "2085",
+            "city": "Хабаровск",
+            "zodiac": "Дева",
+            "zodiac_class": 8,
+            "zodiac_id": 8,
+            "is_premium": false,
+            "bodytype": "1",
+            "height": "170",
+            "body_class": "min",
+            "body_info": "худощавое",
+            "height_class": "med",
+            "is_blocked_by_me": false,
+            "block_status": 0,
+            "is_favorited_by_me": false,
+            "user_greeting_sent": false,
+            "compatibility": {
+                "total": 88,
+                "show_action": "show_total"
+            },
+            "communication": false,
+            "unseen": true,
+            "is_new": 1,
+            "banned_at": null,
+            "premium_till": null,
+            "premium_till_ts": false,
+            "super_premium_till": false,
+            "super_premium_till_ts": false,
+            "show_photo_popup": false,
+            "can_show_photo_gallery": true,
+            "user_photos_request": false,
+            "user_photos_request_date": "",
+            "user_life_attitude_request": false,
+            "user_life_attitude_request_date": "",
+            "user_i_like_request": false,
+            "user_i_like_request_date": "",
+            "user_i_dislike_request": false,
+            "user_i_dislike_request_date": "",
+            "user_i_find_request": false,
+            "user_i_find_request_date": "",
+            "is_liked_by_me": "1",
+            "user_smile_sent": false,
+            "can_read_person_speech": false,
+            "status_message": "*Телец",
+            "is_status_message_liked_by_me": false,
+            "is_compatibility_liked_by_me": false,
+            "is_geo_liked_by_me": false,
+            "is_geo_request_can_send": true,
+            "user_questions_sent": false,
+            "show_dialog_action": "dialog",
+            "birthday_is_need_send_congratulation": false,
+            "birthday_congratulation_status": null
+        },
+        "visit_person": true,
+        "general_v2": {
+            "fields": [
+                {
+                    "name": "education",
+                    "value": "3",
+                    "value_text": "высшее образование"
+                },
+                {
+                    "name": "field_of_activity",
+                    "value": "1",
+                    "value_text": "образование"
+                },
+                {
+                    "name": "marital_status",
+                    "value": "1",
+                    "value_text": "в браке не состою"
+                },
+                {
+                    "name": "children",
+                    "value": "1",
+                    "value_text": "детей нет"
+                },
+                {
+                    "name": "religion",
+                    "value": "8",
+                    "value_text": "другое"
+                },
+                {
+                    "name": "height",
+                    "value": "170",
+                    "value_text": "170"
+                },
+                {
+                    "name": "smoking",
+                    "value": "1",
+                    "value_text": "не курю"
+                },
+                {
+                    "name": "alcohol",
+                    "value": "2",
+                    "value_text": "иногда"
+                }
+            ]
+        },
+        "photos_v2": {
+            "photos": [
+                {
+                    "id": "37765542",
+                    "is_main": true,
+                    "url": {
+                        "gallery": "https://img05.teamo.ru/v2/fit?height=800&url=http://img05.teamo.ru:8080/u/2/37765542.jpg&width=800&sign=kj0InnHgKCVCHrGwmukYR8xnrnn7ZmaCl9Ffmav2I%2B4%3D"
+                    },
+                    "is_approved": 1,
+                    "is_approved_for_main": 1,
+                    "is_liked": 0
+                },
+                {
+                    "id": "37903618",
+                    "is_main": false,
+                    "url": {
+                        "gallery": "https://img06.teamo.ru/v2/fit?height=800&url=http://img06.teamo.ru:8080/a/m/37903618.jpg&width=800&sign=053F8MRATOl3gKXRYsE69gpQtocZY5IgM%2BdOd7VuS%2Bw%3D"
+                    },
+                    "is_approved": 1,
+                    "is_approved_for_main": 1,
+                    "is_liked": 0
+                }
+            ],
+            "status": "show_only_main_photo",
+            "is_photo_requested": false,
+            "need_action": "add_2_photos",
+            "need_action_for": "for_see_person_photos_album",
+            "need_action_params": {
+                "required_photos_count": 2
+            }
+        },
+        "lifestyle": {
+            "events": {
+                "text": "Родные и люди искусства",
+                "is_liked_by_me": false,
+                "label": "Это очень повлияло на мою жизнь и, возможно, изменило ее"
+            },
+            "people": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Окружающие видят меня так"
+            },
+            "best_in": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Лучше всего у меня получается"
+            },
+            "activities": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Сценарий идеального выходного"
+            },
+            "musthave": {
+                "text": "Дом, еда, сон, люди, чувства, разум",
+                "is_liked_by_me": false,
+                "label": "Я не смогу прожить без"
+            },
+            "life_goals": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Я хочу научиться"
+            },
+            "secrets": {
+                "text": "Об этом могут знать только лучшие друзья",
+                "is_liked_by_me": false,
+                "label": "Моя фишка - это"
+            },
+            "more": {
+                "text": "Хочу, чтобы с тобой всегда было о чем поговорить.",
+                "is_liked_by_me": false,
+                "label": "Это всегда заставляет меня смеяться"
+            },
+            "mistakes_ok": {
+                "text": "Те, за которые искренне раскаиваются",
+                "is_liked_by_me": false,
+                "label": "Это я могу простить, если говорить про проступки партнера"
+            },
+            "heroes": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Любимый персонаж из фильмов/сериалов/мемов"
+            },
+            "religion": {
+                "text": "Без фанатизма",
+                "is_liked_by_me": false,
+                "label": "Что для меня религия?"
+            },
+            "best_place": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Идеальное место для жизни - это"
+            },
+            "bad_things": {
+                "text": "Неуважение",
+                "is_liked_by_me": false,
+                "label": "Самое ужасное - это"
+            },
+            "cuisine": {
+                "text": "Когда готовит кто-то другой) простую еду без излишеств",
+                "is_liked_by_me": false,
+                "label": "Лучшая еда - это"
+            },
+            "drinks": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Что лучше всего выпить жарким днем или томным вечером?"
+            }
+        },
+        "likes": {
+            "likes": [
+                {
+                    "id": "52",
+                    "class": "features",
+                    "name": "Страсть",
+                    "text": "я должен испытывать любовь и влечение к своему партнеру"
+                },
+                {
+                    "id": "53",
+                    "class": "features",
+                    "name": "А поговорить",
+                    "text": "мне нужен человек, способный говорить и слушать"
+                },
+                {
+                    "id": "55",
+                    "class": "features",
+                    "name": "Разговоры по душам",
+                    "text": "я должен знать, что мой партнер может поделиться со мной самыми глубокими переживаниями и желаниями"
+                },
+                {
+                    "id": "57",
+                    "class": "features",
+                    "name": "Спонтанные поступки",
+                    "text": "Мне нужен партнер, который способен на спонтанные красивые поступки."
+                },
+                {
+                    "id": "59",
+                    "class": "features",
+                    "name": "Широкий кругозор",
+                    "text": "мне нужен человек одного со мной уровня образования"
+                },
+                {
+                    "id": "60",
+                    "class": "features",
+                    "name": "Веселые вечеринки",
+                    "text": "мне нужен человек, который не боится рисковать и воспринимает жизнь как приключение"
+                },
+                {
+                    "id": "61",
+                    "class": "features",
+                    "name": "Оптимизм",
+                    "text": "Мне нужен человек, способный позитивно мыслить"
+                },
+                {
+                    "id": "62",
+                    "class": "features",
+                    "name": "Компромисс",
+                    "text": "мне нужен человек, которому важнее уладить конфликт в отношениях, чем одержать в нем победу"
+                },
+                {
+                    "id": "66",
+                    "class": "features",
+                    "name": "Интеллект",
+                    "text": "мне нужен партнер с живым умом, который разделит со мной мое представление о мире и сможет поддержать интересную беседу"
+                },
+                {
+                    "id": "67",
+                    "class": "features",
+                    "name": "Уверенность в себе",
+                    "text": "мне нужен партнер, который уверен в себе и своих силах, независимо от того, что предлагает ему жизнь"
+                },
+                {
+                    "id": "76",
+                    "class": "features",
+                    "name": "Эмоциональная щедрость",
+                    "text": "мне нужен человек, который умеет радоваться людям и готов делиться с ними состраданием, вниманием, симпатией и любовью"
+                },
+                {
+                    "id": "78",
+                    "class": "features",
+                    "name": "Верность",
+                    "text": "мне важно знать, что партнер не бросит меня даже в самую трудную минуту"
+                },
+                {
+                    "id": "84",
+                    "class": "values",
+                    "name": "Независимость",
+                    "text": "мне нужен человек, который позволит мне быть самим собой"
+                },
+                {
+                    "id": "85",
+                    "class": "values",
+                    "name": "Общие хобби",
+                    "text": "мне нужен человек, который разделит мои интересы и пристрастия"
+                },
+                {
+                    "id": "96",
+                    "class": "finance",
+                    "name": "Финансовая грамотность",
+                    "text": "мой партнер должен быть ответственным в вопросах денег"
+                },
+                {
+                    "id": "101",
+                    "class": "sexuality",
+                    "name": "Нежность",
+                    "text": "мне важно, чтобы мой партнер отдавал предпочтение традиционным сексуальным привычкам"
+                }
+            ],
+            "is_liked_by_me": false
+        },
+        "dislikes": {
+            "dislikes": [],
+            "is_liked_by_me": false
+        },
+        "looking_for": {
+            "age": "30:35",
+            "user_looking_for_from": "30",
+            "user_looking_for_to": "35",
+            "height": "0:0",
+            "height_from": "0",
+            "height_to": "0",
+            "location_id": "2085",
+            "education": null,
+            "photo": true,
+            "marital_status": null,
+            "children": null,
+            "religion": null,
+            "income": "1",
+            "smoking": null,
+            "drugs": null,
+            "alcohol": null,
+            "country": null,
+            "region": null,
+            "distance": "50",
+            "my_country": 0,
+            "location_name": "Хабаровск, Хабаровский край, Россия"
+        },
+        "locked_fields": [
+            "location"
+        ],
+        "extended_compatibility": {
+            "user_result": {
+                "radical_1": "9",
+                "radical_2": "16",
+                "radical_3": "26",
+                "radical_4": "5",
+                "radical_5": "12",
+                "radical_6": "21",
+                "radical_7": "12"
+            },
+            "person_result": {
+                "radical_1": "38",
+                "radical_2": "16",
+                "radical_3": "3",
+                "radical_4": "19",
+                "radical_5": "5",
+                "radical_6": "11",
+                "radical_7": "8"
+            },
+            "common_result": {
+                "radical_1": 71,
+                "radical_2": 100,
+                "radical_3": 77,
+                "radical_4": 86,
+                "radical_5": 93,
+                "radical_6": 90,
+                "radical_7": 96
+            },
+            "radicals": {
+                "radical_1": "Перфекционизм",
+                "radical_2": "Непредсказуемость",
+                "radical_3": "Лидерство",
+                "radical_4": "Демонстративность",
+                "radical_5": "Общительность",
+                "radical_6": "Осторожность",
+                "radical_7": "Альтруизм"
+            },
+            "percent": 88,
+            "compatibility": {
+                "total": 88,
+                "show_action": "show_total"
+            }
+        },
+        "credits": {
+            "count": 5
+        },
+        "config": null,
+        "last_premium_purchase_at": null,
+        "is_super_premium": false
+    },
+    "error": {
+        "code": 0,
+        "message": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

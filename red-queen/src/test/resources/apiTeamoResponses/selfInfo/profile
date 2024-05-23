@@ -1,0 +1,154 @@
+{
+    "status": "OK",
+    "result": {
+        "profile": {
+            "id": "21593632",
+            "network_status": "online",
+            "sms_status": "offline",
+            "name": "Антон",
+            "age": 26,
+            "sex": "1",
+            "distance": 0,
+            "phone": 0,
+            "last_visit": "2024-03-25 05:40:34",
+            "last_visit_ts": 1711334434,
+            "deleted_at": null,
+            "photos_count": "1",
+            "personal_photos_count": "1",
+            "sent_greeting": null,
+            "is_unseen": null,
+            "is_colored": 0,
+            "second_thumb_url": null,
+            "thumb_url": "https://img05.teamo.ru/v2/crop?height=300&url=http://img05.teamo.ru:8080/w/n/37726124.jpg&width=300&sign=byug5fs0tafmrWte98o3FF5T0b%2BQs%2F7vzoI8fyih82Q%3D",
+            "photo": {
+                "id": "37726124",
+                "server_id": "4",
+                "updated_at": "2023-12-29 12:16:34"
+            },
+            "photo_id": "37726124",
+            "location": "Хабаровск",
+            "location_id": "2085",
+            "city": "Хабаровск",
+            "zodiac": "Телец",
+            "zodiac_class": 4,
+            "zodiac_id": 4,
+            "is_premium": false,
+            "bodytype": "0",
+            "height": "179",
+            "body_class": "med",
+            "body_info": "",
+            "height_class": "med",
+            "email": "wijep28580@ubinert.com",
+            "is_email_confirmed": "0",
+            "buy_premium_strategy": "simple",
+            "looking_for": "2",
+            "is_already_buy_free_3_premium": false,
+            "testing_status": 8,
+            "communication": true,
+            "unseen": false,
+            "compatibility": {
+                "show_action": null,
+                "total": 100,
+                "percent": 100
+            },
+            "is_new": 0,
+            "banned_at": null,
+            "premium_till": null,
+            "premium_till_ts": false,
+            "super_premium_till": false,
+            "super_premium_till_ts": false,
+            "phone_number": null,
+            "income": "1",
+            "is_favorited_by_me": false,
+            "can_read_person_speech": true,
+            "status_message": "",
+            "is_status_message_liked_by_me": false,
+            "is_compatibility_liked_by_me": false,
+            "is_blocked_by_me": false,
+            "block_status": 0,
+            "show_photo_popup": true,
+            "can_show_photo_gallery": false,
+            "user_greeting_sent": false,
+            "user_smile_sent": false,
+            "is_liked_by_me": 3,
+            "profile_filled_percent": 42.00000000000001,
+            "completed_at": "2023-12-29 12:08:42",
+            "photos_count_required": 2,
+            "user_photos_request": false,
+            "user_photos_request_date": "",
+            "user_life_attitude_request": false,
+            "user_life_attitude_request_date": "",
+            "user_i_like_request": false,
+            "user_i_like_request_date": "",
+            "user_i_dislike_request": false,
+            "user_i_dislike_request_date": "",
+            "user_i_find_request": false,
+            "user_i_find_request_date": "",
+            "status_is_approved": true
+        },
+        "long_polling": {
+            "user_id_queue": "5091c9e51ccde528cd70823efd05b46f8adc4e0d",
+            "statistic_queue": "a8348896faade72c8f527a7fdaf9efbee647691b"
+        },
+        "credits": {
+            "count": 20
+        },
+        "config": {
+            "main_account_screen": "faces",
+            "features": {
+                "profile_selection": {
+                    "is_active": false,
+                    "seconds_left": null,
+                    "percent_used": null,
+                    "credit_price": "50"
+                },
+                "search_promotion": {
+                    "is_active": false,
+                    "seconds_left": null,
+                    "percent_used": null,
+                    "credit_price": "100"
+                },
+                "be_popular": {
+                    "is_active": false,
+                    "seconds_left": null,
+                    "percent_used": null,
+                    "popularity": "medium",
+                    "credit_price": "350"
+                },
+                "bonus_system": {
+                    "day": 1,
+                    "day_bonuses_activated": false,
+                    "day_psycho_dialogs_count_used": 0,
+                    "day_psycho_dialogs_count_remained": 1,
+                    "seconds_for_update": 65996,
+                    "day_matching_completed": "1",
+                    "day_next": 2
+                }
+            },
+            "geo_location": {
+                "save_position_period": 600
+            },
+            "device_token": null
+        },
+        "dislikes": {
+            "dislikes": [
+                {
+                    "id": "46",
+                    "class": "values",
+                    "name": "Дикпики от незнакомцев",
+                    "text": "Мне неприятно получать непрошенные фотографии половых органов от незнакомцев."
+                }
+            ],
+            "is_liked_by_me": false
+        },
+        "last_premium_purchase_at": null,
+        "is_super_premium": false
+    },
+    "error": {
+        "code": 0,
+        "message": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

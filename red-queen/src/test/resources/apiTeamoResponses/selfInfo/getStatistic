@@ -1,0 +1,25 @@
+{
+    "status": "OK",
+    "result": {
+        "counters": {
+            "dialogs_new": 2,
+            "dialogs_all_new": 2,
+            "dialogs_mutual_new": 0,
+            "notifications_new": 11,
+            "notifications_new_v2": 11,
+            "guests_new": 11,
+            "faces_income_new": 0,
+            "comments_new": 0,
+            "in_favourites_new": 0,
+            "psycho_selection": 1
+        }
+    },
+    "error": {
+        "code": 0,
+        "message": "",
+        "message_tech": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

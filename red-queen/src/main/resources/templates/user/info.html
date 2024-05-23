@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+    <style>
+        .images {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 20px;
+        }
+        .images img {
+            display: block;
+            width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            object-position: center;
+             aspect-ratio: 9 / 9;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+    <p>
+        Name: <td th:text="${userTeamo.getName()}"/>
+    </p>
+    <p>
+        Age: <td th:text="${userTeamo.getAge()}"></td>
+    </p>
+    <p>
+        City: <td th:text="${userTeamo.getCity()}"></td>
+    </p>
+    <p>
+        LastVisit: <td th:text="${userTeamo.getLastVisit()}"></td>
+    </p>
+    <p>
+        SysCreateDate: <td th:text="${userTeamo.getSysCreateDate()}"></td>
+    </p>
+    <p>
+        Height: <td th:text="${userTeamo.getHeight()}"></td>
+    </p>
+    <p>
+        Gender: <td th:text="${userTeamo.getGender()}"></td>
+    </p>
+
+    <div style="border:solid">
+        <p>
+            <b>GeneralAttribute:</b>
+            <p th:each="generalAttribute : ${userTeamo.getGeneralAttributeList()}"
+               th:text="@{${generalAttribute.getName()} +' : '+ ${generalAttribute.getValueText()}}">
+            <p/>
+        </p>
+    </div>
+
+    <div style="border:solid">
+        <p>
+            <b>Lifestyle:</b>
+            <p th:each="lifestyle : ${userTeamo.getLifestyleList()}"
+               th:text="@{${lifestyle.getLifestyleTypeTitle()} +' : '+ ${lifestyle.getLifestyleBody()}}">
+            <p/>
+        </p>
+    </div>
+    <div style="border:solid">
+        <p>
+            <b>Like list:</b>
+            <p th:each="like : ${userTeamo.getLikeList()}"
+               th:text="@{${like.getName()} +' : '+ ${like.getText()}}">
+            <p/>
+        </p>
+    </div>
+    <div style="border:solid">
+        <p>
+            <b>Dislike list:</b>
+            <p th:each="dislike : ${userTeamo.getDislikeList()}"
+               th:text="@{${dislike.getName()} +' : '+ ${dislike.getText()}}">
+            <p/>
+        </p>
+    </div>
+    <div style="border:solid">
+        <p>
+            <b>Looking list:</b>
+            <p th:each="looking : ${userTeamo.getLookingList()}"
+               th:text="@{${looking.getLookingTypeTitle()} +' : '+ ${looking.getLookingBody()}}">
+            <p/>
+        </p>
+    </div>
+    <div style="border:solid">
+        <p>
+            <b>Blacklist:</b>
+            <p th:each="user : ${userTeamo.getBlacklist()}"
+               th:text="@{${user.getId()} +' : '+ ${user.getName()}}">
+            <p/>
+        </p>
+    </div>
+    <div class="images">
+        <tr th:each="photo: ${userTeamo.getPhotoList()}">
+            <a th:href="${photo.getUrl()}">
+                <img th:src="${photo.getUrl()}">
+            </a>
+        </tr>
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lifestyle list</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <h1>Lifestyle list</h1>
+    <tr th:each="lifestyle: ${lifestyles}">
+        <div style="border:solid">
+            <p>Id: <td th:text="${lifestyle.getId()}"></td></p>
+            <p>Body: <td th:text="${lifestyle.getBody()}"></td></p>
+        </div>
+    </tr>
+</body>
+</html>

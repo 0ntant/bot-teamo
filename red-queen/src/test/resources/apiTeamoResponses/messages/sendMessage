@@ -1,0 +1,25 @@
+{
+    "status": "OK",
+    "result": {
+        "message": {
+            "id": "181072333",
+            "person_message_id": "180927840",
+            "message_text": "Dancing through the graves of those who stand at my feet",
+            "user_id": "21593632",
+            "person_id": "21596288",
+            "date": 1711337034,
+            "is_read": 0,
+            "type": "1",
+            "sender_id": "21593632",
+            "can_not_be_read": 0
+        }
+    },
+    "error": {
+        "code": 0,
+        "message": "",
+        "message_tech": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

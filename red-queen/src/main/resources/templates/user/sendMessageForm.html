@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script
+            th:src ="@{/scripts/sendMessage.js}">
+    </script>
+    <title>Sending message</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+Message fields
+<form>
+
+    <p>User With Token Id:</p>
+    <input type="text" id="user_with_token_id" name="user_with_token_id"><br>
+    <p>User Receiver Id:</p>
+    <input type="text" id="user_receiver_id" name="user_receiver_id"><br>
+    <p>Message:</p>
+    <textarea id="message" name="message" style="height: 202px; width: 414px;"></textarea><br>
+    <input type="submit" id="submit_button" name="submit_button" onclick="handleFile(event)"><br>
+</form>
+</body>
+</html>

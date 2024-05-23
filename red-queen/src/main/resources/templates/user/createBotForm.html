@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script
+            th:src ="@{/scripts/botUpload.js}">
+    </script>
+    <title>Create bot form</title>
+</head>
+<body>
+Bot fields
+<form>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <p>Id:</p>
+        <input type="text" id="id_bot" name="id_bot"><br>
+    <p>Email:</p>
+        <input type="text" id="email" name="email"><br>
+    <p>Password</p>
+        <input type="text" id="password" name="password"><br>
+    <p>Token</p>
+        <input type="text" id="token" name="token"><br>
+    <input type="submit" id="submit_button" name="submit_button" onclick="handleFile(event)"><br>
+</form>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+    "status": "ERROR",
+    "result": [],
+    "error": {
+        "code": 440,
+        "message": "user is self deleted",
+        "message_tech": "user is self deleted"
+    },
+    "global": {
+        "tv": 2
+    }
+}

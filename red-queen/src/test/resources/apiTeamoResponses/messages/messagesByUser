@@ -1,0 +1,64 @@
+{
+    "status": "OK",
+    "result": {
+        "count": 1,
+        "count_new": 0,
+        "messages": [
+            {
+                "dialog_id": 21596288,
+                "person_id": 21596288,
+                "is_read": false,
+                "is_incoming": false,
+                "read_status": 5,
+                "folders": [
+                    1,
+                    2,
+                    4
+                ],
+                "message_info": {
+                    "id": 181072319,
+                    "user_id": 21593632,
+                    "person_id": 21596288,
+                    "sender_id": 21593632,
+                    "date": 1711335376,
+                    "is_incoming": false,
+                    "is_read": false,
+                    "message_text": "Born in flames, I have been blessed",
+                    "type": 1
+                },
+                "user_info": {
+                    "id": 21596288,
+                    "name": "Аня",
+                    "age": 28,
+                    "sex": 2,
+                    "thumb_url": "https://img05.teamo.ru/v2/crop?height=300&url=http://img05.teamo.ru:8080/l/7/37732017.jpg&width=300&sign=G7GVjPtVq09ZkD6rTnXkHfTOIgW%2FGeCzWNccjFlevWk%3D",
+                    "is_premium": false,
+                    "location": "Хабаровск",
+                    "phone": 0,
+                    "is_confirmed": false,
+                    "zodiac_id": 2,
+                    "zodiac": "Pisces",
+                    "network_status": "offline",
+                    "is_blocked_by_me": false,
+                    "is_favorited_by_me": false,
+                    "is_mutual_matched": true,
+                    "is_colored": false,
+                    "compatibility": {
+                        "show_action": "show_total",
+                        "total": 92
+                    },
+                    "show_profile_action": "show_person_profile",
+                    "show_profile_act": 1
+                }
+            }
+        ]
+    },
+    "error": {
+        "code": 0,
+        "message": "",
+        "message_tech": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

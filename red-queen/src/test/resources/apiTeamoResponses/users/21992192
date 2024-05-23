@@ -1,0 +1,100 @@
+{
+    "status": "ERROR",
+    "result": {
+        "profile": {
+            "id": "21992192",
+            "network_status": "online",
+            "sms_status": "offline",
+            "name": "Ольбина",
+            "age": 37,
+            "sex": "2",
+            "distance": 0,
+            "phone": 0,
+            "last_visit": "2024-04-12 09:34:09",
+            "last_visit_ts": 1712903649,
+            "deleted_at": null,
+            "photos_count": "0",
+            "personal_photos_count": "1",
+            "sent_greeting": null,
+            "is_unseen": null,
+            "is_colored": 0,
+            "second_thumb_url": null,
+            "thumb_url": "https://img06.teamo.ru/v2/crop?height=300&url=http://img06.teamo.ru:8080/w/e/38489144.jpg&width=300&sign=BbXxaLezvOM20kV53uXblOf4%2F0U9f68MvBZ6kUvZiqA%3D",
+            "photo": {
+                "id": "38489144",
+                "server_id": "5",
+                "updated_at": "2024-04-12 09:31:51"
+            },
+            "photo_id": "38489144",
+            "location": "Хабаровск",
+            "location_id": "2085",
+            "city": "Хабаровск",
+            "zodiac": "Телец",
+            "zodiac_class": 4,
+            "zodiac_id": 4,
+            "is_premium": false,
+            "bodytype": "0",
+            "height": "173",
+            "body_class": "med",
+            "body_info": "",
+            "height_class": "med",
+            "is_blocked_by_me": false,
+            "block_status": 4,
+            "is_favorited_by_me": false,
+            "user_greeting_sent": false,
+            "compatibility": {
+                "total": 0,
+                "show_action": "person_not_pass_psycho_testing"
+            },
+            "communication": false,
+            "unseen": true,
+            "is_new": 1,
+            "banned_at": null,
+            "premium_till": null,
+            "premium_till_ts": false,
+            "super_premium_till": false,
+            "super_premium_till_ts": false,
+            "show_photo_popup": false,
+            "can_show_photo_gallery": true,
+            "user_photos_request": false,
+            "user_photos_request_date": "",
+            "user_life_attitude_request": false,
+            "user_life_attitude_request_date": "",
+            "user_i_like_request": false,
+            "user_i_like_request_date": "",
+            "user_i_dislike_request": false,
+            "user_i_dislike_request_date": "",
+            "user_i_find_request": false,
+            "user_i_find_request_date": "",
+            "is_liked_by_me": 3,
+            "user_smile_sent": false,
+            "can_read_person_speech": false,
+            "status_message": "",
+            "is_status_message_liked_by_me": false,
+            "is_compatibility_liked_by_me": false,
+            "is_geo_liked_by_me": false,
+            "is_geo_request_can_send": true,
+            "user_questions_sent": false,
+            "show_dialog_action": "dialog",
+            "birthday_is_need_send_congratulation": false,
+            "birthday_congratulation_status": null
+        },
+        "photos_v2": {
+            "photos": [],
+            "status": "show_only_main_photo",
+            "is_photo_requested": false,
+            "need_action": "add_2_photos",
+            "need_action_for": "for_see_person_photos_album",
+            "need_action_params": {
+                "required_photos_count": 2
+            }
+        }
+    },
+    "error": {
+        "code": 454,
+        "message": "person block my user"
+    },
+    "global": {
+        "tv": 2
+    }
+}

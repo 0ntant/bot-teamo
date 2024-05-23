@@ -1,0 +1,314 @@
+{
+    "status": "OK",
+    "result": {
+        "profile": {
+            "id": "21810077",
+            "network_status": "away_week",
+            "sms_status": "offline",
+            "name": "Юлия",
+            "age": 47,
+            "sex": "2",
+            "distance": 0,
+            "phone": 1,
+            "last_visit": "2024-03-23 07:19:30",
+            "last_visit_ts": 1711167570,
+            "deleted_at": null,
+            "photos_count": "1",
+            "personal_photos_count": "1",
+            "sent_greeting": null,
+            "is_unseen": null,
+            "is_colored": 0,
+            "second_thumb_url": null,
+            "thumb_url": "https://img05.teamo.ru/v2/crop?height=300&url=http://img05.teamo.ru:8080/w/u/38173496.jpg&width=300&sign=2iWAkrIL0My%2FX1Uyd%2F8RynWw3Rthj3hV78RXynU6%2Fz8%3D",
+            "photo": {
+                "id": "38173496",
+                "server_id": "4",
+                "updated_at": "2024-03-01 19:25:45"
+            },
+            "photo_id": "38173496",
+            "location": "Хабаровск",
+            "location_id": "2085",
+            "city": "Хабаровск",
+            "zodiac": "Телец",
+            "zodiac_class": 4,
+            "zodiac_id": 4,
+            "is_premium": false,
+            "bodytype": "0",
+            "height": "166",
+            "body_class": "med",
+            "body_info": "",
+            "height_class": "med",
+            "is_blocked_by_me": false,
+            "block_status": 0,
+            "is_favorited_by_me": false,
+            "user_greeting_sent": false,
+            "compatibility": {
+                "total": 89,
+                "show_action": "show_total"
+            },
+            "communication": false,
+            "unseen": true,
+            "is_new": 1,
+            "banned_at": null,
+            "premium_till": null,
+            "premium_till_ts": false,
+            "super_premium_till": false,
+            "super_premium_till_ts": false,
+            "show_photo_popup": false,
+            "can_show_photo_gallery": true,
+            "user_photos_request": false,
+            "user_photos_request_date": "",
+            "user_life_attitude_request": false,
+            "user_life_attitude_request_date": "",
+            "user_i_like_request": false,
+            "user_i_like_request_date": "",
+            "user_i_dislike_request": false,
+            "user_i_dislike_request_date": "",
+            "user_i_find_request": false,
+            "user_i_find_request_date": "",
+            "is_liked_by_me": null,
+            "user_smile_sent": false,
+            "can_read_person_speech": false,
+            "status_message": "",
+            "is_status_message_liked_by_me": false,
+            "is_compatibility_liked_by_me": false,
+            "is_geo_liked_by_me": false,
+            "is_geo_request_can_send": true,
+            "user_questions_sent": false,
+            "show_dialog_action": "dialog",
+            "birthday_is_need_send_congratulation": false,
+            "birthday_congratulation_status": null
+        },
+        "visit_person": true,
+        "general_v2": {
+            "fields": [
+                {
+                    "name": "education",
+                    "value": "6",
+                    "value_text": "среднее специальное"
+                },
+                {
+                    "name": "field_of_activity",
+                    "value": "2",
+                    "value_text": "здравоохранение"
+                },
+                {
+                    "name": "marital_status",
+                    "value": "5",
+                    "value_text": "вдова либо вдовец"
+                },
+                {
+                    "name": "children",
+                    "value": "2",
+                    "value_text": "несовершеннолетние дети, живем вместе"
+                },
+                {
+                    "name": "religion",
+                    "value": "2",
+                    "value_text": "православие"
+                },
+                {
+                    "name": "height",
+                    "value": "166",
+                    "value_text": "166"
+                },
+                {
+                    "name": "smoking",
+                    "value": "1",
+                    "value_text": "не курю"
+                },
+                {
+                    "name": "alcohol",
+                    "value": "2",
+                    "value_text": "иногда"
+                }
+            ]
+        },
+        "photos_v2": {
+            "photos": [
+                {
+                    "id": "38173496",
+                    "is_main": true,
+                    "url": {
+                        "gallery": "https://img05.teamo.ru/v2/fit?height=800&url=http://img05.teamo.ru:8080/w/u/38173496.jpg&width=800&sign=W1safZ0TtAFq1wO061Lo3%2BHSmFeipQxiKX%2B3Y2OwSCg%3D"
+                    },
+                    "is_approved": 1,
+                    "is_approved_for_main": 1,
+                    "is_liked": 0
+                }
+            ],
+            "status": "show_only_main_photo",
+            "is_photo_requested": false,
+            "need_action": "add_2_photos",
+            "need_action_for": "for_see_person_photos_album",
+            "need_action_params": {
+                "required_photos_count": 2
+            }
+        },
+        "lifestyle": {
+            "events": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Это очень повлияло на мою жизнь и, возможно, изменило ее"
+            },
+            "people": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Окружающие видят меня так"
+            },
+            "best_in": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Лучше всего у меня получается"
+            },
+            "activities": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Сценарий идеального выходного"
+            },
+            "musthave": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Я не смогу прожить без"
+            },
+            "life_goals": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Я хочу научиться"
+            },
+            "secrets": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Моя фишка - это"
+            },
+            "more": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Это всегда заставляет меня смеяться"
+            },
+            "mistakes_ok": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Это я могу простить, если говорить про проступки партнера"
+            },
+            "heroes": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Любимый персонаж из фильмов/сериалов/мемов"
+            },
+            "religion": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Что для меня религия?"
+            },
+            "best_place": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Идеальное место для жизни - это"
+            },
+            "bad_things": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Самое ужасное - это"
+            },
+            "cuisine": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Лучшая еда - это"
+            },
+            "drinks": {
+                "text": "",
+                "is_liked_by_me": false,
+                "label": "Что лучше всего выпить жарким днем или томным вечером?"
+            }
+        },
+        "likes": {
+            "likes": [],
+            "is_liked_by_me": false
+        },
+        "dislikes": {
+            "dislikes": [],
+            "is_liked_by_me": false
+        },
+        "looking_for": {
+            "age": "18:53",
+            "user_looking_for_from": "18",
+            "user_looking_for_to": "53",
+            "height": "0:0",
+            "height_from": "0",
+            "height_to": "0",
+            "location_id": "2085",
+            "education": null,
+            "photo": true,
+            "marital_status": null,
+            "children": null,
+            "religion": null,
+            "income": null,
+            "smoking": null,
+            "drugs": null,
+            "alcohol": null,
+            "country": null,
+            "region": null,
+            "distance": null,
+            "my_country": 0,
+            "location_name": "Хабаровск, Хабаровский край, Россия"
+        },
+        "locked_fields": [],
+        "extended_compatibility": {
+            "user_result": {
+                "radical_1": "9",
+                "radical_2": "16",
+                "radical_3": "26",
+                "radical_4": "5",
+                "radical_5": "12",
+                "radical_6": "21",
+                "radical_7": "12"
+            },
+            "person_result": {
+                "radical_1": "0",
+                "radical_2": "26",
+                "radical_3": "13",
+                "radical_4": "6",
+                "radical_5": "13",
+                "radical_6": "3",
+                "radical_7": "39"
+            },
+            "common_result": {
+                "radical_1": 91,
+                "radical_2": 90,
+                "radical_3": 87,
+                "radical_4": 99,
+                "radical_5": 99,
+                "radical_6": 82,
+                "radical_7": 73
+            },
+            "radicals": {
+                "radical_1": "Перфекционизм",
+                "radical_2": "Непредсказуемость",
+                "radical_3": "Лидерство",
+                "radical_4": "Демонстративность",
+                "radical_5": "Общительность",
+                "radical_6": "Осторожность",
+                "radical_7": "Альтруизм"
+            },
+            "percent": 89,
+            "compatibility": {
+                "total": 89,
+                "show_action": "show_total"
+            }
+        },
+        "credits": {
+            "count": 0
+        },
+        "config": null,
+        "last_premium_purchase_at": null,
+        "is_super_premium": false
+    },
+    "error": {
+        "code": 0,
+        "message": ""
+    },
+    "global": {
+        "tv": 2
+    }
+}

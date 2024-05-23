@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sending message</title>
+    <script
+            th:src ="@{/scripts/v2/sendMessage.js}">
+    </script>
+</head>
+<body onload="handleChangeSelect()">
+<div th:replace="~{fragments/header :: header}"></div>
+<ul id="chat">
+
+</ul>
+<form>
+    <label>Choose user with token:</label>
+    <select id="users_with_token_ids" name="users_with_token_ids" onchange="handleChangeSelect()">
+        <tr th:each="userWithToken: ${usersWithToken}">
+            <option th:value="${userWithToken.getId()}"/>
+                <td th:text="${userWithToken.getId()}"/>
+                <td th:text="${userWithToken.getName()}"/>
+                <td th:text="${userWithToken.getCity()}"/>
+            </option>
+        </tr>
+    </select><br><br>
+    <label>Choose user receiver</label><select id="users_receiver_ids" onchange="handleChangeSelect2()"></select>
+    <p>Message:</p>
+    <textarea id="message" name="message" style="height: 202px; width: 414px;"></textarea><br>
+    <input type="submit" id="submit_button" name="submit_button" onclick="handleClick(event)"><br>
+</form>
+</body>
+</html>

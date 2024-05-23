@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scheduler bot panel</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <h1>Scheduler bot panel</h1>
+    <p>
+        User pool size: <td th:text="${userPoolSize}"></td>
+    </p>
+    <p>
+       Scheduler state: <td th:text="${schedulerState}"></td>
+    </p>
+    <p>
+        <a href="http://localhost:8080/scheduler-bot/state">State</a>
+    </p>
+    <p>
+        <a href="http://localhost:8080/scheduler-bot/start">Start</a>
+    </p>
+<!--    <p>-->
+<!--        <a href="http://localhost:8080/scheduler-bot/stop">Stop</a>-->
+<!--    </p>-->
+    <p>
+        <a href="http://localhost:8080/scheduler-bot/get/user-pool">User pool</a>
+    </p>
+</body>
+</html>
