@@ -1,0 +1,15 @@
+.idea
+
+red-queen/target/*
+red-queen/.idea
+red-queen/src/main/resources/application.yml
+
+img-generator/.idea
+img-generator/src/main/resources/application.yml
+img-generator/target/*
+img-generator/src/main/resources/static/images/*
+
+content-storage-service/.idea
+content-storage-service/src/main/resources/application.yml
+content-storage-service/target/*
+content-storage-service/src/main/resources/files/*

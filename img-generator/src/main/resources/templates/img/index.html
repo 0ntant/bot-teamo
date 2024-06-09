@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image validator</title>
+    <style>
+        .button {
+          background-color: #04AA6D; /* Green */
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+
+        .button2 {background-color: #008CBA;} /* Blue */
+        .button3 {background-color: #f44336;  width:250px;} /* Red */
+    </style>
+
+    <script
+            th:src ="@{/scripts/sendImg.js}">
+    </script>
+<body onload="setImg()">
+<img id="get_img"
+     width="500"
+     height="500"/>
+<p>
+    <button class="button" onclick="sendFemale()">Female</button>
+    <button class="button button2" onclick="sendMale()">Male</button>
+
+</p>
+<p>
+    <button class="button button3" onclick="deleteImg()">DELETE</button>
+</p>
+<div id="hidden-img-name" hidden="hidden">ImgName</div>
+</body>
+</html>
+

@@ -1,5 +1,3 @@
---CREATE DATABASE IF NOT EXISTS teamo_db;
-
 \c teamo_db
 
 CREATE USER teamo_app  WITH PASSWORD 'MWQ*sdg#MNGW(Isd_gdH(#N!NG@($#sd(!?';
@@ -65,16 +63,6 @@ CREATE TABLE general_attribute
 	name varchar(255) NOT NULL,
 	value_text varchar(255) NOT NULL
 );
-
---CREATE TABLE user_bot 
---(
---	id SERIAL PRIMARY KEY,
---	email varchar(255) UNIQUE NOT NULL,
---	username varchar(255) NOT NULL,
---	password varchar(255) NOT NULL,
---	age integer,
---	token varchar(255)	
---);
 
 
 CREATE TABLE user_teamo_has_t_like
