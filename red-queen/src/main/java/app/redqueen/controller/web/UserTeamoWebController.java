@@ -28,13 +28,13 @@ public class UserTeamoWebController
     @GetMapping(path = "get/upload-bot-form")
     public String getCreateBotForm()
     {
-        return "user/createBotForm";
+        return "user-teamo/createBotForm";
     }
 
     @GetMapping(path = "get/send-message-form")
     public String sendMessageForm()
     {
-        return "user/sendMessageForm";
+        return "user-teamo/sendMessageForm";
     }
 
     @GetMapping(path = "v2/get/send-message-form")
@@ -42,13 +42,13 @@ public class UserTeamoWebController
     {
         model.addAttribute("usersWithToken",
                 userTeamoService.findUserWithTokenAndNotBlocking());
-        return "v2/user/sendMessageForm";
+        return "v2/user-teamo/sendMessageForm";
     }
 
     @GetMapping
     public String getIndex()
     {
-        return "user/index";
+        return "user-teamo/index";
     }
 
     @GetMapping("get/list")
@@ -81,7 +81,7 @@ public class UserTeamoWebController
                 .toList();
 
         model.addAttribute("usersTeamo", userTeamoDtoList);
-        return "user/listAll";
+        return "user-teamo/listAll";
     }
 
     @GetMapping("get/list-all")
@@ -93,7 +93,7 @@ public class UserTeamoWebController
                 .map(UserTeamoDto::mapToTeamoUserDto)
                 .toList();
         model.addAttribute("usersTeamo", userTeamoDtoList);
-        return "user/listAll";
+        return "user-teamo/listAll";
     }
 
     @GetMapping("get/info/{id}")
@@ -105,7 +105,7 @@ public class UserTeamoWebController
                 "userTeamo",
                 UserTeamoFullInfoDto.mapToUserTeamoFullInfoDto(userTeamo)
         );
-        return "user/info";
+        return "user-teamo/info";
     }
 
     @GetMapping("get/users-with-token-not-blocked-list")
@@ -117,7 +117,7 @@ public class UserTeamoWebController
                 .map(UserTeamoDto::mapToTeamoUserDto)
                 .toList();
         model.addAttribute("usersTeamo", userTeamoDtoList);
-        return "user/listAll";
+        return "user-teamo/listAll";
     }
 
     @GetMapping("get/blacklist-all")
@@ -133,6 +133,12 @@ public class UserTeamoWebController
                     .toList());
         }
         model.addAttribute("users", users);
-        return "user/blacklist";
+        return "user-teamo/blacklist";
+    }
+
+    @GetMapping("get/order-form")
+    public String getOrderForm()
+    {
+        return "user-teamo/createOrderForm";
     }
 }

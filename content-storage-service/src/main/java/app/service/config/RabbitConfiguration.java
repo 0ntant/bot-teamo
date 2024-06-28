@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfiguration
 {
-    public static final String imgAvaQue = "img-ava-que";
-
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

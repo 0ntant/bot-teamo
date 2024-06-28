@@ -2,19 +2,18 @@ package app.redqueen.controller.rest;
 
 import app.redqueen.dto.input.BotDto;
 import app.redqueen.dto.input.MessageDto;
+import app.redqueen.dto.input.UserTeamoOrderDto;
 import app.redqueen.dto.output.TeamoUserDto;
 import app.redqueen.dto.output.UserTeamoDto;
 import app.redqueen.dto.output.UserTeamoFullInfo.UserTeamoFullInfoDto;
 import app.redqueen.model.MessageTeamo;
 import app.redqueen.model.UserTeamo;
+import app.redqueen.service.BotOrderService;
 import app.redqueen.service.database.UserTeamoService;
 import app.redqueen.service.network.*;
+import app.redqueen.util.EmailAddressGen;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -28,8 +27,10 @@ public class UserTeamoController
    @Autowired
    private UserTeamoService userTeamoService;
    @Autowired
-   private UserNetServiceFactory userNetServiceFactory;
+   private BotOrderService botOrderService;
 
+   @Autowired
+   private UserNetServiceFactory userNetServiceFactory;
    @Autowired
    private MessageNetServiceFactory messageNetServiceFactory;
 
@@ -114,5 +115,12 @@ public class UserTeamoController
     public long getCount()
     {
         return userTeamoService.getCount();
+    }
+
+    @PostMapping("create/order")
+    public String getOrder(@RequestBody UserTeamoOrderDto userTeamoOrderDto)
+    {
+        botOrderService.orderBot(UserTeamoOrderDto.map(userTeamoOrderDto));
+        return "Success";
     }
 }

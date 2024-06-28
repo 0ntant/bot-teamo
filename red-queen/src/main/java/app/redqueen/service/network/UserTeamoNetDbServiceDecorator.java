@@ -71,8 +71,6 @@ public class UserTeamoNetDbServiceDecorator
         return resultOrError;
     }
 
-
-
     @Override
     public ResultOrError<UserTeamo> getSelfFullInfo()
     {
