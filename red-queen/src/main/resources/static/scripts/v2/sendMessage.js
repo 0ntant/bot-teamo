@@ -1,5 +1,7 @@
 const BASE_URL = window.location.protocol +'//'+ window.location.host
 const user_create_bot = BASE_URL+'/user-teamo/send-message';
+const user_get_users_data = BASE_URL+'/user-teamo/get/user-chat-partners/';
+const user_get_chat = BASE_URL + '/teamo-message/get/chat/';
 
 async function handleClick(event)
 {
@@ -31,7 +33,7 @@ async function handleChangeSelect()
 {
       users_with_token_id = Number(document.getElementById("users_with_token_ids").value)
       console.log(users_with_token_id)
-      users_receiver = await getUsersData ("http://localhost:8080/user-teamo/get/user-chat-partners/" + users_with_token_id)
+      users_receiver = await getUsersData (user_get_users_data + users_with_token_id)
       createOptionsSelect(users_receiver)
 
       user_with_token_id = Number(document.getElementById("users_with_token_ids").value)
@@ -43,7 +45,7 @@ async function handleChangeSelect()
 
 function getChat(sender_id, receiver_id)
 {
-    return getUsersData("http://localhost:8080/teamo-message/get/chat/"+sender_id+"/"+receiver_id)
+    return getUsersData(user_get_chat+sender_id+"/"+receiver_id)
 }
 
 function createChat(messages)

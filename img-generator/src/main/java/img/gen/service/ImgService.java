@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -92,7 +93,7 @@ public class ImgService
                 .toList();
     }
 
-
+    @Async
     public void createImg()
     {
         byte[] imgFromClient = imgClient.getImage();

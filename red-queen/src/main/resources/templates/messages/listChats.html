@@ -8,7 +8,7 @@
     <div th:replace="~{fragments/header :: header}"></div>
     <h1>List chats</h1>
     <tr th:each="chat: ${chats}">
-        <a th:href="@{http://localhost:8080/teamo-message/get/chat(senderId=${chat.getSenderId()},receiverId=${chat.getReceiverId()})}"/>
+        <a th:href="@{~/teamo-message/get/chat(senderId=${chat.getSenderId()},receiverId=${chat.getReceiverId()})}"/>
            <p>
                <td th:text="@{'Chat ' + ${chat.getReceiverName()}  + ' ' + ${chat.getReceiverId()} + ' with: '+ ${chat.getSenderName()}+' '+ ${chat.getSenderId()}}"/></a>
            </p>

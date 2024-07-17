@@ -1,7 +1,7 @@
 package app.redqueen.service.network;
 
-import app.redqueen.integration.rest.UserClient;
-import app.redqueen.integration.rest.UserClientAPI;
+import app.redqueen.integration.rest.teamo.UserClient;
+import app.redqueen.integration.rest.teamo.UserClientAPI;
 import app.redqueen.mapper.user.JsonNodeToMessageTeamo;
 import app.redqueen.mapper.user.MessageTeamoMapper;
 

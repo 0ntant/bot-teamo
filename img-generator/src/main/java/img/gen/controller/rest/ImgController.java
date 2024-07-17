@@ -47,6 +47,7 @@ public class ImgController
         {
             return "img not found";
         }
+        imgService.createImg();
         return imgService.sendToCSS(gender, imgName);
     }
 
@@ -87,6 +88,7 @@ public class ImgController
     @DeleteMapping("delete/{imgName}")
     public String deleteByName(@PathVariable(name = "imgName") String imgName)
     {
+        imgService.createImg();
         return imgService.deleteByName(imgName);
     }
 }

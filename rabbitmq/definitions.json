@@ -1,9 +1,16 @@
 {
-  "rabbit_version": "3.13.3",
-  "rabbitmq_version": "3.13.3",
+  "rabbit_version": "3.13.4",
+  "rabbitmq_version": "3.13.4",
   "product_name": "RabbitMQ",
-  "product_version": "3.13.3",
+  "product_version": "3.13.4",
   "users": [
+    {
+      "name": "proxy_provider_app",
+      "password_hash": "ieaIYWTBB+bVS2nZdypQD+vy2FuNntwmrW2RQ4FEl9JduIG4",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [],
+      "limits": {}
+    },
     {
       "name": "red_queen_app",
       "password_hash": "wUUXlRFGL5CfRoiIBZzxWaftWnSLe4n/BLEKX/XWDDvBxv2U",
@@ -44,12 +51,25 @@
   ],
   "vhosts": [
     {
-      "name": "/"
+      "name": "/",
+      "description": "",
+      "tags": [],
+      "metadata": {
+        "description": "",
+        "tags": []
+      }
     }
   ],
   "permissions": [
     {
-      "user": "img_generator_app",
+      "user": "teamo_auto_reg_app",
+      "vhost": "/",
+      "configure": "",
+      "write": ".*",
+      "read": "reg-user-teamo-que|teamo-auto-reg-proxy-que"
+    },
+    {
+      "user": "proxy_provider_app",
       "vhost": "/",
       "configure": "",
       "write": ".*",
@@ -60,21 +80,7 @@
       "vhost": "/",
       "configure": "",
       "write": ".*",
-      "read": "user-teamo-que"
-    },
-    {
-      "user": "content_storage_service_app",
-      "vhost": "/",
-      "configure": "",
-      "write": "",
-      "read": "img-ava-que"
-    },
-    {
-      "user": "teamo_auto_reg_app",
-      "vhost": "/",
-      "configure": "",
-      "write": ".*",
-      "read": "reg-user-teamo-que"
+      "read": "user-teamo-que|red-queen-proxy-que"
     },
     {
       "user": "rabbit_admin",
@@ -82,13 +88,34 @@
       "configure": ".*",
       "write": ".*",
       "read": ".*"
+    },
+    {
+      "user": "img_generator_app",
+      "vhost": "/",
+      "configure": "",
+      "write": ".*",
+      "read": ""
+    },
+    {
+      "user": "content_storage_service_app",
+      "vhost": "/",
+      "configure": "",
+      "write": "",
+      "read": "img-ava-que"
     }
   ],
   "topic_permissions": [
     {
-      "user": "teamo_auto_reg_app",
+      "user": "img_generator_app",
       "vhost": "/",
       "exchange": "img-ava-exc",
+      "write": ".*",
+      "read": ""
+    },
+    {
+      "user": "proxy_provider_app",
+      "vhost": "/",
+      "exchange": "proxy-exc",
       "write": ".*",
       "read": ""
     },
@@ -96,13 +123,6 @@
       "user": "red_queen_app",
       "vhost": "/",
       "exchange": "reg-user-teamo-exc",
-      "write": ".*",
-      "read": ""
-    },
-    {
-      "user": "img_generator_app",
-      "vhost": "/",
-      "exchange": "img-ava-exc",
       "write": ".*",
       "read": ""
     }
@@ -140,11 +160,38 @@
       "durable": true,
       "auto_delete": false,
       "arguments": {}
+    },
+    {
+      "name": "teamo-auto-reg-proxy-que",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "red-queen-proxy-que",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
     }
   ],
   "exchanges": [
     {
       "name": "reg-user-teamo-exc",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "proxy-exc",
       "vhost": "/",
       "type": "topic",
       "durable": true,
@@ -178,6 +225,22 @@
       "destination": "img-ava-que",
       "destination_type": "queue",
       "routing_key": "file.img.ava",
+      "arguments": {}
+    },
+    {
+      "source": "proxy-exc",
+      "vhost": "/",
+      "destination": "red-queen-proxy-que",
+      "destination_type": "queue",
+      "routing_key": "proxy.dto",
+      "arguments": {}
+    },
+    {
+      "source": "proxy-exc",
+      "vhost": "/",
+      "destination": "teamo-auto-reg-proxy-que",
+      "destination_type": "queue",
+      "routing_key": "proxy.dto",
       "arguments": {}
     },
     {

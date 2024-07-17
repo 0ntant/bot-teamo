@@ -42,4 +42,10 @@ public interface UserTeamoRepository extends JpaRepository<UserTeamo, Long>
     Page<UserTeamo> findAll(Pageable pageable);
 
     List<UserTeamo> findByGender(String gender);
+
+    @Query("""
+            SELECT u FROM UserTeamo u
+            WHERE u.token is not null and u.block.isBlocking!=true and u.city=:city
+            """)
+    List<UserTeamo> findUserWithTokenAndCity(@Param("city") String city);
 }

@@ -1,6 +1,6 @@
 package service.network.IT.apiMock;
 
-import app.redqueen.integration.rest.UserClient;
+import app.redqueen.integration.rest.teamo.UserClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

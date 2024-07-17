@@ -1,4 +1,5 @@
 .idea
+.docker-compose.yml.kate-swp
 
 red-queen/target/*
 red-queen/.idea
@@ -19,3 +20,9 @@ teamo-auto-reg/src/main/resources/application*
 teamo-auto-reg/src/main/resources/selenium/*
 teamo-auto-reg/src/main/resources/temp/*
 teamo-auto-reg/target/*
+
+proxy-provider/.idea
+proxy-provider/.attach_pid*
+proxy-provider/src/main/resources/application*
+proxy-provider/src/main/resources/free-proxy-list/*
+proxy-provider/src/main/resources/free-proxy-list

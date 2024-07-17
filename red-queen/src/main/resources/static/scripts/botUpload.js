@@ -31,7 +31,7 @@ async function handleFile(event)
 
 async function sendBot(sendData)
 {
-    const url = 'http://localhost:8080/user-teamo/create/bot';
+    const url = user_create_bot;
     console.log(url)
     try
     {

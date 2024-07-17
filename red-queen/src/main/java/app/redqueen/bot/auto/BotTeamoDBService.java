@@ -5,23 +5,13 @@ import app.redqueen.model.BotPhraseType;
 import app.redqueen.model.MessageTeamo;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.service.database.BotServiceFacade;
-import app.redqueen.service.database.DialogGenerator;
-import app.redqueen.service.database.MessageTeamoService;
-import app.redqueen.service.database.UserTeamoService;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @NoArgsConstructor

@@ -40,10 +40,12 @@ public class UserDtoReceiver
     {
         UserTeamoDto userTeamoDto = new UserTeamoDto();
         driver.get("https://teamo.ru/");
+        driver.get("https://teamo.ru/");
 
         driver.manage().addCookie(teamoCookie);
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofMinutes(1));
 
+        driver.get("https://teamo.ru/");
         driver.get("https://teamo.ru/");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
 

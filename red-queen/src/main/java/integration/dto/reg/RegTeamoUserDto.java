@@ -21,7 +21,6 @@ public class RegTeamoUserDto
     AgeSeek ageSeek;
 
     String education;
-//    String occupation;
     String activity;
     String income;
     String maritalStatus;

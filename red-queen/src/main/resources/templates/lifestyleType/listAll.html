@@ -8,7 +8,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
     <h1>Lifestyle type panel</h1>
     <tr th:each="lifestyleType: ${lifestyleTypes}">
-        <a th:href="@{'http://localhost:8080/lifestyle/get/list/by-type-label/' + ${lifestyleType.getLabel()}}"/>
+        <a th:href="@{'~/lifestyle/get/list/by-type-label/' + ${lifestyleType.getLabel()}}"/>
             <td th:text="${lifestyleType.getTitle()}"/></a><br>
     </tr>
 </body>

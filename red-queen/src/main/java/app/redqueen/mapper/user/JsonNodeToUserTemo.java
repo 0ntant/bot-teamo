@@ -11,7 +11,5 @@ public interface JsonNodeToUserTemo
 
     List<UserTeamo> mapFromList(JsonNode jsonNode);
 
-    //   UserTeamo map(JsonNode jsonNode, UserTeamo partner);
-
     List<UserTeamo> mapFromListMessages(JsonNode jsonNode);
 }

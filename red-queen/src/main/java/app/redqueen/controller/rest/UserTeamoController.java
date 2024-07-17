@@ -9,9 +9,9 @@ import app.redqueen.dto.output.UserTeamoFullInfo.UserTeamoFullInfoDto;
 import app.redqueen.model.MessageTeamo;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.service.BotOrderService;
+import app.redqueen.service.BotFullInfoGetterService;
 import app.redqueen.service.database.UserTeamoService;
 import app.redqueen.service.network.*;
-import app.redqueen.util.EmailAddressGen;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,39 +23,25 @@ import java.util.*;
 @Slf4j
 public class UserTeamoController
 {
+    @Autowired
+    private UserTeamoService userTeamoService;
+    @Autowired
+    private BotOrderService botOrderService;
 
-   @Autowired
-   private UserTeamoService userTeamoService;
-   @Autowired
-   private BotOrderService botOrderService;
+    @Autowired
+    private MessageNetServiceFactory messageNetServiceFactory;
 
-   @Autowired
-   private UserNetServiceFactory userNetServiceFactory;
-   @Autowired
-   private MessageNetServiceFactory messageNetServiceFactory;
+    @Autowired
+    private BotFullInfoGetterService botFullInfoGetterService;
 
-   @PostMapping("create/bot")
-   public String createBot(@RequestBody BotDto botDto)
-   {
-        //check user already exists
-        boolean isUserExist = userTeamoService.isExistById(botDto.getId());
-        if(isUserExist)
-        {
-            return "User already exist";
-        }
-
+    @PostMapping("create/bot")
+    public String createBot(@RequestBody BotDto botDto)
+    {
         UserTeamo userTeamo = BotDto.BotDtoToUserTeamo(botDto);
-        UserTeamoNetworkService userTeamoNetworkService
-                = userNetServiceFactory.createUserNetDecorator(userTeamo);
-        userTeamo.setSysCreateDate(new Date());
 
-        ResultOrError<UserTeamo> resultOrError = userTeamoNetworkService.getSelfFullInfo();
-        if (resultOrError.isErrorResponse())
-        {
-            return "Error during self info";
-        }
+        botFullInfoGetterService.getFullInfoUser(userTeamo);
         return "Success ";
-   }
+    }
 
     @PostMapping("send-message")
     public app.redqueen.dto.output.MessageDto sendMessageByUser(@RequestBody MessageDto messageDto)

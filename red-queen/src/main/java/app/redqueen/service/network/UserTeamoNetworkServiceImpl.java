@@ -1,6 +1,6 @@
 package app.redqueen.service.network;
 
-import app.redqueen.integration.rest.*;
+import app.redqueen.integration.rest.teamo.*;
 import app.redqueen.mapper.api.JsonNodeToSuccessLikeMessage;
 import app.redqueen.mapper.api.SuccessLikeMessageMapper;
 import app.redqueen.mapper.user.*;

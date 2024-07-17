@@ -1,5 +1,8 @@
 package auto.reg.maker;
 
+import auto.reg.integration.rest.contentStorageService.ImgAvaClient;
+import auto.reg.service.TempFileService;
+import integration.dto.reg.ImageAvaDto;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -18,11 +21,19 @@ public class ImageUploader
     @Autowired
     DriverFactory driverFactory;
     WebDriver driver;
-    int waitSecLimit = 3;
+    int waitSecLimit = 5;
 
-    public void uploadAvaImg(Cookie teamoCookie, String avaPath)
+    @Autowired
+    ImgAvaClient imgAvaClient;
+
+    @Autowired
+    TempFileService tempFileService;
+
+    public void uploadAvaImg(Cookie teamoCookie, ImageAvaDto imageAvaDto)
     {
         driver = driverFactory.create();
+
+        String avaPath = tempFileService.saveFromImageAvaDto(imageAvaDto);
 
         try
         {
@@ -31,6 +42,26 @@ public class ImageUploader
         finally
         {
             driver.quit();
+            tempFileService.remove(avaPath);
+        }
+    }
+
+    public void uploadAvaImg(Cookie teamoCookie, String gender)
+    {
+        driver = driverFactory.create();
+
+        String avaPath = tempFileService.saveFromImgAvaDto(
+                imgAvaClient.getImgAvaDtoByGender(gender)
+        );
+
+        try
+        {
+            uploadAvaImg(driver, teamoCookie, avaPath);
+        }
+        finally
+        {
+            driver.quit();
+            tempFileService.remove(avaPath);
         }
     }
 
@@ -39,27 +70,35 @@ public class ImageUploader
         driver.get("https://teamo.ru/me/upload");
         driver.manage().addCookie(teamoCookie);
         driver.get("https://teamo.ru/me/upload");
+        driver.get("https://teamo.ru/me/upload");
         driver.manage().window().maximize();
 
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofMinutes(1));
 
         //add-photo-block__file-field
         wait.until(ExpectedConditions.elementToBeClickable(By.id("dropZone")));
-        WebElement fileInput = driver.findElement(By.tagName("input"));
+        WebElement fileInputZone = driver.findElement(By.tagName("input"));
 
-        waitWebElement(fileInput);
-        fileInput.sendKeys(avaPath);
-        waitWebElement(fileInput);
+        waitWebElement();
+        fileInputZone.sendKeys(avaPath);
+        waitWebElement();
 
         driver.get("https://teamo.ru/me/upload");
     }
 
-    private void waitWebElement(WebElement webElement)
+    public boolean hasImgByGender(String gender)
     {
-        synchronized (webElement) {
-            try {
-                webElement.wait(1000L * waitSecLimit);
-            } catch (InterruptedException e) {
+        return imgAvaClient.getCountByGender(gender) >= 1;
+    }
+
+    private void waitWebElement()
+    {
+        synchronized (Thread.currentThread()) {
+            try
+            {
+                Thread.currentThread().wait(1000L * waitSecLimit);
+            }
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

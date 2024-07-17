@@ -1,4 +1,3 @@
-version: '1'
 services:
   rabbit-mq:
     container_name: rabbit-mq
@@ -11,7 +10,6 @@ services:
       - internal_net
     ports:
       - '15672:15672'
-      - '5672:5672'
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
@@ -37,7 +35,20 @@ services:
       retries: 5
       start_period: 80s
 
+  chrome-stadalone:
+    image: selenium/standalone-chromium:latest
+    shm_size: 2gb
+    environment:
+      - TZ=Europe/Moscow
+    networks:
+      - internal_net
+    ports:
+      - '4444:4444'
+      - '5900:5900'
+      - '7900:7900'
+
   img-generator:
+    image: img-generator:1.3.0
     container_name: img-generator
     environment:
       - TZ=Europe/Moscow
@@ -53,6 +64,7 @@ services:
         condition: service_healthy
 
   content-storage-service:
+    image: content-storage-service:1.3.0
     container_name: content-storage-service
     environment:
       - TZ=Europe/Moscow
@@ -66,10 +78,9 @@ services:
          condition: service_healthy
       rabbit-mq:
          condition: service_healthy
-    ports:
-      - '8081:8080'
 
   red-queen:
+    image: red-queen:1.3.0
     container_name: red-queen
     environment:
       - TZ=Europe/Moscow
@@ -86,6 +97,33 @@ services:
     ports:
       - '8080:8080'
 
+  teamo-auto-reg:
+    image: teamo-auto-reg:1.3.0
+    container_name: teamo-auto-reg
+    environment:
+      - TZ=Europe/Moscow
+    build:
+      context: ./teamo-auto-reg
+      dockerfile: Dockerfile
+    networks:
+      - internal_net
+    depends_on:
+      rabbit-mq:
+         condition: service_healthy
+
+  proxy-provider:
+    image: proxy-provider:1.3.0
+    container_name: proxy-provider
+    environment:
+      - TZ=Europe/Moscow
+    build:
+      context: ./proxy-provider
+      dockerfile: Dockerfile
+    networks:
+      - internal_net
+    depends_on:
+      rabbit-mq:
+         condition: service_healthy
 
 networks:
   internal_net:
@@ -93,4 +131,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 192.168.101.0/24
+        - subnet: 10.0.1.0/24

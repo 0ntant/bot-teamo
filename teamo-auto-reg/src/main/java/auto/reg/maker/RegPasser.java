@@ -51,7 +51,6 @@ public class RegPasser
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
 
         teamoCookie  = driver.manage().getCookieNamed("teamo");
-        log.info("Current cookie value {}", teamoCookie.getValue());
         //get hCaptcha
         List<WebElement> iframes = driver.findElements(By.xpath("//iframe|//frame"));
         activateExt();
@@ -67,7 +66,6 @@ public class RegPasser
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
 
         teamoCookie = driver.manage().getCookieNamed("teamo");
-        log.info("after reg cookie value {}", teamoCookie.getValue());
 
         return teamoCookie;
     }

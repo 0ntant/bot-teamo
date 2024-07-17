@@ -8,7 +8,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
   <h1>User list</h1>
   <tr th:each="userTeamo: ${usersTeamo}">
-    <a th:href="@{'http://localhost:8080/user-teamo/get/info/' + ${userTeamo.getId()}}"/>
+    <a th:href="@{'~/user-teamo/get/info/' + ${userTeamo.getId()}}"/>
     <td th:text="@{${userTeamo.getId()} +' '+ ${userTeamo.getName}}"/></a><br>
   </tr>
 </body>

@@ -78,4 +78,9 @@ public class UserTeamoService
     {
         return userTeamoRepository.findBlackListOwners();
     }
+
+    public List<UserTeamo> findBotsByCity(String city)
+    {
+        return userTeamoRepository.findUserWithTokenAndCity(city);
+    }
 }

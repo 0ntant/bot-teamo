@@ -25,7 +25,6 @@ public class GeneralAttributeMapper implements JsonNodeToGeneralAttributeList
             generalAttributeList.add(new GeneralAttribute
                     (
                             attributeName,
-                            //  generalAttribute.path("value").asInt(),
                             attributeValueText
                     ));
         }

@@ -43,7 +43,6 @@ public class LifestyleMapper implements JsonNodeToLifestyle
         {
             Map.Entry<String, JsonNode> jsonObject = it.next();
             {
-              //  String lifestyleBody = jsonObject.getValue().asText();
                 JsonNode jsonNodeValues = jsonObject.getValue();
                 String lifestyleBody = jsonNodeValues.path("text").asText();
 

@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Slf4j
@@ -121,7 +120,7 @@ public class BotTeamoNetService
         {
             log.error("Response is error={}",
                     resultOrError.getBlock().getReason());
-            throw new RuntimeException("User bot banned");
+            throw new RuntimeException("User banned");
         }
     }
 }

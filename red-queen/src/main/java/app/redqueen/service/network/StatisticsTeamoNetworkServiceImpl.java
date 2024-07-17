@@ -1,7 +1,7 @@
 package app.redqueen.service.network;
 
-import app.redqueen.integration.rest.TeamoClient;
-import app.redqueen.integration.rest.TeamoClientAPI;
+import app.redqueen.integration.rest.teamo.TeamoClient;
+import app.redqueen.integration.rest.teamo.TeamoClientAPI;
 import app.redqueen.mapper.api.JsonNodeToStatisticsTeamo;
 import app.redqueen.mapper.api.StatisticsTeamoMapper;
 import app.redqueen.model.StatisticsTeamo;
@@ -11,8 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

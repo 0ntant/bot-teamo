@@ -1,6 +1,5 @@
 package img.gen.integration.mq;
 
-import img.gen.config.RabbitConfig;
 import img.gen.util.Base64Util;
 import img.gen.util.FileUtil;
 import integration.dto.ImgAvaDto;

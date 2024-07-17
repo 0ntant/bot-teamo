@@ -1,13 +1,12 @@
 package auto.reg.maker;
 
-import auto.reg.integration.mq.RedQueenPublisher;
-import auto.reg.integration.rest.contentStorageService.ImgAvaClient;
+import auto.reg.integration.mq.reqQueen.RedQueenPublisher;
 import auto.reg.integration.rest.teamo.TeamoClient;
 import auto.reg.mapper.NextStepMapper;
-import auto.reg.service.TempFileService;
 import com.fasterxml.jackson.databind.JsonNode;
 import integration.dto.UserTeamoDto;
 import integration.dto.reg.RegTeamoUserDto;
+import integration.dto.reg.RegTeamoUserImgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ public class UserCreator
     TeamoClient teamoClient;
 
     @Autowired
-    ImgAvaClient imgAvaClient;
-
-    @Autowired
     RegPasser regPasser;
 
     @Autowired
@@ -38,17 +34,13 @@ public class UserCreator
     HumanImitator humanImitator;
 
     @Autowired
-    TempFileService tempFileService;
-
-    @Autowired
     RedQueenPublisher redQueenPublisher;
 
-    public synchronized UserTeamoDto createUser(RegTeamoUserDto regTeamoUserDto)
+    public synchronized UserTeamoDto createUser(RegTeamoUserImgDto regTeamoUserDto)
     {
-        Cookie teamoCookie = null;
         try
         {
-            regPasser.bypass(regTeamoUserDto);
+            regPasser.bypass(regTeamoUserDto.getUserDto());
         }
         catch (Exception ex)
         {
@@ -56,25 +48,11 @@ public class UserCreator
             createUser(regTeamoUserDto);
         }
 
-        String imgNamePath = "";
-        if(imgAvaClient.getCountByGender(regTeamoUserDto.getGender()) < 1)
-        {
-            syncRandWait(0);
-            log.warn("No images gender={}, Content storage ", regTeamoUserDto.getGender());
-            createUser(regTeamoUserDto);
-        }
-        else
-        {
-            imgNamePath = tempFileService.saveFromImgAvaDto(imgAvaClient.getImgAvaDtoByGender(
-                    regTeamoUserDto.getGender()
-            ));
-        }
-
-        teamoCookie = new Cookie("teamo",regPasser.getTeamoCookie().getValue());
+        Cookie teamoCookie = new Cookie("teamo",regPasser.getTeamoCookie().getValue());
 
         UserTeamoDto userTeamoDto = userDtoReceiver.receive(teamoCookie);
-        userTeamoDto.setEmail(regTeamoUserDto.getEmail());
-        userTeamoDto.setPassword(regTeamoUserDto.getPassword());
+        userTeamoDto.setEmail(regTeamoUserDto.getUserDto().getEmail());
+        userTeamoDto.setPassword(regTeamoUserDto.getUserDto().getPassword());
 
         teamoClient.setToken(userTeamoDto.getToken());
 
@@ -84,20 +62,16 @@ public class UserCreator
             throw new RuntimeException("User already on 'faces' step");
         }
         log.info("Next step {} before edit user info", nextStepMsg);
-        editMainInfo(regTeamoUserDto);
+        editMainInfo(regTeamoUserDto.getUserDto());
 
         log.info("Next step {} before bypass psy test", getNextStep());
         passPsyTest();
 
         log.info("Next step {} before upload avatar image", getNextStep());
-        imageUploader.uploadAvaImg(
-                teamoCookie,
-                imgNamePath
-        );
+        imageUploader.uploadAvaImg(teamoCookie, regTeamoUserDto.getImageDto());
 
         log.info("Next step {} before skip confirmation", getNextStep());
         skipConfirmation();
-        tempFileService.remove(imgNamePath);
 
         log.info("Next step {} before human imitation" , getNextStep());
         humanImitator.userDoSomeStuff(teamoCookie);

@@ -23,21 +23,6 @@ public class MessageTeamoMapper implements JsonNodeToMessageTeamo
         }
         for (JsonNode message : messages.get(0))
         {
-//            Date dateToMessageTeamo = new Date(TimeUnit.SECONDS.toMillis(message.path("date").asLong()));
-//            MessageTeamo mgsToMap = new MessageTeamo(
-//                    message.path("message_text").asText(),
-//                    dateToMessageTeamo
-//            );
-//            if (userSender.getId() == message.path("sender_id").asLong())
-//            {
-//                mgsToMap.setUserSender(userSender);
-//                mgsToMap.setUserReceiver(userReceiver);
-//            }
-//            else
-//            {
-//                mgsToMap.setUserSender(userReceiver);
-//                mgsToMap.setUserReceiver(userSender);
-//            }
             teamoMessages.add(mapToMessage(message, userSender, userReceiver));
         }
         return teamoMessages;
@@ -67,6 +52,4 @@ public class MessageTeamoMapper implements JsonNodeToMessageTeamo
         }
         return mgsToMap;
     }
-
-
 }

@@ -15,24 +15,6 @@
         <spring.boot.version>3.3.0</spring.boot.version>
     </properties>
 
-<!--    <build>-->
-<!--        <pluginManagement>-->
-<!--            <plugins>-->
-<!--                <plugin>-->
-<!--                    <groupId>org.liquibase</groupId>-->
-<!--                    <artifactId>liquibase-maven-plugin</artifactId>-->
-<!--                    <version>4.27.0</version>-->
-<!--                    <configuration>-->
-<!--                        <changeLogFile>/src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>-->
-<!--                        <url> jdbc:postgresql://localhost:5432/teamo_db</url>-->
-<!--                        <username>teamo_app</username>-->
-<!--                        <password>MWQ*sdg#MNGW(Isd_gdH(#N!NG@($#sd(!?</password>-->
-<!--                    </configuration>-->
-<!--                </plugin>-->
-<!--            </plugins>-->
-<!--        </pluginManagement>-->
-<!--    </build>-->
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
