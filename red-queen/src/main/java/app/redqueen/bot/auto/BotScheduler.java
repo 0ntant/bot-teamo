@@ -97,6 +97,30 @@ public class BotScheduler implements Runnable
     {
         schedulerState = "get user from db";
         List<UserTeamo> notBlockedUsersWithTokens = userTeamoService.findUserWithTokenAndNotBlocking();
+        Random random = new Random();
+        notBlockedUsersWithTokens = notBlockedUsersWithTokens
+                .stream()
+                .filter(userTeamo ->
+                                botTeamoList
+                                        .stream()
+                                        .noneMatch(teamobot -> Objects.equals(teamobot.getUserBot().getId(), userTeamo.getId()))
+                        )
+                .toList();
+
+        if (!notBlockedUsersWithTokens.isEmpty())
+        {
+           return Optional.of(
+                   notBlockedUsersWithTokens
+                           .get(random.nextInt(notBlockedUsersWithTokens.size()))
+           );
+        }
+        return Optional.empty();
+    }
+
+    private Optional<UserTeamo> _getNotBlockedUserWithTokensNotInSchList ()
+    {
+        schedulerState = "get user from db";
+        List<UserTeamo> notBlockedUsersWithTokens = userTeamoService.findUserWithTokenAndNotBlocking();
         logger.info("Users in pool {}", botTeamoList.size());
         for (UserTeamo userWithToken : notBlockedUsersWithTokens)
         {

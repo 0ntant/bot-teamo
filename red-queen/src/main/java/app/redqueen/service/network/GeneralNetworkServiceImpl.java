@@ -20,7 +20,6 @@ public abstract class GeneralNetworkServiceImpl
 {
     private JsonNodeToUserTeamoBlock errorMapper;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Getter
     private UserTeamo clientUser;
 
@@ -42,17 +41,12 @@ public abstract class GeneralNetworkServiceImpl
 
             switch (userBlock.getReason())
             {
-                case "user is self deleted":
+                case "uploaded profile photo was rejected", "user is self deleted":
                     userBlock.setIsBlocking(true);
                     break;
-                case "Encounter day limit":
+                case "Encounter day limit", "person block my user":
                     userBlock.setIsBlocking(false);
                     break;
-
-                case "person block my user":
-                    userBlock.setIsBlocking(false);
-                    break;
-
                 default :
                     userBlock.setIsBlocking(true);
                     logger.error("Unchecked API response");

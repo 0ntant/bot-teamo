@@ -12,8 +12,8 @@ public class HumanNameGen
         Random random = new Random();
         if(gender.equals("male"))
         {
-            return maleNames[random.nextInt(0,maleNames.length - 1)];
+            return maleNames[random.nextInt(maleNames.length)];
         }
-        return femaleNames[random.nextInt(0,femaleNames.length - 1)];
+        return femaleNames[random.nextInt(femaleNames.length)];
     }
 }

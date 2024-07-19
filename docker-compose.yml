@@ -80,7 +80,7 @@ services:
          condition: service_healthy
 
   red-queen:
-    image: red-queen:1.3.0
+    image: red-queen:1.4.0
     container_name: red-queen
     environment:
       - TZ=Europe/Moscow
@@ -112,7 +112,7 @@ services:
          condition: service_healthy
 
   proxy-provider:
-    image: proxy-provider:1.3.0
+    image: proxy-provider:1.4.0
     container_name: proxy-provider
     environment:
       - TZ=Europe/Moscow

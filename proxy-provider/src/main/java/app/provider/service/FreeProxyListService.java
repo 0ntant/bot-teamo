@@ -1,10 +1,12 @@
 package app.provider.service;
 
+import app.provider.integration.rest.CheckerProxyIP;
 import app.provider.model.ProxyHost;
 import app.provider.util.FileUtil;
 import app.provider.util.GitUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,22 +28,37 @@ public class FreeProxyListService
     @Value("${free-proxy-list.socks5-dir}")
     String socks5Dir;
 
+    @Value("${free-proxy-list.socks4-dir}")
+    String socks4Dir;
+
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public Queue<ProxyHost> getProxyHostsList()
+    @Autowired
+    ProxyValidateService proxyValidateServ;
+
+    public void addProxyList()
     {
         updateProxyList();
-        File socks5File = new File(socks5Dir);
+
+        proxyValidateServ.addToActuatorList(getProxyHostsList(socks5Dir));
+        proxyValidateServ.addToActuatorList(getProxyHostsList(socks4Dir));
+
+        log.info("Remove dir {}", dirRep);
+        FileUtil.removeNotEmptyDir(dirRep);
+    }
+
+    public Queue<ProxyHost> getProxyHostsList(String path)
+    {
+        File socks5File = new File(path);
         try
         {
             Queue<ProxyHost> proxyHosts
                     = new LinkedList<>(List.of(objectMapper.readValue(socks5File, ProxyHost[].class)));
             log.info("Proxy hosts size={} in file={}",
                     proxyHosts.size(),
-                    socks5Dir
+                    path
             );
-            log.info("Remove dir {}", dirRep);
-            FileUtil.removeNotEmptyDir(dirRep);
+
             return proxyHosts;
         }
         catch (Exception ex)
@@ -53,14 +70,13 @@ public class FreeProxyListService
 
     private void updateProxyList()
     {
-        File proxyListFile = new File(dirRep);
-        if (!proxyListFile.exists())
+        if (GitUtil.isGitRepExists(dirRep))
         {
-            cloneRep();
+            pullRep();
         }
         else
         {
-            pullRep();
+            cloneRep();
         }
     }
 

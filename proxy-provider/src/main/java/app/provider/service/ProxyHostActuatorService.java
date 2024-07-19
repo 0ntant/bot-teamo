@@ -23,6 +23,8 @@ public class ProxyHostActuatorService
 
     List<ProxyHost> proxyHosts = new ArrayList<>();
 
+    ProxyDto lastProxyRecord;
+
     public void addProxyHost(ProxyHost proxyHost)
     {
         proxyHosts.add(proxyHost);
@@ -32,7 +34,11 @@ public class ProxyHostActuatorService
     {
         if (proxyHosts.isEmpty())
         {
-            sendProxy(new ProxyDto("127.0.0.1", "8888", false));
+            sendProxy(new ProxyDto(
+                    "127.0.0.1",
+                    "8888",
+                    false)
+            );
         }
         else
         {
@@ -56,6 +62,10 @@ public class ProxyHostActuatorService
 
     private void sendProxy(ProxyDto proxyDto)
     {
-        proxyListPub.sendProxyDto(proxyDto);
+        if (!proxyDto.equals(lastProxyRecord))
+        {
+            lastProxyRecord = proxyDto;
+            proxyListPub.sendProxyDto(proxyDto);
+        }
     }
 }

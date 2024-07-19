@@ -38,4 +38,10 @@ public class GitUtil
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    public static boolean isGitRepExists(String repoDir)
+    {
+        File checkedGitRep = new File(repoDir + "/.git");
+        return checkedGitRep.exists();
+    }
 }
