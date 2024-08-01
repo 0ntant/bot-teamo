@@ -48,4 +48,11 @@ public interface UserTeamoRepository extends JpaRepository<UserTeamo, Long>
             WHERE u.token is not null and u.block.isBlocking!=true and u.city=:city
             """)
     List<UserTeamo> findUserWithTokenAndCity(@Param("city") String city);
+
+
+    @Query("""
+             SELECT u FROM UserTeamo u
+             WHERE u.token is not null and u.block.isBlocking=true and u.block.reason=:reason
+            """)
+    List<UserTeamo> findBotsBlockingByReason(@Param("reason") String reason);
 }

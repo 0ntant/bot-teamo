@@ -41,6 +41,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - TZ=Europe/Moscow
+    ports:
+      - 5000:5000
     networks:
       - internal_net
     depends_on:
@@ -63,6 +65,7 @@ services:
       - internal_net
     ports:
       - '15672:15672'
+      - '5672:5672'
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
@@ -88,105 +91,6 @@ services:
       retries: 5
       start_period: 80s
 
-  chrome-stadalone:
-    image: selenium/standalone-chromium:latest
-    shm_size: 2gb
-    environment:
-      - TZ=Europe/Moscow
-    networks:
-      - internal_net
-    ports:
-      - '4444:4444'
-      - '5900:5900'
-      - '7900:7900'
-
-  img-generator:
-    image: img-generator:1.5.0
-    container_name: img-generator
-    environment:
-      - TZ=Europe/Moscow
-    build:
-      context: ./img-generator
-      dockerfile: Dockerfile
-    networks:
-      - internal_net
-    ports:
-      - '8090:8080'
-    depends_on:
-      rabbit-mq:
-        condition: service_healthy
-      logstash:
-        condition: service_healthy
-
-  content-storage-service:
-    image: content-storage-service:1.5.0
-    container_name: content-storage-service
-    environment:
-      - TZ=Europe/Moscow
-    build:
-      context: ./content-storage-service
-      dockerfile: Dockerfile
-    networks:
-      - internal_net
-    depends_on:
-      database:
-         condition: service_healthy
-      rabbit-mq:
-         condition: service_healthy
-      logstash:
-         condition: service_healthy
-
-  red-queen:
-    image: red-queen:1.5.0
-    container_name: red-queen
-    environment:
-      - TZ=Europe/Moscow
-    build:
-      context: ./red-queen
-      dockerfile: Dockerfile
-    networks:
-      - internal_net
-    depends_on:
-      database:
-         condition: service_healthy
-      rabbit-mq:
-         condition: service_healthy
-      logstash:
-         condition: service_healthy
-    ports:
-      - '8080:8080'
-
-  teamo-auto-reg:
-    image: teamo-auto-reg:1.5.0
-    container_name: teamo-auto-reg
-    environment:
-      - TZ=Europe/Moscow
-    build:
-      context: ./teamo-auto-reg
-      dockerfile: Dockerfile
-    networks:
-      - internal_net
-    depends_on:
-      rabbit-mq:
-         condition: service_healthy
-      logstash:
-         condition: service_healthy
-
-  proxy-provider:
-    image: proxy-provider:1.5.0
-    container_name: proxy-provider
-    environment:
-      - TZ=Europe/Moscow
-    build:
-      context: ./proxy-provider
-      dockerfile: Dockerfile
-    networks:
-      - internal_net
-    depends_on:
-      rabbit-mq:
-         condition: service_healthy
-      logstash:
-         condition: service_healthy
 
 networks:
   internal_net:

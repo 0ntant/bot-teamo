@@ -5,6 +5,7 @@ WORKDIR /build
 COPY src/main/java src/main/java
 COPY pom.xml pom.xml
 COPY src/main/resources/application-test.yml ./application-test.yaml
+COPY src/main/resources/logback-spring.xml ./resources/logback-spring.xml
 COPY src/main/resources/templates ./resources/templates
 COPY src/main/resources/static ./resources/static
 

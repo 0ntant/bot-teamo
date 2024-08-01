@@ -1,6 +1,7 @@
 package app.provider.config;
 
 import app.provider.integration.geonode.GeonodeClient;
+import app.provider.logging.LoggingRestClientInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ public class GeonodeClientConfig
         RestTemplate restTemplate = restTemplateBuilder
                 .setReadTimeout(Duration.ofSeconds(10))
                 .setConnectTimeout(Duration.ofSeconds(10))
+                .interceptors(new LoggingRestClientInterceptor())
                 .build();
 
         return new GeonodeClient(restTemplate, proxyListUrl);

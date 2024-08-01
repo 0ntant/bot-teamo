@@ -41,10 +41,12 @@ public abstract class GeneralNetworkServiceImpl
 
             switch (userBlock.getReason())
             {
-                case "uploaded profile photo was rejected", "user is self deleted":
+                case "uploaded profile photo was rejected",
+                     "Encounter day limit",
+                     "user is self deleted":
                     userBlock.setIsBlocking(true);
                     break;
-                case "Encounter day limit", "person block my user":
+                case "person block my user":
                     userBlock.setIsBlocking(false);
                     break;
                 default :

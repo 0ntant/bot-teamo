@@ -10,7 +10,7 @@ public class GitUtil
     {
         try
         {
-            Git git = Git.open( new File( repoDir + "/.git" ) );
+            Git git = Git.open(new File(getRepDir(repoDir)));
             git.fetch().setRemote("origin").call();
             git.pull().call();
             git.close();
@@ -41,7 +41,12 @@ public class GitUtil
 
     public static boolean isGitRepExists(String repoDir)
     {
-        File checkedGitRep = new File(repoDir + "/.git");
+        File checkedGitRep = new File(getRepDir(repoDir));
         return checkedGitRep.exists();
+    }
+
+    private static String getRepDir(String repoDir)
+    {
+        return repoDir + "/.git";
     }
 }

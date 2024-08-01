@@ -1,6 +1,5 @@
 package app.provider.service;
 
-import app.provider.integration.rest.CheckerProxyIP;
 import app.provider.model.ProxyHost;
 import app.provider.util.FileUtil;
 import app.provider.util.GitUtil;

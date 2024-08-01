@@ -13,9 +13,7 @@ import app.redqueen.service.network.UserNetServiceFactory;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -103,7 +101,10 @@ public class BotScheduler implements Runnable
                 .filter(userTeamo ->
                                 botTeamoList
                                         .stream()
-                                        .noneMatch(teamobot -> Objects.equals(teamobot.getUserBot().getId(), userTeamo.getId()))
+                                        .noneMatch(teamobot -> Objects.equals(
+                                                teamobot.getUserBot().getId(),
+                                                userTeamo.getId()
+                                        ))
                         )
                 .toList();
 
@@ -138,7 +139,7 @@ public class BotScheduler implements Runnable
     public void addAndStartBot(UserTeamo userTeamo)
     {
         schedulerState = "Add start bot";
-        List<String> dialogTitles = Arrays.asList(
+        List<String> defaultDialogTitles = Arrays.asList(
                 "joke",
                 "get_contact",
                 "apologize"
@@ -146,7 +147,7 @@ public class BotScheduler implements Runnable
 
         List<BotPhraseType> phraseTypeList = new ArrayList<>();
 
-        for (String dialogTitle : dialogTitles)
+        for (String dialogTitle : defaultDialogTitles)
         {
             try
             {

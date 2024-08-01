@@ -1,6 +1,7 @@
 package app.redqueen.config;
 
 import app.redqueen.integration.rest.teamo.RtestClient;
+import app.redqueen.logging.LoggingRestClientInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -23,6 +24,7 @@ public class RtestClientConfig
         RestTemplate restTemplate = restTemplateBuilder
                 .setReadTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
+                .interceptors(new LoggingRestClientInterceptor())
                 .build();
 
         return RtestClient.builder()

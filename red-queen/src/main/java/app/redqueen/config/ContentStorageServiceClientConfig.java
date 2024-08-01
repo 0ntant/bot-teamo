@@ -1,6 +1,7 @@
 package app.redqueen.config;
 
 import app.redqueen.integration.rest.contentStorageService.ContentStorageServiceClient;
+import app.redqueen.logging.LoggingRestClientInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ public class ContentStorageServiceClientConfig
         RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
+                .interceptors(new LoggingRestClientInterceptor())
                 .build();
         return ContentStorageServiceClient.builder()
                 .getAvaImgCountUrl(getAvaImgCountUrl)

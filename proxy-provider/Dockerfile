@@ -5,6 +5,7 @@ WORKDIR /build
 COPY src/main/java src/main/java
 COPY pom.xml pom.xml
 COPY src/main/resources/application-test.yml ./application-test.yaml
+COPY src/main/resources/logback-spring.xml ./resources/logback-spring.xml
 
 RUN --mount=type=cache,target=/root/.m2  mvn clean package  \
     -DskipTests
@@ -18,6 +19,7 @@ USER java-user
 WORKDIR /app
 RUN mkdir "resources"
 
+COPY --from=build /build/resources ./resources
 COPY --from=build /build/application-test.yaml ./application-test.yaml
 COPY --from=build /build/target/proxy-provider-1.0-SNAPSHOT.jar ./index.jar
 

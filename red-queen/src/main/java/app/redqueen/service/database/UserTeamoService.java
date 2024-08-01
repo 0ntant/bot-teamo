@@ -3,6 +3,7 @@ package app.redqueen.service.database;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.repository.UserTeamoRepository;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class UserTeamoService
 {
+    @Getter
     @Autowired
     UserTeamoRepository userTeamoRepository;
 

@@ -1,7 +1,6 @@
 package app.provider.service;
 
 import app.provider.integration.geonode.GeonodeClient;
-import app.provider.integration.rest.CheckerProxyIP;
 import app.provider.mapper.GeoNodeProxyToProxyHost;
 import app.provider.model.ProxyHost;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ public class GeonodeService
 {
     @Autowired
     GeonodeClient geonodeClient;
-
     @Autowired
     ProxyValidateService proxyValidateServ;
 

@@ -1,7 +1,6 @@
 package app.provider.service;
 
 import app.provider.integration.proxyscrape.ProxyscrapeClient;
-import app.provider.mapper.GeoNodeProxyToProxyHost;
 import app.provider.mapper.ProxyscrapeProxyToProxyHost;
 import app.provider.model.ProxyHost;
 import lombok.extern.slf4j.Slf4j;
