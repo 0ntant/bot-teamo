@@ -17,7 +17,7 @@ content-storage-service/src/main/resources/files/*
 
 teamo-auto-reg/.idea
 teamo-auto-reg/src/main/resources/application.yml
-teamo-auto-reg/src/main/resources/selenium/*
+teamo-auto-reg/src/main/resources/selenium/chromedriver
 teamo-auto-reg/src/main/resources/temp/*
 teamo-auto-reg/target/*
 
