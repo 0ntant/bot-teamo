@@ -1,0 +1,36 @@
+file:
+  images:
+    avatar:
+      dir: ./files/images/avatars
+
+spring:
+  application:
+    name: content-storage-service
+  liquibase:
+    enabled: true
+    user: ${datasource.username}
+    password: ${datasource.password}
+    change-log: file:/app/resources/db/changelog/db.changelog-master.yaml
+  rabbitmq:
+    username: content_storage_service_app
+    password: ;b4ULg7bT9uEe]
+    host: rabbit-mq
+    port: 5672
+    con:
+      img-gen:
+        que: img-ava-que
+
+datasource:
+  maximumPoolSize: 10
+  driverClassName: org.postgresql.Driver
+  jdbcUrl: jdbc:postgresql://database:5432/content_storage_service_db
+  username: content_storage_service_app
+  password: 7(<6@~*!:N;35XTS<gk$hUIW-%%d9t,SRtHH
+
+logging:
+  config: /app/resources/logback-spring.xml
+
+logback:
+  destination:
+    url: logstash
+    port: 5000

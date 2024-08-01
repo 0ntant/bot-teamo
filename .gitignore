@@ -3,26 +3,26 @@
 
 red-queen/target/*
 red-queen/.idea
-red-queen/src/main/resources/application*
+red-queen/src/main/resources/application.yml
 
 img-generator/.idea
-img-generator/src/main/resources/application*
+img-generator/src/main/resources/application.yml
 img-generator/target/*
 img-generator/src/main/resources/images/*
 
 content-storage-service/.idea
-content-storage-service/src/main/resources/application*
+content-storage-service/src/main/resources/application.yml
 content-storage-service/target/*
 content-storage-service/src/main/resources/files/*
 
 teamo-auto-reg/.idea
-teamo-auto-reg/src/main/resources/application*
+teamo-auto-reg/src/main/resources/application.yml
 teamo-auto-reg/src/main/resources/selenium/*
 teamo-auto-reg/src/main/resources/temp/*
 teamo-auto-reg/target/*
 
 proxy-provider/.idea
 proxy-provider/.attach_pid*
-proxy-provider/src/main/resources/application*
+proxy-provider/src/main/resources/application.yml
 proxy-provider/src/main/resources/free-proxy-list/*
 proxy-provider/src/main/resources/free-proxy-list

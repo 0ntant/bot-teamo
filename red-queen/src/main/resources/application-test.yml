@@ -1,0 +1,78 @@
+teamo:
+  api:
+    teamo:
+      post:
+        getLocation: https://api.teamo.ru/rtest.getLocation
+        specialUsers: https://api.teamo.ru/teamo.specialUsers
+        searchPersons: https://api.teamo.ru/teamo.searchPersons
+        income: https://api.teamo.ru/teamo.getIncome
+        mutual: https://api.teamo.ru/teamo.getMutual
+        statistic: https://api.teamo.ru/teamo.getStatistic
+        searchPersonsOthers: hthttps://api.teamo.ru/teamo.searchPersonsOthers
+        guests: https://api.teamo.ru/teamo.getGuests
+        signup: https://teamo.ru/signup
+        signin: https://teamo.ru/signin
+    faces:
+      post:
+        matches: https://api.teamo.ru/faces.getMatches
+        saveMatchVote: https://api.teamo.ru/faces.saveMatchVote
+    user:
+      post:
+        profile: https://api.teamo.ru/user.profile
+        messagesByUser: https://api.teamo.ru/user.messagesByUser
+        sendMessage: https://api.teamo.ru/user.sendMessage
+        shardableMessages: https://api.teamo.ru/user.getShardableMessages
+
+content-storage-service:
+  api:
+    root-url: http://content-storage-service:8080
+    get-ava-img-base64-by-gender: ${content-storage-service.api.root-url}/image-avatar/get/info-base64-struct/by-gender?gender={gender}
+    get-ava-img-count-by-gender:  ${content-storage-service.api.root-url}/image-avatar/get/count/by-gender?gender={gender}
+
+teamo-auto-reg:
+  api:
+    root-url: http://teamo-auto-reg:8080
+    user-queue-size: ${teamo-auto-reg.api.root-url}/users-order/get/user-queue-size
+
+datasource:
+  maximumPoolSize: 10
+  driverClassName: org.postgresql.Driver
+  jdbcUrl: jdbc:postgresql://database:5432/teamo_db
+  username: teamo_app
+  password: MWQ*sdg#MNGW(Isd_gdH(#N!NG@($#sd(!?
+spring:
+  application:
+    name: red-queen
+  web:
+    resources:
+      static-locations: file:/app/resources/static/
+  thymeleaf:
+    check-template: true
+    check-template-location: true
+    prefix: file:/app/resources/templates/
+  liquibase:
+    user: ${datasource.username}
+    password: ${datasource.password}
+    change-log: file:/app/resources/db/changelog/db.changelog-master.yaml
+  rabbitmq:
+    username: red_queen_app
+    password: HK(4e?R%Ox~_
+    host: rabbit-mq
+    port: 5672
+    consumer:
+      teamo-auto-reg:
+        que: user-teamo-que
+      proxy-provider:
+        que: red-queen-proxy-que
+    producer:
+      teamo-auto-reg:
+        exc: reg-user-teamo-exc
+        route-key: reg.user.dto
+
+logging:
+  config: /app/resources/logback-spring.xml
+
+logback:
+  destination:
+    url: logstash
+    port: 5000

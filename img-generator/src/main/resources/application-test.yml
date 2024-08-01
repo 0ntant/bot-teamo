@@ -1,0 +1,34 @@
+url:
+  personotexistimg: https://thispersondoesnotexist.com/
+
+images:
+  count: 50
+  dir: ./images
+
+spring:
+  application:
+    name: img-generator
+  web:
+    resources:
+      static-locations: file:/app/resources/static/
+  thymeleaf:
+    check-template: true
+    check-template-location: true
+    prefix: file:/app/resources/templates/
+  rabbitmq:
+    username: img_generator_app
+    password: TyQlBQ.315;%O%
+    host: rabbit-mq
+    port: 5672
+    pub:
+      css:
+        route-key: file.img.ava
+        exc: img-ava-exc
+
+logging:
+  config: /app/resources/logback-spring.xml
+
+logback:
+  destination:
+    url: logstash
+    port: 5000

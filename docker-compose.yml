@@ -35,6 +35,7 @@ services:
          condition: service_healthy
 
   logstash:
+    image: logstash:1.5.0
     container_name: logstash
     build:
       context: ./logstash
@@ -53,6 +54,7 @@ services:
       retries: 5
 
   rabbit-mq:
+    image: rabbit-mq:1.5.0
     container_name: rabbit-mq
     environment:
       - TZ=Europe/Moscow
@@ -71,6 +73,7 @@ services:
       start_period: 10s
 
   database:
+    image: database:1.5.0
     container_name: database
     environment:
       - TZ=Europe/Moscow
