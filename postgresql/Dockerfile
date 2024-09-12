@@ -1,4 +1,4 @@
-FROM postgres:14.12
+FROM postgres:14.13
 
 EXPOSE 5432
 

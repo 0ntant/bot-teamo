@@ -26,7 +26,6 @@ public class RtestClientConfig
                 .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())
                 .build();
-
         return RtestClient.builder()
                 .objectMapper(objectMapper)
                 .getLocationUrl(getLocationUrl)

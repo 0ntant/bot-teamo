@@ -1,6 +1,5 @@
 teamoAPI:
   baseUrl: https://api.teamo.ru
-
   nextStep: ${teamoAPI.baseUrl}/teamo.getNextStep
   cancelPsychoTesting: ${teamoAPI.baseUrl}/rtest.cancelPsychoTesting
   editMainInfo: ${teamoAPI.baseUrl}/user.editMainInfo
@@ -8,7 +7,6 @@ teamoAPI:
 
 content-storage-serviceAPI:
   baseUrl: http://content-storage-service:8080/image-avatar
-
   countByGender: ${content-storage-serviceAPI.baseUrl}/get/count/by-gender
   infoBase64ByGender: ${content-storage-serviceAPI.baseUrl}/get/info-base64-struct/by-gender
 
@@ -26,7 +24,7 @@ spring:
     name: teamo-auto-reg
   rabbitmq:
     username: teamo_auto_reg_app
-    password: r2$L%)`C=;pJUPg]dm:VDu
+    password: 027u4JJJqfqmnqdnweNN
     host: rabbit-mq
     port: 5672
     consumer:

@@ -27,16 +27,4 @@ public class RedQueenConsumer
         );
         usersOrderService.addUserToQue(regTeamoUserDto);
     }
-
-//    @RabbitListener(queues = "${spring.rabbitmq.consumer.red-queen.que}")
-//    @RabbitHandler
-//    public void receiveUserTeamoDto(RegTeamoUserDto regTeamoUserDto)
-//    {
-//        log.info("[CONSUMER] receive user to reg name={} email={} gender={}",
-//                regTeamoUserDto.getEmail(),
-//                regTeamoUserDto.getName(),
-//                regTeamoUserDto.getGender()
-//        );
-//        usersOrderService.addUserToQue(regTeamoUserDto);
-//    }
 }

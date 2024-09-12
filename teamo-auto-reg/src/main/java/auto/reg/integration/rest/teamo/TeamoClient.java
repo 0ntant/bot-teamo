@@ -5,29 +5,33 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import integration.dto.reg.RegTeamoUserDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Component
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TeamoClient
 {
-    @Value("${teamoAPI.nextStep}")
     String nextStepUrl;
-    @Value("${teamoAPI.editMainInfo}")
     String editMainInfoUrl;
-    @Value("${teamoAPI.cancelPsychoTesting}")
     String cancelPsychoTestingUrl;
-    @Value("${teamoAPI.skipConfirmation}")
     String skipConfirmationUrl;
 
     @Setter
     String token;
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    RestTemplate restTemplate= new RestTemplate();
+    ObjectMapper objectMapper;
+    RestTemplate restTemplate;
 
     public JsonNode getNextStep() throws JsonProcessingException
     {

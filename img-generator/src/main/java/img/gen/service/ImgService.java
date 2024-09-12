@@ -13,9 +13,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -33,16 +35,86 @@ public class ImgService
     ContentStoragePub contentStoragePub;
 
     @Autowired
-    PersonNotExistImgClient imgClient;
+    PersonNotExistImgClient imgPENClient;
 
-    public int getImgCurCount()
+    @Autowired
+    UnsplashService unsplashService;
+
+    @Autowired
+    PexelsService pexelsService;
+
+    @Autowired
+    PixabayService pixabayService;
+
+    @Async
+    public void createImg()
     {
-        return FileUtil.countFile(dir);
+        log.info("Create image");
+        if(getImgCurCount() <= getImageCount())
+        {
+            createPENCFile();
+            createUnsplashPhotos();
+            createPexelsPhotos();
+            createPixabayPhotos();
+        }
+    }
+
+    @Async
+    public void createPexelsPhotos()
+    {
+        File femaleImg = saveJpegImage(pexelsService.getFemaleImage());
+        File maleImg = saveJpegImage(pexelsService.getMaleImage());
+
+        ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
+        ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
+    }
+
+    @Async
+    public void createUnsplashPhotos()
+    {
+        File femaleImg = saveJpegImage(unsplashService.getFemaleImage());
+        File maleImg = saveJpegImage(unsplashService.getMaleImage());
+
+        ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
+        ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
+    }
+
+    @Async
+    public void createPENCFile()
+    {
+        File imgToSave = saveJpegImage(imgPENClient.getImage());
+        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
+    }
+
+    @Async
+    public void createPixabayPhotos()
+    {
+        List<byte[]> photosData = Stream.concat(
+                pixabayService.getFemaleImages().stream(),
+                pixabayService.getMaleImages().stream()
+        ).toList();
+
+        for (byte[] photoData : photosData)
+        {
+            File file = saveJpegImage(photoData);
+            ImgUtil.horizontalFlipImage(file.getAbsolutePath());
+        }
     }
 
     public String getRandImgPath()
     {
         return getRandImg().getAbsolutePath();
+    }
+
+    public File getRandImg()
+    {
+        return FileUtil.getFilesInDir(dir)
+                .get(ThreadLocalRandom.current().nextInt(0, getImgCurCount()));
+    }
+
+    public int getImgCurCount()
+    {
+        return FileUtil.countFile(dir);
     }
 
     public boolean imgExists(String name)
@@ -52,16 +124,9 @@ public class ImgService
 
     public String sendToCSS(String gender, String imgName)
     {
-        log.info("Send to content storage service gender {} {}", gender, getFullImgPath(imgName));
-
         contentStoragePub.sendMsq(new File(getFullImgPath(imgName)), gender);
+        deleteByName(imgName);
         return "Success";
-    }
-
-    public File getRandImg()
-    {
-        return FileUtil.getFilesInDir(dir)
-                .get(ThreadLocalRandom.current().nextInt(0, getImgCurCount()));
     }
 
     public String deleteByName(String name)
@@ -84,7 +149,6 @@ public class ImgService
                 .findAny();
     }
 
-
     public List<String> getAllImgNames()
     {
         return FileUtil.getFilesInDir(dir)
@@ -93,17 +157,20 @@ public class ImgService
                 .toList();
     }
 
-    @Async
-    public void createImg()
+    private File saveJpegImage(byte[] imgData)
     {
-        byte[] imgFromClient = imgClient.getImage();
-        String imgName = String.format("%stpdne.jpeg" , StrUtil.genRandStr());
-        File imgToSave = FileUtil.saveFile(
-                getFullImgPath(imgName),
-                imgFromClient
-        );
-        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
-        log.info("Save image {}", imgName);
+        File imgToSave  = null;
+        String imgName = String.format("%stpdne.jpeg", StrUtil.genRandStr());
+        try
+        {
+            imgToSave = FileUtil.saveFile(getFullImgPath(imgName), imgData);
+            log.info("Save image {}", getFullImgPath(imgName));
+        }
+        catch (Exception ex)
+        {
+            log.error(ex.getMessage());
+        }
+        return imgToSave;
     }
 
     private String getFullImgPath(String imgName)

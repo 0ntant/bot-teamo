@@ -1,6 +1,6 @@
 package app.redqueen.integration.mq.teamoAutoReg;
 
-
+import app.redqueen.mapper.integration.UserTeamoDtoMapper;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.service.BotFullInfoGetterService;
 import integration.dto.UserTeamoDto;
@@ -9,8 +9,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Component
 @Slf4j
@@ -25,14 +23,7 @@ public class TeamoAutoRegConsumer
     {
         log.info("[CONSUMER] receive user id={}", userTeamoDto.getUserId());
 
-        UserTeamo userTeamo = new UserTeamo();
-
-        userTeamo.setId(userTeamoDto.getUserId());
-        userTeamo.setToken(userTeamoDto.getToken());
-        userTeamo.setEmail(userTeamoDto.getEmail());
-        userTeamo.setPassword(userTeamoDto.getPassword());
-        userTeamo.setSysCreateDate(new Date());
-
+        UserTeamo userTeamo = UserTeamoDtoMapper.map(userTeamoDto);
         botFullInfoGetterService.getFullInfoUser(userTeamo);
     }
 }

@@ -36,8 +36,10 @@ public class ContentStoragePub
                           gender,
                           new String(Base64Util.getBase64(FileUtil.getFileBytes(imgFile.getAbsolutePath()))))
             );
-            log.info("[PRODUCER] send img {}", imgFile.getName());
-            FileUtil.removeFile(imgFile.getAbsolutePath());
+            log.info("[PRODUCER] send img gender {} img {}",
+                    gender,
+                    imgFile.getName()
+            );
         }
         catch (Exception ex)
         {

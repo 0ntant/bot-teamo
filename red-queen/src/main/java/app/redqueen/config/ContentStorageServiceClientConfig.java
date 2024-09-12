@@ -22,7 +22,6 @@ public class ContentStorageServiceClientConfig
     @Bean
     public ContentStorageServiceClient contentStorageServiceClient(RestTemplateBuilder restTemplateBuilder)
     {
-
         RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))

@@ -1,7 +1,7 @@
 services:
   opensearch:
     image: opensearchproject/opensearch:2.15.0
-    container_name: opensearch
+    container_name: opensearch-local
     environment:
       - TZ=Europe/Moscow
       - node.name=opensearch
@@ -21,7 +21,7 @@ services:
   dashboard:
     restart: always
     image: opensearchproject/opensearch-dashboards:2.15.0
-    container_name: dashboard
+    container_name: dashboard-local
     environment:
       TZ: Europe/Moscow
       OPENSEARCH_HOSTS: '["https://opensearch:9200"]'
@@ -35,7 +35,7 @@ services:
          condition: service_healthy
 
   logstash:
-    container_name: logstash
+    container_name: logstash-local
     build:
       context: ./logstash
       dockerfile: Dockerfile
@@ -55,9 +55,10 @@ services:
       retries: 5
 
   rabbit-mq:
-    container_name: rabbit-mq
+    container_name: rabbit-mq-local
     environment:
       - TZ=Europe/Moscow
+    command: ["bash", "-c", "chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
     build:
       context: ./rabbitmq
       dockerfile: Dockerfile
@@ -66,6 +67,7 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+    restart: always
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
@@ -74,7 +76,7 @@ services:
       start_period: 10s
 
   database:
-    container_name: database
+    container_name: database-local
     environment:
       - TZ=Europe/Moscow
     build:

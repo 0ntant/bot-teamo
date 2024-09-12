@@ -10,6 +10,8 @@ services:
       - cluster.name=opensearch-cluster
       - node.name=opensearch
       - "discovery.type=single-node"
+    volumes:
+      - /usr/share/opensearch/data
     networks:
       - internal_net
     healthcheck:
@@ -54,10 +56,11 @@ services:
       retries: 5
 
   rabbit-mq:
-    image: rabbit-mq:1.5.0
+    image: rabbit-mq:1.6.0
     container_name: rabbit-mq
     environment:
       - TZ=Europe/Moscow
+    command: ["bash", "-c", "chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
     build:
       context: ./rabbitmq
       dockerfile: Dockerfile
@@ -73,13 +76,15 @@ services:
       start_period: 10s
 
   database:
-    image: database:1.5.0
+    image: database:1.6.0
     container_name: database
     environment:
       - TZ=Europe/Moscow
     build:
       context: ./postgresql
       dockerfile: Dockerfile
+    volumes:
+      - /var/lib/postgresql/data
     networks:
       - internal_net
     ports:
@@ -104,13 +109,43 @@ services:
       - '7900:7900'
 
   img-generator:
-    image: img-generator:1.5.0
+    image: img-generator:1.6.0
     container_name: img-generator
     environment:
-      - TZ=Europe/Moscow
+      TZ: Europe/Moscow
+      api.personotexistimg: https://thispersondoesnotexist.com/
+      api.unsplash.search-url: https://api.unsplash.com/search/photos
+      api.unsplash.random-url: https://api.unsplash.com/photos/random
+      api.unsplash.access-key: 8A_9v-sMYvUJWxGMo7iehQbCKXQlMqZ8X1ClgIzdlqc
+      api.unsplash.secret-key: KDuvQgNJoCN-PqIg8feEvMBDbljzVg2NGaX3MunHEUk
+      api.pexels.search-url: https://api.pexels.com/v1/search
+      api.pexels.access-key: WIcfbU65AcOO96hi7hY5qbmpFGOEx0MaEawmkUqUpXhzyv1pTJitXS2g
+      api.pixabay.search-url: https://pixabay.com/api/
+      api.pixabay.access-key: 45793961-b754e262a06e937f9d5242608
+      images.count: 15
+      images.dir: /app/images
+      spring.application.name: img-generator
+      spring.web.resources.static-locations: file:/app/static/
+      spring.thymeleaf.check-template: true
+      spring.thymeleaf.check-template-location: true
+      spring.thymeleaf.prefix: file:/app/templates/
+      spring.rabbitmq.username: img_generator_app
+      spring.rabbitmq.password: TyQlBQ.315;%O%
+      spring.rabbitmq.host: rabbit-mq
+      spring.rabbitmq.port: 5672
+      spring.rabbitmq.pub.css.route-key: file.img.ava
+      spring.rabbitmq.pub.css.exc: img-ava-exc
+      logging.config: /app/logback-spring.xml
+      logback.destination.url: logstash
+      logback.destination.port: 5000
     build:
       context: ./img-generator
       dockerfile: Dockerfile
+    volumes:
+      - /app/images
+      - ./img-generator/src/main/resources/static:/app/static:ro
+      - ./img-generator/src/main/resources/templates:/app/templates:ro
+      - ./resources/logback-spring.xml:/app/logback-spring.xml:ro
     networks:
       - internal_net
     ports:
@@ -122,13 +157,33 @@ services:
         condition: service_healthy
 
   content-storage-service:
-    image: content-storage-service:1.5.0
+    image: content-storage-service:1.6.0
     container_name: content-storage-service
     environment:
-      - TZ=Europe/Moscow
+      TZ: Europe/Moscow
+      file.images.avatar.dir: ./files/images/avatars
+      spring.application.name: content-storage-service
+      spring.liquibase.change-log: file:/app/db/changelog/db.changelog-master.yaml
+      spring.rabbitmq.username: content_storage_service_app
+      spring.rabbitmq.password: ;b4ULg7bT9uEe]
+      spring.rabbitmq.host: rabbit-mq
+      spring.rabbitmq.port: 5672
+      spring.rabbitmq.con.img-gen.que: img-ava-que
+      datasource.maximumPoolSize: 10
+      datasource.driverClassName: org.postgresql.Driver
+      datasource.jdbcUrl: jdbc:postgresql://database:5432/content_storage_service_db
+      datasource.username: content_storage_service_app
+      datasource.password: r89w42hitjitn23103494WAAAAA
+      logging.config: /app/logback-spring.xml
+      logback.destination.url: logstash
+      logback.destination.port: 5000
     build:
       context: ./content-storage-service
       dockerfile: Dockerfile
+    volumes:
+      - /app/files/images/avatars
+      - ./content-storage-service/src/main/resources/db:/app/db:ro
+      - ./resources/logback-spring.xml:/app/logback-spring.xml:ro
     networks:
       - internal_net
     depends_on:
@@ -140,13 +195,61 @@ services:
          condition: service_healthy
 
   red-queen:
-    image: red-queen:1.5.0
+    image: red-queen:1.6.0
     container_name: red-queen
     environment:
-      - TZ=Europe/Moscow
+      TZ: Europe/Moscow
+      teamo.api.teamo.post.getLocation: https://api.teamo.ru/rtest.getLocation
+      teamo.api.teamo.post.specialUsers: https://api.teamo.ru/teamo.specialUsers
+      teamo.api.teamo.post.searchPersons: https://api.teamo.ru/teamo.searchPersons
+      teamo.api.teamo.post.income: https://api.teamo.ru/teamo.getIncome
+      teamo.api.teamo.post.mutual: https://api.teamo.ru/teamo.getMutual
+      teamo.api.teamo.post.statistic: https://api.teamo.ru/teamo.getStatistic
+      teamo.api.teamo.post.searchPersonsOthers: hthttps://api.teamo.ru/teamo.searchPersonsOthers
+      teamo.api.teamo.post.guests: https://api.teamo.ru/teamo.getGuests
+      teamo.api.teamo.post.signup: https://teamo.ru/signup
+      teamo.api.teamo.post.signin: https://teamo.ru/signin
+      teamo.api.faces.post.matches: https://api.teamo.ru/faces.getMatches
+      teamo.api.faces.post.saveMatchVote: https://api.teamo.ru/faces.saveMatchVote
+      teamo.api.user.post.profile: https://api.teamo.ru/user.profile
+      teamo.api.user.post.messagesByUser: https://api.teamo.ru/user.messagesByUser
+      teamo.api.user.post.sendMessage: https://api.teamo.ru/user.sendMessage
+      teamo.api.user.post.shardableMessages: https://api.teamo.ru/user.getShardableMessages
+      content-storage-service.api.root-url: http://content-storage-service:8080
+      content-storage-service.api.get-ava-img-base64-by-gender: http://content-storage-service:8080/image-avatar/get/info-base64-struct/by-gender?gender={gender}
+      content-storage-service.api.get-ava-img-count-by-gender: http://content-storage-service:8080/image-avatar/get/count/by-gender?gender={gender}
+      teamo-auto-reg.api.root-url: http://teamo-auto-reg:8080
+      teamo-auto-reg.api.user-queue-size: http://teamo-auto-reg:8080/users-order/get/user-queue-size
+      datasource.maximumPoolSize: 10
+      datasource.driverClassName: org.postgresql.Driver
+      datasource.jdbcUrl: jdbc:postgresql://database:5432/teamo_db
+      datasource.username: teamo_app
+      datasource.password: MWQ*sdg#MNGW(Isd_gdH(#N!NG@($#sd(!?
+      spring.application.name: red-queen
+      spring.web.resources.static-locations: file:/app/static/
+      spring.thymeleaf.check-template: true
+      spring.thymeleaf.check-template-location: true
+      spring.thymeleaf.prefix: file:/app/templates/
+      spring.liquibase.change-log: file:/app/db/changelog/db.changelog-master.yaml
+      spring.rabbitmq.username: red_queen_app
+      spring.rabbitmq.password: HK(4e?R%Ox~_
+      spring.rabbitmq.host: rabbit-mq
+      pring.rabbitmq.port: 5672
+      spring.rabbitmq.consumer.teamo-auto-reg.que: user-teamo-que
+      spring.rabbitmq.consumer.proxy-provider.que: red-queen-proxy-que
+      spring.rabbitmq.producer.teamo-auto-reg.exc: reg-user-teamo-exc
+      spring.rabbitmq.producer.teamo-auto-reg.route-key: reg.user.dto
+      logging.config: /app/logback-spring.xml
+      logback.destination.url: logstash
+      logback.destination.port: 5000
     build:
       context: ./red-queen
       dockerfile: Dockerfile
+    volumes:
+      - ./red-queen/src/main/resources/db:/app/db:ro
+      - ./red-queen/src/main/resources/static:/app/static:ro
+      - ./red-queen/src/main/resources/templates:/app/templates:ro
+      - ./resources/logback-spring.xml:/app/logback-spring.xml:ro
     networks:
       - internal_net
     depends_on:
@@ -160,13 +263,41 @@ services:
       - '8080:8080'
 
   teamo-auto-reg:
-    image: teamo-auto-reg:1.5.0
+    image: teamo-auto-reg:1.6.0
     container_name: teamo-auto-reg
     environment:
-      - TZ=Europe/Moscow
+      TZ: Europe/Moscow
+      teamoAPI.baseUrl: https://api.teamo.ru
+      teamoAPI.nextStep: https://api.teamo.ru/teamo.getNextStep
+      teamoAPI.cancelPsychoTesting: https://api.teamo.ru/rtest.cancelPsychoTesting
+      teamoAPI.editMainInfo: https://api.teamo.ru/user.editMainInfo
+      teamoAPI.skipConfirmation: https://api.teamo.ru/phone.skipConfirmation
+      content-storage-serviceAPI.baseUrl: http://content-storage-service:8080/image-avatar
+      content-storage-serviceAPI.countByGender: http://content-storage-service:8080/image-avatar/get/count/by-gender
+      content-storage-serviceAPI.infoBase64ByGender: http://content-storage-service:8080/image-avatar/get/info-base64-struct/by-gender
+      web-driver.type: remote
+      web-driver.remote-url: http://chrome-stadalone:4444
+      web-driver.selenium-dir: /app/selenium
+      file.photos.dir: /app/temp/photos
+      spring.application.name: teamo-auto-reg
+      spring.rabbitmq.username: teamo_auto_reg_app
+      spring.rabbitmq.password: 027u4JJJqfqmnqdnweNN
+      spring.rabbitmq.host: rabbit-mq
+      spring.rabbitmq.port: 5672
+      spring.rabbitmq.consumer.red-queen.que: reg-user-teamo-que
+      spring.rabbitmq.consumer.proxy-provider.que: teamo-auto-reg-proxy-que
+      spring.rabbitmq.producer.red-queen.exc: user-teamo-exc
+      spring.rabbitmq.producer.red-queen.route-key: user.teamo.dto
+      logging.config: /app/logback-spring.xml
+      logback.destination.url: logstash
+      logback.destination.port: 5000
     build:
       context: ./teamo-auto-reg
       dockerfile: Dockerfile
+    volumes:
+      - /app/temp/photos
+      - ./teamo-auto-reg/src/main/resources/selenium/capchaRes.crx:/app/selenium/capchaRes.crx:ro
+      - ./resources/logback-spring.xml:/app/logback-spring.xml:ro
     networks:
       - internal_net
     depends_on:
@@ -175,25 +306,12 @@ services:
       logstash:
          condition: service_healthy
 
-  proxy-provider:
-    image: proxy-provider:1.5.0
-    container_name: proxy-provider
-    environment:
-      - TZ=Europe/Moscow
-    build:
-      context: ./proxy-provider
-      dockerfile: Dockerfile
-    networks:
-      - internal_net
-    depends_on:
-      rabbit-mq:
-         condition: service_healthy
-      logstash:
-         condition: service_healthy
 
 networks:
   internal_net:
     driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: "1420"
     ipam:
       driver: default
       config:

@@ -31,8 +31,16 @@ public class BotFullInfoGetterService
             return;
         }
 
-        log.info("Add user to get full info to queue id={}",userTeamo.getId());
-        usersToGetInfo.add(userTeamo);
+        try
+        {
+            tryToRegUser(userTeamo);
+        }
+        catch (Exception ex)
+        {
+            log.warn(ex.getMessage());
+            log.info("Add user to get full info to queue id={}",userTeamo.getId());
+            usersToGetInfo.add(userTeamo);
+        }
     }
 
     public void getRequestUsersFromList()
@@ -42,17 +50,9 @@ public class BotFullInfoGetterService
         {
             for(UserTeamo userTeamoToReg : usersToGetInfo)
             {
-                UserTeamoNetworkService userTeamoNetworkService
-                    = userNetServiceFactory.createUserNetDecorator(userTeamoToReg);
                 try
                 {
-                    ResultOrError<UserTeamo> resultOrError = userTeamoNetworkService.getSelfFullInfo();
-                    if (resultOrError.isErrorResponse())
-                    {
-                        log.error("Error self info code={} reason={}",
-                                resultOrError.getBlock().getTeamoCode(),
-                                resultOrError.getBlock().getReason());
-                    }
+                    tryToRegUser(userTeamoToReg);
                 }
                 catch (Exception ex)
                 {
@@ -61,6 +61,19 @@ public class BotFullInfoGetterService
                 }
             }
             usersToGetInfo = usersNotRequested;
+        }
+    }
+
+    private void tryToRegUser(UserTeamo userTeamoToReg)
+    {
+        UserTeamoNetworkService userTeamoNetworkService
+                = userNetServiceFactory.createUserNetDecorator(userTeamoToReg);
+        ResultOrError<UserTeamo> resultOrError = userTeamoNetworkService.getSelfFullInfo();
+        if (resultOrError.isErrorResponse())
+        {
+            log.error("Error self info code={} reason={}",
+                    resultOrError.getBlock().getTeamoCode(),
+                    resultOrError.getBlock().getReason());
         }
     }
 }

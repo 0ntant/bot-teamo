@@ -1,8 +1,19 @@
-url:
+api:
   personotexistimg: https://thispersondoesnotexist.com/
+  unsplash:
+    search-url: https://api.unsplash.com/search/photos
+    random-url: https://api.unsplash.com/photos/random
+    access-key: 8A_9v-sMYvUJWxGMo7iehQbCKXQlMqZ8X1ClgIzdlqc
+    secret-key: KDuvQgNJoCN-PqIg8feEvMBDbljzVg2NGaX3MunHEUk
+  pexels:
+    search-url: https://api.pexels.com/v1/search
+    access-key: WIcfbU65AcOO96hi7hY5qbmpFGOEx0MaEawmkUqUpXhzyv1pTJitXS2g
+  pixabay:
+    search-url: https://pixabay.com/api/
+    access-key: 45793961-b754e262a06e937f9d5242608
 
 images:
-  count: 50
+  count: 15
   dir: ./images
 
 spring:

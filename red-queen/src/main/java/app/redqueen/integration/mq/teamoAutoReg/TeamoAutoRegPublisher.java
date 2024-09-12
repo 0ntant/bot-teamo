@@ -1,7 +1,5 @@
 package app.redqueen.integration.mq.teamoAutoReg;
 
-
-import integration.dto.reg.RegTeamoUserDto;
 import integration.dto.reg.RegTeamoUserImgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -40,7 +38,7 @@ public class TeamoAutoRegPublisher
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 }

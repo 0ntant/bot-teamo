@@ -51,8 +51,6 @@ spring:
     check-template-location: true
     prefix: file:/app/resources/templates/
   liquibase:
-    user: ${datasource.username}
-    password: ${datasource.password}
     change-log: file:/app/resources/db/changelog/db.changelog-master.yaml
   rabbitmq:
     username: red_queen_app

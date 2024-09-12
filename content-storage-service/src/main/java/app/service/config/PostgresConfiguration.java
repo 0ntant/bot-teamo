@@ -12,6 +12,7 @@ public class PostgresConfiguration
 {
     @Value("${datasource.maximumPoolSize}")
     private int maximumPoolSize;
+
     @Value("${datasource.driverClassName}")
     private String driverClassName;
 

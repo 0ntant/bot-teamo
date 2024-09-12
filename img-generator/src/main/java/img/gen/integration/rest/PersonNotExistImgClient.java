@@ -9,7 +9,7 @@ public class PersonNotExistImgClient
 {
     RestTemplate client = new RestTemplate();
 
-    @Value("${url.personotexistimg}")
+    @Value("${api.personotexistimg}")
     String url;
 
     public byte[] getImage()
