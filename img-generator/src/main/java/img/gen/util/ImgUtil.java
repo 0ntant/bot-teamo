@@ -10,10 +10,15 @@ public class ImgUtil
 {
     public static void cutImgBottom(String filePath, int size)
     {
+        validateImgExt(filePath);
         try
         {
             File imgToCut = new File(filePath);
             BufferedImage bufferedImage = ImageIO.read(imgToCut);
+            if (size >= bufferedImage.getHeight())
+            {
+                throw new RuntimeException("Invalid cut size");
+            }
             BufferedImage subImage = bufferedImage.getSubimage(
                     0,
                     0,
@@ -30,8 +35,90 @@ public class ImgUtil
         }
     }
 
+    public static void cutImgUpper(String filePath, int size)
+    {
+        validateImgExt(filePath);
+        try
+        {
+            File imgToCut = new File(filePath);
+            BufferedImage bufferedImage = ImageIO.read(imgToCut);
+            if (size >= bufferedImage.getHeight())
+            {
+                throw new RuntimeException("Invalid cut size");
+            }
+            BufferedImage subImage = bufferedImage.getSubimage(
+                    0,
+                    size,
+                    bufferedImage.getWidth(),
+                    bufferedImage.getHeight() - size
+            );
+            File outputfile = new File(filePath);
+            String fileExt = FileUtil.getExt(filePath);
+            ImageIO.write(subImage, fileExt, outputfile);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void cutImgRight(String filePath, int size)
+    {
+        validateImgExt(filePath);
+        try
+        {
+            File imgToCut = new File(filePath);
+            BufferedImage bufferedImage = ImageIO.read(imgToCut);
+            if (size >= bufferedImage.getHeight())
+            {
+                throw new RuntimeException("Invalid cut size");
+            }
+            BufferedImage subImage = bufferedImage.getSubimage(
+                    0,
+                    0,
+                    bufferedImage.getWidth() - size,
+                    bufferedImage.getHeight()
+            );
+            File outputfile = new File(filePath);
+            String fileExt = FileUtil.getExt(filePath);
+            ImageIO.write(subImage, fileExt, outputfile);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void cutImgLeft(String filePath, int size)
+    {
+        validateImgExt(filePath);
+        try
+        {
+            File imgToCut = new File(filePath);
+            BufferedImage bufferedImage = ImageIO.read(imgToCut);
+            if (size >= bufferedImage.getHeight())
+            {
+                throw new RuntimeException("Invalid cut size");
+            }
+            BufferedImage subImage = bufferedImage.getSubimage(
+                    size,
+                    0,
+                    bufferedImage.getWidth() - size,
+                    bufferedImage.getHeight()
+            );
+            File outputfile = new File(filePath);
+            String fileExt = FileUtil.getExt(filePath);
+            ImageIO.write(subImage, fileExt, outputfile);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     public static void horizontalFlipImage(String filePath)
     {
+        validateImgExt(filePath);
         try
         {
             File imageToFlip = new File(filePath);
@@ -57,6 +144,16 @@ public class ImgUtil
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+    }
+
+    private static void validateImgExt(String filePath)
+    {
+        String imgEx = FileUtil.getExt(filePath);
+        switch (imgEx)
+        {
+            case "jpeg","png","jpg": break;
+            default: throw new RuntimeException("Invalid image ext");
         }
     }
 }

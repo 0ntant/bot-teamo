@@ -10,6 +10,7 @@ import app.redqueen.model.MessageTeamo;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.service.BotOrderService;
 import app.redqueen.service.BotFullInfoGetterService;
+import app.redqueen.service.CloneUserTeamoService;
 import app.redqueen.service.database.UserTeamoService;
 import app.redqueen.service.network.*;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +35,19 @@ public class UserTeamoController
     @Autowired
     private BotFullInfoGetterService botFullInfoGetterService;
 
+    @Autowired
+    CloneUserTeamoService cloneUserTeamoServ;
+
     @PostMapping("create/bot")
     public String createBot(@RequestBody BotDto botDto)
     {
         UserTeamo userTeamo = BotDto.BotDtoToUserTeamo(botDto);
-
         botFullInfoGetterService.getFullInfoUser(userTeamo);
+
+        userTeamoService.setUserCreateSource(
+                userTeamo,
+                "red-queen web interface"
+        );
         return "Success ";
     }
 
@@ -70,7 +78,7 @@ public class UserTeamoController
     @GetMapping("get/users-with-token-not-blocked")
     public List<UserTeamoDto> getUsersWithToken()
     {
-       return userTeamoService.findUserWithTokenAndNotBlocking()
+       return userTeamoService.findUsersWithTokenAndNotBlocking()
                .stream()
                .map(UserTeamoDto::mapToTeamoUserDto)
                .toList();
@@ -107,6 +115,23 @@ public class UserTeamoController
     public String getOrder(@RequestBody UserTeamoOrderDto userTeamoOrderDto)
     {
         botOrderService.orderBot(UserTeamoOrderDto.map(userTeamoOrderDto));
+        return "Success";
+    }
+
+    @PostMapping("create/clone/user/{id}")
+    private String createClone(@PathVariable("id") long id)
+    {
+        UserTeamo userTeamo = userTeamoService.findById(id);
+        try
+        {
+            cloneUserTeamoServ.orderCloneUser(userTeamo);
+        }
+        catch (Exception ex)
+        {
+            log.error(ex.getMessage());
+            ex.printStackTrace();
+            return "Failed";
+        }
         return "Success";
     }
 }

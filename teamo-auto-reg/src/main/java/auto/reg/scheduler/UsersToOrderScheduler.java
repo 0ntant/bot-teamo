@@ -16,10 +16,6 @@ public class UsersToOrderScheduler
     @Scheduled(fixedDelay = 1000 * 60)
     public void orderUser()
     {
-        if (usersOrderService.getUserQueSize() > 0)
-        {
-            log.info("Order user");
-            usersOrderService.regUser();
-        }
+        usersOrderService.regUserFromPool();
     }
 }

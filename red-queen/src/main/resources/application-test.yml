@@ -26,13 +26,19 @@ teamo:
 content-storage-service:
   api:
     root-url: http://content-storage-service:8080
-    get-ava-img-base64-by-gender: ${content-storage-service.api.root-url}/image-avatar/get/info-base64-struct/by-gender?gender={gender}
-    get-ava-img-count-by-gender:  ${content-storage-service.api.root-url}/image-avatar/get/count/by-gender?gender={gender}
+    get-ava-img-base64-by-gender: http://content-storage-service:8080/image-avatar/get/info-base64-struct/by-gender?gender={gender}
+    get-ava-img-count-by-gender:  http://content-storage-service:8080/image-avatar/get/count/by-gender?gender={gender}
+    reg-object: http://content-storage-service:8080/register/reg/object
+    check-reg-status: http://content-storage-service:8080/register/check/reg/status
+
+img-generator:
+  api:
+    horizontal-flip-url: http://img-generator:8080/img-processing/edit/flip/horizontal
 
 teamo-auto-reg:
   api:
     root-url: http://teamo-auto-reg:8080
-    user-queue-size: ${teamo-auto-reg.api.root-url}/users-order/get/user-queue-size
+    user-queue-size: http://teamo-auto-reg:8080/users-order/get/user-queue-size
 
 datasource:
   maximumPoolSize: 10

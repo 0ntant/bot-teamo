@@ -19,8 +19,14 @@
         }
     </style>
 </head>
+<script
+        th:src ="@{/scripts/orderUser.js}">
+</script>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
+    <p>
+        Create source: <td th:text="${userTeamo.getCreateSource()}"/>
+    </p>
     <p>
         Name: <td th:text="${userTeamo.getName()}"/>
     </p>
@@ -41,6 +47,13 @@
     </p>
     <p>
         Gender: <td th:text="${userTeamo.getGender()}"></td>
+    </p>
+
+    <p>
+        <button th:onclick="@{'copyUser(' + ${userTeamo.getId()} + ')'}" style="height:30px;width:100px">
+
+            Copy
+        </button>
     </p>
 
     <div style="border:solid">

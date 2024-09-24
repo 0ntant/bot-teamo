@@ -1,5 +1,6 @@
 package app.redqueen.bot.auto;
 
+import app.redqueen.model.BotPhrase;
 import app.redqueen.model.BotPhraseType;
 import app.redqueen.model.BotUserData;
 import app.redqueen.model.UserTeamo;
@@ -11,12 +12,14 @@ import app.redqueen.service.network.MessageNetServiceFactory;
 import app.redqueen.service.network.StatisticsTeamoNetworkServiceImpl;
 import app.redqueen.service.network.UserNetServiceFactory;
 import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
@@ -43,6 +46,9 @@ public class BotScheduler implements Runnable
     @Autowired
     DialogGenerator dialogGenerator;
 
+    @Autowired
+    BotPhraseTypeService botPhraseTypeServ;
+
     List<BotTeamoComp> botTeamoList = new ArrayList<>();
 
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -50,6 +56,12 @@ public class BotScheduler implements Runnable
     private Thread thread;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    CopyOnWriteArrayList<String> defaultDialogTypeTitles = new CopyOnWriteArrayList<>( List.of (
+            "joke",
+            "get_contact",
+            "apologize"
+    ));
 
     @Override
     public void run()
@@ -94,7 +106,7 @@ public class BotScheduler implements Runnable
     private Optional<UserTeamo> getNotBlockedUserWithTokensNotInSchList ()
     {
         schedulerState = "get user from db";
-        List<UserTeamo> notBlockedUsersWithTokens = userTeamoService.findUserWithTokenAndNotBlocking();
+        List<UserTeamo> notBlockedUsersWithTokens = userTeamoService.findUsersWithTokenAndNotBlocking();
         Random random = new Random();
         notBlockedUsersWithTokens = notBlockedUsersWithTokens
                 .stream()
@@ -121,7 +133,7 @@ public class BotScheduler implements Runnable
     private Optional<UserTeamo> _getNotBlockedUserWithTokensNotInSchList ()
     {
         schedulerState = "get user from db";
-        List<UserTeamo> notBlockedUsersWithTokens = userTeamoService.findUserWithTokenAndNotBlocking();
+        List<UserTeamo> notBlockedUsersWithTokens = userTeamoService.findUsersWithTokenAndNotBlocking();
         logger.info("Users in pool {}", botTeamoList.size());
         for (UserTeamo userWithToken : notBlockedUsersWithTokens)
         {
@@ -139,15 +151,10 @@ public class BotScheduler implements Runnable
     public void addAndStartBot(UserTeamo userTeamo)
     {
         schedulerState = "Add start bot";
-        List<String> defaultDialogTitles = Arrays.asList(
-                "joke",
-                "get_contact",
-                "apologize"
-        );
 
         List<BotPhraseType> phraseTypeList = new ArrayList<>();
 
-        for (String dialogTitle : defaultDialogTitles)
+        for (String dialogTitle : defaultDialogTypeTitles)
         {
             try
             {
@@ -236,6 +243,12 @@ public class BotScheduler implements Runnable
     public void stop()
     {
         running.set(false);
+        for (BotTeamoComp botTeamo : botTeamoList)
+        {
+            botTeamo.stop();
+        }
+        botTeamoList.clear();
+        thread.interrupt();
     }
 
     public void waitingSec(int min, int max)
@@ -256,6 +269,30 @@ public class BotScheduler implements Runnable
         {
             ex.printStackTrace();
             logger.error(ex.getMessage());
+        }
+    }
+
+    public List<BotPhraseType> getDefaultDialogTypeTitles()
+    {
+        return defaultDialogTypeTitles.stream()
+                .map(botPhraseType -> botPhraseTypeService.findByTitle(botPhraseType))
+                .toList();
+    }
+
+    public void setDefaultDialogTypeTitles(List<BotPhraseType> botPhraseTypes)
+    {
+        this.defaultDialogTypeTitles = new CopyOnWriteArrayList<>(botPhraseTypes
+        .stream()
+        .map(botTypePhrase -> botPhraseTypeServ
+                .findById(botTypePhrase.getId())
+                .getTitle())
+        .toList());
+        for (BotTeamoComp botTeamo : botTeamoList)
+        {
+            botTeamo.setBotPrasesType(defaultDialogTypeTitles
+                    .stream()
+                    .map(botPhraseTypeTitle -> botPhraseTypeServ.findByTitle(botPhraseTypeTitle))
+                    .toList());
         }
     }
 }

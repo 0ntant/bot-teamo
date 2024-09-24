@@ -5,6 +5,7 @@ import app.redqueen.repository.BotPhraseRepository;
 import app.redqueen.repository.MessageTeamoRepository;
 import app.redqueen.repository.UserTeamoRepository;
 import app.redqueen.service.database.UserServiceDataFacade;
+import app.redqueen.service.database.UserTeamoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class MessageNetServiceFactory
 {
     @Autowired
-    UserTeamoRepository userTeamoRepository;
+    UserTeamoService userTeamoRepository;
 
     @Autowired
     BotPhraseRepository botPhraseRepository;

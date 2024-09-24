@@ -2,6 +2,7 @@ package app.redqueen.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,7 @@ public class UserTeamo implements Cloneable
 
     @Column(name= "gender")
     private String gender;
+
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_teamo_has_t_like",
@@ -105,6 +107,10 @@ public class UserTeamo implements Cloneable
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<UserTeamo> blackListsOwners = new ArrayList<>();
+
+    @Builder.Default
+    @Column(name="create_source")
+    private String createSource = "Untraceable create source";
 
     @Override
     public UserTeamo clone()

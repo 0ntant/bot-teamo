@@ -41,7 +41,7 @@ public class UserTeamoWebController
     public String sendMessageFormV2(Model model)
     {
         model.addAttribute("usersWithToken",
-                userTeamoService.findUserWithTokenAndNotBlocking());
+                userTeamoService.findUsersWithTokenAndNotBlocking());
         return "v2/user-teamo/sendMessageForm";
     }
 
@@ -112,7 +112,7 @@ public class UserTeamoWebController
     public String getUsersWithToken(Model model)
     {
         List<UserTeamoDto> userTeamoDtoList = userTeamoService
-                .findUserWithTokenAndNotBlocking()
+                .findUsersWithTokenAndNotBlocking()
                 .stream()
                 .map(UserTeamoDto::mapToTeamoUserDto)
                 .toList();

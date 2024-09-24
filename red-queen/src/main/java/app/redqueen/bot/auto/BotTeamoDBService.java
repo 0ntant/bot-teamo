@@ -33,7 +33,7 @@ public class BotTeamoDBService
         return botServiceFacade.isUserAddBotToBlackList(userBot, blackListOwner);
     }
 
-    public  List<MessageTeamo> botsMessagesWithUser(UserTeamo checkedUser)
+    public List<MessageTeamo> botsMessagesWithUser(UserTeamo checkedUser)
     {
        return botServiceFacade.botsMessagesWithUser(userBot, checkedUser);
     }
@@ -58,7 +58,7 @@ public class BotTeamoDBService
         return botServiceFacade.generateDialogForUser(phraseTypeList, userBot, userTeamo);
     }
 
-    public UserTeamo getUserById(long id )
+    public UserTeamo getUserById(long id)
     {
         return botServiceFacade.getUserById(id);
     }

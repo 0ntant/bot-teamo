@@ -15,6 +15,7 @@ public class UserTeamoDtoMapper
                 .email(userTeamoDto.getEmail())
                 .password(userTeamoDto.getPassword())
                 .sysCreateDate(new Date())
+                .createSource(userTeamoDto.getCreateSource())
                 .build();
     }
 }

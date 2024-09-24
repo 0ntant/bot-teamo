@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.List;
 
 @Component
 public class ImageUploader
@@ -29,7 +30,7 @@ public class ImageUploader
     @Autowired
     TempFileService tempFileService;
 
-    public void uploadAvaImg(Cookie teamoCookie, ImageAvaDto imageAvaDto)
+    public void uploadAvaImg(List<Cookie> teamoCookies, ImageAvaDto imageAvaDto)
     {
         driver = driverFactory.create();
 
@@ -37,7 +38,7 @@ public class ImageUploader
 
         try
         {
-            uploadAvaImg(driver, teamoCookie, avaPath);
+            uploadAvaImg(driver, teamoCookies, avaPath);
         }
         finally
         {
@@ -46,7 +47,7 @@ public class ImageUploader
         }
     }
 
-    public void uploadAvaImg(Cookie teamoCookie, String gender)
+    public void uploadAvaImg(List<Cookie> teamoCookies, String gender)
     {
         driver = driverFactory.create();
 
@@ -56,7 +57,7 @@ public class ImageUploader
 
         try
         {
-            uploadAvaImg(driver, teamoCookie, avaPath);
+            uploadAvaImg(driver, teamoCookies, avaPath);
         }
         finally
         {
@@ -65,10 +66,15 @@ public class ImageUploader
         }
     }
 
-    private void uploadAvaImg(WebDriver driver, Cookie teamoCookie, String avaPath)
+    private void uploadAvaImg(WebDriver driver, List<Cookie> teamoCookies, String avaPath)
     {
         driver.get("https://teamo.ru/me/upload");
-        driver.manage().addCookie(teamoCookie);
+
+        for(Cookie teamoCookie : teamoCookies)
+        {
+            driver.manage().addCookie(teamoCookie);
+        }
+
         driver.get("https://teamo.ru/me/upload");
         driver.get("https://teamo.ru/me/upload");
         driver.manage().window().maximize();

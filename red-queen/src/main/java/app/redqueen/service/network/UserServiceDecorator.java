@@ -3,6 +3,7 @@ package app.redqueen.service.network;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.model.UserTeamoBlock;
 import app.redqueen.repository.UserTeamoRepository;
+import app.redqueen.service.database.UserTeamoService;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -19,11 +20,11 @@ import java.util.Optional;
 abstract public class UserServiceDecorator
 {
     protected GeneralNetworkService generalNetworkService;
-    protected UserTeamoRepository userTeamoService;
+    protected UserTeamoService userTeamoService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public UserServiceDecorator(GeneralNetworkService generalNetworkService, UserTeamoRepository userTeamoRepository)
+    public UserServiceDecorator(GeneralNetworkService generalNetworkService, UserTeamoService userTeamoRepository)
     {
         this.generalNetworkService = generalNetworkService;
         this.userTeamoService = userTeamoRepository;

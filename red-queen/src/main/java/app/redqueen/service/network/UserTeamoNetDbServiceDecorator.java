@@ -3,6 +3,7 @@ package app.redqueen.service.network;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.repository.UserTeamoRepository;
 import app.redqueen.service.database.UserServiceDataFacade;
+import app.redqueen.service.database.UserTeamoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,12 @@ public class UserTeamoNetDbServiceDecorator
     public  UserTeamoNetDbServiceDecorator(
                     UserTeamoNetworkService userTeamoNetworkService,
                     UserServiceDataFacade userServiceFacade,
-                    UserTeamoRepository userTeamoRepository)
+                    UserTeamoService userTeamoRepository)
     {
         super(userTeamoNetworkService, userTeamoRepository);
         this.userTeamoNetService = userTeamoNetworkService;
         this.userServiceFacade = userServiceFacade;
     }
-
 
     //user full info saving
     private void synchronizeDbSave(UserTeamo userTeamo)
@@ -47,21 +47,23 @@ public class UserTeamoNetDbServiceDecorator
     @Override
     public ResultOrError<UserTeamo> getUserFullInfoById(long userId)
     {
-        Optional<UserTeamo> isUserExit = userTeamoService.findById(userId);
-        if (isUserExit.isPresent())
+       // Optional<UserTeamo> isUserExit = userTeamoService.findById(userId);
+        boolean isUserExit = userTeamoService.isExistById(userId);
+        if (isUserExit)
         {
-            return ResultOrError.successResponse(isUserExit.get());
+            return ResultOrError.successResponse(userTeamoService.findById(userId));
         }
         logger.info("User id={} do not in database getting info from API", userId);
 
         ResultOrError<UserTeamo> resultOrError = userTeamoNetService.getUserFullInfoById(userId);
         if(botBlock(resultOrError))
         {
-            isUserExit = userTeamoService.findById(userId);
-            if (resultOrError.getBlock().getReason().contains("person block my user") && isUserExit.isPresent())
+            isUserExit = userTeamoService.isExistById(userId);
+            //isUserExit = userTeamoService.findById(userId);
+            if (resultOrError.getBlock().getReason().contains("person block my user") && isUserExit)
             {
               //  userTeamoService.addingBotToBlackList()
-                userServiceFacade.addingBotToBlackList(getClientUser(), isUserExit.get());
+                userServiceFacade.addingBotToBlackList(getClientUser(), userTeamoService.findById(userId));
             }
             logger.warn("User bot is blocked can't get full info");
             return resultOrError;
@@ -106,8 +108,12 @@ public class UserTeamoNetDbServiceDecorator
             logger.warn("User bot is blocked can't get full info");
             return resultOrError;
         }
-
-        return getFullInfoFromUserList(resultOrError.getResult());
+        ResultOrError<List<UserTeamo>> userFullInfoList = getFullInfoFromUserList(resultOrError.getResult());
+        for(UserTeamo userTeamo : userFullInfoList.getResult())
+        {
+            userTeamoService.setUserCreateSource(userTeamo,"User from messages list");
+        }
+        return userFullInfoList;
     }
 
     private ResultOrError<List<UserTeamo>> getFullInfoFromUserList(List<UserTeamo> userTeamoListWithPartInfo)
@@ -134,8 +140,12 @@ public class UserTeamoNetDbServiceDecorator
             logger.warn("User bot is blocked can't get users from guests");
             return resultOrError;
         }
-
-        return getFullInfoFromUserList(resultOrError.getResult());
+        ResultOrError<List<UserTeamo>> userFullInfoList = getFullInfoFromUserList(resultOrError.getResult());
+        for(UserTeamo userTeamo : userFullInfoList.getResult())
+        {
+            userTeamoService.setUserCreateSource(userTeamo,"User from guest list");
+        }
+        return userFullInfoList;
     }
 
     @Override
@@ -147,7 +157,13 @@ public class UserTeamoNetDbServiceDecorator
             logger.warn("User bot is blocked can't get users from matches");
             return resultOrError;
         }
-
-        return getFullInfoFromUserList(resultOrError.getResult());
+        ResultOrError<List<UserTeamo>> userFullInfoList = getFullInfoFromUserList(resultOrError.getResult());
+        for(UserTeamo userTeamo : userFullInfoList.getResult())
+        {
+            userTeamoService.setUserCreateSource(userTeamo,"User from match list");
+        }
+        return userFullInfoList;
     }
+
+
 }

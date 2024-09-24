@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -27,7 +25,7 @@ public class ImgDto
                 .gender(imageAvatar.getGender())
                 .base64(
                         new String(
-                                Base64Util.getBase64(
+                                Base64Util.encode(
                                         FileUtil.getBytes(
                                                 imageAvatar.getPath()
                                         )

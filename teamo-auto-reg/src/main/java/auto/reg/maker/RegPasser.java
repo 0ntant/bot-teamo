@@ -13,8 +13,9 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.List;
 
+@Deprecated
 @Slf4j
-@Component
+@Component("reg-pass")
 public class RegPasser
 {
     @Autowired
@@ -135,7 +136,6 @@ public class RegPasser
                     break;
                 }
             }
-
         }
         else
         {

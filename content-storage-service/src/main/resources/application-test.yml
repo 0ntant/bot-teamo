@@ -8,8 +8,6 @@ spring:
     name: content-storage-service
   liquibase:
     enabled: true
-    user: ${datasource.username}
-    password: ${datasource.password}
     change-log: file:/app/resources/db/changelog/db.changelog-master.yaml
   rabbitmq:
     username: content_storage_service_app

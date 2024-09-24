@@ -2,7 +2,7 @@ package img.gen.integration.mq;
 
 import img.gen.util.Base64Util;
 import img.gen.util.FileUtil;
-import integration.dto.ImgAvaDto;
+import integration.dto.ImgAvaDto.ImgAvaDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +24,17 @@ public class ContentStoragePub
     @Value("${spring.rabbitmq.pub.css.route-key}")
     private String cssImgAvaRoute;
 
-    public void sendMsq(File imgFile, String gender)
+    public void sendMsq(ImgAvaDto imgAvaDto)
     {
         try
         {
             rabbitTemplate.convertAndSend(
                     cssImgAvaExc,
                     cssImgAvaRoute,
-                  new ImgAvaDto(
-                          FileUtil.getName(imgFile.getAbsolutePath()),
-                          gender,
-                          new String(Base64Util.getBase64(FileUtil.getFileBytes(imgFile.getAbsolutePath()))))
+                    imgAvaDto
             );
-            log.info("[PRODUCER] send img gender {} img {}",
-                    gender,
-                    imgFile.getName()
+            log.info("[PRODUCER] send img gender img {}",
+                    imgAvaDto.getName()
             );
         }
         catch (Exception ex)

@@ -1,7 +1,7 @@
 package app.redqueen.service.network;
 
 import app.redqueen.dto.integration.input.ImgDto;
-import app.redqueen.integration.rest.contentStorageService.ContentStorageServiceClient;
+import app.redqueen.integration.contentStorageService.ContentStorageServiceClient;
 import integration.dto.reg.ImageAvaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +21,15 @@ public class ContentStorageService
     public int getCountByGender(String gender)
     {
         return cssClient.getCountByGender(gender);
+    }
+
+    public boolean isObjectReg(byte[] data)
+    {
+        return cssClient.checkRegStatus(data);
+    }
+
+    public String regObject(byte[] data)
+    {
+        return cssClient.regObject(data);
     }
 }

@@ -29,4 +29,9 @@ public class UnsplashService
 
         return client.getImage(photoUlr);
     }
+
+    public boolean isRateLimited()
+    {
+        return client.getAvailablePermissions() > 0;
+    }
 }

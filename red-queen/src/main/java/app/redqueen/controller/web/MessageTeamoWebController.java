@@ -70,7 +70,7 @@ public class MessageTeamoWebController
     public String getChat(Model model)
     {
         List<ChatDto> messageDtoList = new ArrayList<>();
-        List<UserTeamo> usersWithTokens = userTeamoServ.findUserWithToken();
+        List<UserTeamo> usersWithTokens = userTeamoServ.findUsersWithToken();
         for(UserTeamo userWithTokens : usersWithTokens)
         {
             messageDtoList.addAll(userTeamoServ.findChatPartners(userWithTokens)

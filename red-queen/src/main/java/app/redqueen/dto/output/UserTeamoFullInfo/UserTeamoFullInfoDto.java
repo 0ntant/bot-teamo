@@ -18,6 +18,7 @@ import java.util.List;
 public class UserTeamoFullInfoDto
 {
     Long id;
+    String createSource;
     String name;
     Integer age;
     String city;
@@ -43,6 +44,7 @@ public class UserTeamoFullInfoDto
     {
         return UserTeamoFullInfoDto.builder()
                 .id(userTeamo.getId())
+                .createSource(userTeamo.getCreateSource())
                 .name(userTeamo.getName())
                 .age(userTeamo.getAge())
                 .generalAttributeList(

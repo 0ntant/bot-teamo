@@ -16,12 +16,12 @@ import java.util.*;
 public class BotFullInfoGetterService
 {
     @Autowired
-    UserTeamoService userTeamoService;
+    private UserTeamoService userTeamoService;
 
     @Autowired
-    UserNetServiceFactory userNetServiceFactory;
+    private UserNetServiceFactory userNetServiceFactory;
 
-    List<UserTeamo> usersToGetInfo = new ArrayList<>();
+    private List<UserTeamo> usersToGetInfo = new ArrayList<>();
 
     public void getFullInfoUser(UserTeamo userTeamo)
     {
@@ -69,6 +69,7 @@ public class BotFullInfoGetterService
         UserTeamoNetworkService userTeamoNetworkService
                 = userNetServiceFactory.createUserNetDecorator(userTeamoToReg);
         ResultOrError<UserTeamo> resultOrError = userTeamoNetworkService.getSelfFullInfo();
+        userTeamoService.setUserCreateSource(userTeamoToReg, userTeamoToReg.getCreateSource());
         if (resultOrError.isErrorResponse())
         {
             log.error("Error self info code={} reason={}",

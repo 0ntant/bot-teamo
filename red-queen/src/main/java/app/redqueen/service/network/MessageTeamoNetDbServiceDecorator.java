@@ -8,6 +8,7 @@ import app.redqueen.repository.BotPhraseRepository;
 import app.redqueen.repository.MessageTeamoRepository;
 import app.redqueen.repository.UserTeamoRepository;
 import app.redqueen.service.database.UserServiceDataFacade;
+import app.redqueen.service.database.UserTeamoService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class MessageTeamoNetDbServiceDecorator
     @Autowired
     public MessageTeamoNetDbServiceDecorator(
                     MessageTeamoNetworkService messageTeamoNetworkService,
-                    UserTeamoRepository userTeamoRepository,
+                    UserTeamoService userTeamoRepository,
                     MessageTeamoRepository messageTeamoRepository,
                     BotPhraseRepository botPhraseRepository,
                     UserServiceDataFacade userServiceDataFacade

@@ -10,8 +10,12 @@ import integration.dto.reg.RegTeamoUserImgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Component
@@ -22,10 +26,10 @@ public class UserCreator
     TeamoClient teamoClient;
 
     @Autowired
-    RegPasser regPasser;
+    SignupModuleImp signupModule;
 
     @Autowired
-    UserDtoReceiver userDtoReceiver;
+    LocalStorageReceiver localStorageReceiver;
 
     @Autowired
     ImageUploader imageUploader;
@@ -40,17 +44,21 @@ public class UserCreator
     {
         try
         {
-            regPasser.bypass(regTeamoUserDto.getUserDto());
+            signupModule.bypass(regTeamoUserDto.getUserDto());
         }
         catch (Exception ex)
         {
             log.warn(ex.getMessage());
+            ex.printStackTrace();
             createUser(regTeamoUserDto);
         }
 
-        Cookie teamoCookie = new Cookie("teamo",regPasser.getTeamoCookie().getValue());
+        List<Cookie> teamoCookies = new ArrayList<>();
+        for (Map.Entry<String, String> cookieValue : signupModule.getTeamoCookieValue().entrySet()) {
+             teamoCookies.add(new Cookie(cookieValue.getKey(), cookieValue.getValue()));
+        }
 
-        UserTeamoDto userTeamoDto = userDtoReceiver.receive(teamoCookie);
+        UserTeamoDto userTeamoDto = localStorageReceiver.receive(teamoCookies);
         userTeamoDto.setEmail(regTeamoUserDto.getUserDto().getEmail());
         userTeamoDto.setPassword(regTeamoUserDto.getUserDto().getPassword());
 
@@ -68,15 +76,20 @@ public class UserCreator
         passPsyTest();
 
         log.info("Next step {} before upload avatar image", getNextStep());
-        imageUploader.uploadAvaImg(teamoCookie, regTeamoUserDto.getImageDto());
-
+        imageUploader.uploadAvaImg(teamoCookies, regTeamoUserDto.getImageDto());
+        String nextStep = getNextStep();
+        if (nextStep.equals("upload_photo_for_registration"))
+        {
+            throw new RuntimeException("Invalid upload image");
+        }
         log.info("Next step {} before skip confirmation", getNextStep());
         skipConfirmation();
 
         log.info("Next step {} before human imitation" , getNextStep());
-        humanImitator.userDoSomeStuff(teamoCookie);
+        humanImitator.userDoSomeStuff(teamoCookies);
 
         log.info("Success reg {} {}", userTeamoDto.getUserId() , userTeamoDto.getToken());
+        userTeamoDto.setCreateSource(regTeamoUserDto.getCreateSource());
         redQueenPublisher.sendUserTeamo(userTeamoDto);
         return userTeamoDto;
     }

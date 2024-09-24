@@ -40,4 +40,9 @@ public class PixabayService
         }
         return photosData;
     }
+
+    public boolean isRateLimited()
+    {
+        return client.getAvailablePermissions() > perPage + 1;
+    }
 }

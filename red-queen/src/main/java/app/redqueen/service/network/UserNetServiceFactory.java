@@ -3,6 +3,7 @@ package app.redqueen.service.network;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.repository.UserTeamoRepository;
 import app.redqueen.service.database.UserServiceDataFacade;
+import app.redqueen.service.database.UserTeamoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ public class UserNetServiceFactory
     UserServiceDataFacade userServiceDataFacade;
 
     @Autowired
-    UserTeamoRepository userTeamoRepository;
+    UserTeamoService userTeamoRepository;
 
     public UserTeamoNetDbServiceDecorator createUserNetDecorator(UserTeamo client)
     {

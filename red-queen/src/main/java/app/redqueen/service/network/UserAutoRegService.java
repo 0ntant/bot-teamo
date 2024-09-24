@@ -1,6 +1,6 @@
 package app.redqueen.service.network;
 
-import app.redqueen.integration.rest.teamoAutoReg.UserAutoRegClient;
+import app.redqueen.integration.teamoAutoReg.UserAutoRegClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

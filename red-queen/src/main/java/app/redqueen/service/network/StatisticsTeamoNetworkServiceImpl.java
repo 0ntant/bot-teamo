@@ -1,7 +1,7 @@
 package app.redqueen.service.network;
 
-import app.redqueen.integration.rest.teamo.TeamoClient;
-import app.redqueen.integration.rest.teamo.TeamoClientAPI;
+import app.redqueen.integration.teamo.TeamoClient;
+import app.redqueen.integration.teamo.TeamoClientAPI;
 import app.redqueen.mapper.api.JsonNodeToStatisticsTeamo;
 import app.redqueen.mapper.api.StatisticsTeamoMapper;
 import app.redqueen.model.StatisticsTeamo;

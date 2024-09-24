@@ -1,6 +1,6 @@
 package app.redqueen.service;
 
-import app.redqueen.integration.mq.teamoAutoReg.TeamoAutoRegPublisher;
+import app.redqueen.integration.teamoAutoReg.TeamoAutoRegPublisher;
 import app.redqueen.model.ResidencePlace;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.service.database.ResidencePlaceService;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 @Service
@@ -25,33 +26,33 @@ public class BotOrderService
 {
     private static final Logger log = LoggerFactory.getLogger(BotOrderService.class);
     @Autowired
-    TeamoAutoRegPublisher autoRegPublisher;
+    private TeamoAutoRegPublisher autoRegPublisher;
 
     @Autowired
-    LocationService locationService;
+    private LocationService locationService;
 
     @Autowired
-    UserTeamoService userTeamoServ;
+    private UserTeamoService userTeamoServ;
 
-    int usersLimit = 1;
+    private int usersLimit = 1;
 
-    Random random = new Random();
-
-    @Autowired
-    ResidencePlaceService resPlaceServ;
+    private Random random = new Random();
 
     @Autowired
-    UserAutoRegService userAutoRegService;
+    private ResidencePlaceService resPlaceServ;
 
     @Autowired
-    ContentStorageService contentStorageService;
+    private UserAutoRegService userAutoRegService;
+
+    @Autowired
+    private ContentStorageService contentStorageService;
 
     public void orderUser()
     {
-        int currUserAutoRegQueValue =  userAutoRegService.getUserQueSize();
-        if (currUserAutoRegQueValue >= 2)
+        //int currUserAutoRegQueValue =  userAutoRegService.getUserQueSize();
+        if (isQueueFull())
         {
-            log.warn("Teamo-auto-reg service queue={} ", currUserAutoRegQueValue);
+            log.warn("Teamo-auto-reg service queue full ");
             return;
         }
 
@@ -107,6 +108,12 @@ public class BotOrderService
         }
     }
 
+    public boolean isQueueFull()
+    {
+        int currUserAutoRegQueValue =  userAutoRegService.getUserQueSize();
+        return (currUserAutoRegQueValue >= 2);
+    }
+
     public boolean isUsersInResPlace(ResidencePlace resPlaceToCheck)
     {
         return userTeamoServ.findBotsByCity(resPlaceToCheck.getTitle()).size() < usersLimit * 2;
@@ -128,7 +135,7 @@ public class BotOrderService
         return  resPlaceTime.isAfter(minTime) && resPlaceTime.isBefore(maxTime);
     }
 
-    public void orderFemaleInCity(String city)
+    private void orderFemaleInCity(String city)
     {
         UserTeamo userToOrder = UserTeamo.builder()
                 .gender("female")
@@ -141,7 +148,7 @@ public class BotOrderService
         orderBot(userToOrder);
     }
 
-    public void orderMaleInCity(String city)
+    private void orderMaleInCity(String city)
     {
         UserTeamo userToOrder = UserTeamo.builder()
                 .gender("male")
@@ -155,25 +162,37 @@ public class BotOrderService
 
     public void orderBot(UserTeamo userTeamo)
     {
-        autoRegPublisher.sendRegUserTeamo(
+        orderUser(
                 createRegUserImgDto(
-                        createRegUserDto(userTeamo)));
+                        createRegUserDto(userTeamo)
+                )
+        );
+    }
+
+    public void orderUser(RegTeamoUserImgDto userToReg)
+    {
+        autoRegPublisher.sendRegUserTeamo(userToReg);
     }
 
     private RegTeamoUserImgDto createRegUserImgDto(RegTeamoUserDto regTeamoUserDto)
     {
         ImageAvaDto imageAvaDto = contentStorageService.getImgDtoByGender(regTeamoUserDto.getGender());
-        return new RegTeamoUserImgDto(regTeamoUserDto, imageAvaDto);
+
+        String gender = regTeamoUserDto.getGender().equals("male") ? "1" : "2";
+        regTeamoUserDto.setGender(gender);
+        return new RegTeamoUserImgDto(
+                regTeamoUserDto,
+                imageAvaDto,
+                "teamo-auto-reg service"
+        );
     }
 
     private RegTeamoUserDto createRegUserDto(UserTeamo userTeamo)
     {
         LocalDateTime currDate = LocalDateTime.now();
         Random rand = new Random();
-
         int dayNumber = rand.nextInt(1, 28);
         int monthNumber = rand.nextInt(1, 11);
-
         return RegTeamoUserDto.builder()
                 .name(userTeamo.getName())
                 .birth(new BirthDto(
@@ -201,7 +220,7 @@ public class BotOrderService
                 .build();
     }
 
-    private int getResPlaceIndexByName(String cityName)
+    public int getResPlaceIndexByName(String cityName)
     {
         int cityIndex = 2085;
         List<Integer> cityIndexes= locationService.getLocationIndexes(cityName);

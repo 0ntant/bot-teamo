@@ -1,7 +1,11 @@
 package img.gen.config;
 
+import img.gen.integration.rest.GeneralClient;
 import img.gen.integration.rest.UnsplashClient;
 import img.gen.logging.LoggingRestClientInterceptor;
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.ratelimiter.RateLimiterConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +26,18 @@ public class UnsplashClientConf
     @Value("${api.unsplash.access-key}")
     String accessKey;
 
+    @Autowired
+    GeneralClient generalClient;
+
     @Bean
     public UnsplashClient unsplashClient()
     {
+        RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
+                .limitForPeriod(50)
+                .limitRefreshPeriod(Duration.ofHours(1L))
+                .timeoutDuration(Duration.ZERO)
+                .build();
+
         RestTemplate restTemplate = new RestTemplateBuilder()
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
@@ -33,8 +46,13 @@ public class UnsplashClientConf
                         "Authorization",
                         String.format("%s %s", "Client-ID", accessKey))
                 .build();
+
         return UnsplashClient.builder()
+                .rateLimiter(RateLimiter.of(
+                        "unsplashRateLimiter",
+                        rateLimiterConfig))
                 .client(restTemplate)
+                .generalClient(generalClient)
                 .searchUrl(searchUrl)
                 .randomUrl(randomUrl)
                 .build();

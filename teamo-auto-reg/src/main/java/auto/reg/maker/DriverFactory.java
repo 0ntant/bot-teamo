@@ -44,7 +44,8 @@ public class DriverFactory
 
     private WebDriver createRemoteDriver()
     {
-        ChromeOptions options = setProxyChromeOption(new ChromeOptions());
+//      ChromeOptions options = setProxyChromeOption(new ChromeOptions());
+        ChromeOptions options = new ChromeOptions();
         options.addExtensions (new File(seleniumDir + "/capchaRes.crx"));
         try
         {
@@ -67,8 +68,11 @@ public class DriverFactory
         );
 
         //add extension
-        ChromeOptions options = setProxyChromeOption(new ChromeOptions ());
+        //ChromeOptions options = setProxyChromeOption(new ChromeOptions ());
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary(seleniumDir + "/chromium");
         options.addExtensions (new File(seleniumDir + "/capchaRes.crx"));
+
         DesiredCapabilities capabilities = new DesiredCapabilities ();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 

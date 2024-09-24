@@ -48,7 +48,6 @@ public class FileUtil
         return path.substring(path.lastIndexOf(".") + 1);
     }
 
-
     public static String getName(String path)
     {
         return path.substring(path.lastIndexOf("/") + 1);

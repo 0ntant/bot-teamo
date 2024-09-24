@@ -47,7 +47,7 @@ public class TeamoClient
     public JsonNode editMainInfo(RegTeamoUserDto regTeamoUserDto) throws JsonProcessingException
     {
         MultiValueMap<String, String> requestParams = BaseParam.getBasePostParameters(token);
-        requestParams.addAll(RegUserDtoMapper.getParams(regTeamoUserDto));
+        requestParams.addAll(RegUserDtoMapper.getParamsV2(regTeamoUserDto));
 
         return objectMapper.readTree(
                 restTemplate.postForEntity(

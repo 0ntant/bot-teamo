@@ -1,7 +1,6 @@
 package auto.reg.service;
 
 import auto.reg.maker.UserCreator;
-import integration.dto.reg.RegTeamoUserDto;
 import integration.dto.reg.RegTeamoUserImgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,17 @@ public class UsersOrderService
         return usersImgToOrder.size();
     }
 
-    public void regUser()
+    public void regUserFromPool()
     {
-        userCreator.createUser(usersImgToOrder.poll());
+        if (getUserQueSize() > 0)
+        {
+            log.info("Order user from pool");
+            regUser(usersImgToOrder.poll());
+        }
+    }
+
+    public void regUser(RegTeamoUserImgDto userToReg)
+    {
+        userCreator.createUser(userToReg);
     }
 }

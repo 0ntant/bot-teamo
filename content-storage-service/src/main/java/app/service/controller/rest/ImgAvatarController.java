@@ -25,29 +25,21 @@ public class ImgAvatarController
     public ImgDto getInfoStrutByGender(@RequestParam("gender") String gender)
     {
         ImageAvatar imageAvatar = imgAvatarServ.getRandByGender(validateGender(gender));
-        ImgDto imgDto =  ImgDto.imageAvatarToImgDto(imageAvatar);
-        FileUtil.remove(imageAvatar.getPath());
-        return imgDto;
+        return ImgDto.imageAvatarToImgDto(imageAvatar);
     }
 
     @GetMapping("get/image/by-gender")
     public ResponseEntity<byte[]> getImageByGender(@RequestParam("gender") String gender) throws Exception
     {
-        ImageAvatar imageAvatar = imgAvatarServ.getRandByGender(validateGender(gender));
-        ResponseEntity<byte[]> response =   ResponseEntity.ok()
+        return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
-                .body(FileUtil.getBytes(imageAvatar.getPath()));
-        FileUtil.remove(imageAvatar.getPath());
-        return response;
+                .body(imgAvatarServ.getRandByGenderBytes(validateGender(gender)));
     }
 
     @GetMapping("get/image-bytes/by-gender")
     public byte[] getImageBytesByGender(@RequestParam("gender") String gender)
     {
-        ImageAvatar imageAvatar = imgAvatarServ.getRandByGender(validateGender(gender));
-        byte[] imgBytes =  FileUtil.getBytes(imageAvatar.getPath());
-        FileUtil.remove(imageAvatar.getPath());
-        return imgBytes;
+        return imgAvatarServ.getRandByGenderBytes(validateGender(gender));
     }
 
     @GetMapping("get/count/by-gender")

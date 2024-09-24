@@ -1,6 +1,6 @@
 package service.network.IT.apiMock;
 
-import app.redqueen.integration.rest.teamo.FacesClient;
+import app.redqueen.integration.teamo.FacesClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.File;

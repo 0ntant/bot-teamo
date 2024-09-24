@@ -1,6 +1,6 @@
 package app.redqueen.config;
 
-import app.redqueen.integration.rest.teamoAutoReg.UserAutoRegClient;
+import app.redqueen.integration.teamoAutoReg.UserAutoRegClient;
 import app.redqueen.logging.LoggingRestClientInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

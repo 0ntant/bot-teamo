@@ -8,4 +8,9 @@ public class Base64Util
     {
         return Base64.getDecoder().decode(bytes);
     }
+
+    public static byte[] encode(byte[] bytes)
+    {
+        return Base64.getEncoder().encode(bytes);
+    }
 }

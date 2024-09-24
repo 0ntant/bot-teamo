@@ -29,7 +29,7 @@ public class ImgController
 
         return new ImgDto(
                 FileUtil.getName(imgPath),
-                Base64Util.getBase64(FileUtil.getFileBytes(imgPath))
+                Base64Util.encode(FileUtil.getFileBytes(imgPath))
         );
     }
 
@@ -48,7 +48,7 @@ public class ImgController
             return "img not found";
         }
         imgService.createImg();
-        return imgService.sendToCSS(gender, imgName);
+        return imgService.saveToCSS(gender, imgName);
     }
 
     @GetMapping("get/all-img-names")
@@ -89,6 +89,6 @@ public class ImgController
     public String deleteByName(@PathVariable(name = "imgName") String imgName)
     {
         imgService.createImg();
-        return imgService.deleteByName(imgName);
+        return imgService.regToCSS(imgName);
     }
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -14,12 +15,12 @@ public class HumanImitator
     DriverFactory driverFactory;
     WebDriver driver;
 
-    public void userDoSomeStuff(Cookie teamoCookie)
+    public void userDoSomeStuff(List<Cookie> teamoCookies)
     {
         driver = driverFactory.create();
         try
         {
-            userDoSomeStuff(driver, teamoCookie);
+            userDoSomeStuff(driver, teamoCookies);
         }
         finally
         {
@@ -27,10 +28,13 @@ public class HumanImitator
         }
     }
 
-    private void userDoSomeStuff(WebDriver driver, Cookie teamoCookie)
+    private void userDoSomeStuff(WebDriver driver, List<Cookie> teamoCookies)
     {
         driver.get("https://teamo.ru/faces");
-        driver.manage().addCookie(teamoCookie);
+        for(Cookie teamoCookie : teamoCookies)
+        {
+            driver.manage().addCookie(teamoCookie);
+        }
         driver.get("https://teamo.ru/faces");
         driver.get("https://teamo.ru/faces");
         driver.manage().window().maximize();

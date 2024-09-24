@@ -21,7 +21,8 @@ public class RedQueenPublisherIT
                 1L,
                 "token",
                 "email",
-                "pass"
+                "pass",
+                "testCreateSource"
         );
         //then
         redQueenPublisher.sendUserTeamo(userToSend);

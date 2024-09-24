@@ -20,7 +20,8 @@ public class RedQueenConsumer
     @RabbitHandler
     public void receiveUserTeamoImgDto(RegTeamoUserImgDto regTeamoUserDto)
     {
-        log.info("[CONSUMER] receive user to reg name={} email={} gender={}",
+        log.info("[CONSUMER] receive user source={} name={} email={} gender={}",
+                regTeamoUserDto.getCreateSource(),
                 regTeamoUserDto.getUserDto().getEmail(),
                 regTeamoUserDto.getUserDto().getName(),
                 regTeamoUserDto.getUserDto().getGender()

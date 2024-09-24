@@ -12,9 +12,15 @@ api:
     search-url: https://pixabay.com/api/
     access-key: 45793961-b754e262a06e937f9d5242608
 
+inner-api:
+  CCS:
+    check: http://localhost:8080/register/check/reg/status
+    reg: http://localhost:8080/register/reg/object
+
 images:
   count: 15
   dir: ./images
+  temp-dir: ./images/temp
 
 spring:
   application:

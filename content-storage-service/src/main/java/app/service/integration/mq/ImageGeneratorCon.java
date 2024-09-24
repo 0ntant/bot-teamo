@@ -2,7 +2,7 @@ package app.service.integration.mq;
 
 
 import app.service.service.ImageAvatarService;
-import integration.dto.ImgAvaDto;
+import integration.dto.ImgAvaDto.ImgAvaDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -21,7 +21,10 @@ public class ImageGeneratorCon
     @RabbitHandler
     public void receiveImageAvatar(ImgAvaDto imgDto)
     {
-        log.info("[CONSUMER] received image avatar {}",imgDto.getName());
+        log.info("[CONSUMER] receive {} image avatar {}",
+                imgDto.getOperation(),
+                imgDto.getName()
+        );
         imgAvaServ.saveFromImgGenerator(imgDto);
     }
 }

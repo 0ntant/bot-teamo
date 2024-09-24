@@ -1,7 +1,7 @@
 package app.redqueen.service.network;
 
 import app.redqueen.dto.integration.output.LocationDto;
-import app.redqueen.integration.rest.teamo.RtestClient;
+import app.redqueen.integration.teamo.RtestClient;
 import app.redqueen.mapper.api.JsonNodeToCityIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

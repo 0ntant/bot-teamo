@@ -1,6 +1,6 @@
 package app.redqueen.config;
 
-import app.redqueen.integration.rest.teamo.RtestClient;
+import app.redqueen.integration.teamo.RtestClient;
 import app.redqueen.logging.LoggingRestClientInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;

@@ -43,7 +43,6 @@ public class BotTeamoComp implements Runnable
                 botState,
                 thread.getName());
         running.set(true);
-
         while (isRunning())
         {
             checkPartnersMessages();
@@ -101,6 +100,30 @@ public class BotTeamoComp implements Runnable
             }
             netService.getMessagesFromPartner(user);
             waitingSec(60, 120);
+        }
+    }
+
+    public void setBotPrasesType(List<BotPhraseType> botPhraseTypes)
+    {
+        synchronized (running)
+        {
+            log.info("{} change dialog", thread.getName());
+            try
+            {
+                //running.wait();
+                dbService.setPhraseTypeList(botPhraseTypes);
+                List<UserTeamo> usersToWrite = new ArrayList<>();
+                for (Map.Entry<Long , Queue<BotPhrase>> dialog: messagesToUsers.entrySet())
+                {
+                    usersToWrite.add(dbService.getUserById(dialog.getKey()));
+                }
+                generateDialogs(usersToWrite);
+               // running.notify();
+            }catch (Exception ex)
+            {
+                ex.printStackTrace();
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -211,6 +234,8 @@ public class BotTeamoComp implements Runnable
     public void stop()
     {
         running.set(false);
+        log.info("{} stopping ", thread.getName());
+        this.thread.interrupt();
     }
 
     public boolean isRunning ()

@@ -1,6 +1,6 @@
 package app.redqueen.config;
 
-import app.redqueen.integration.rest.contentStorageService.ContentStorageServiceClient;
+import app.redqueen.integration.contentStorageService.ContentStorageServiceClient;
 import app.redqueen.logging.LoggingRestClientInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -19,6 +19,12 @@ public class ContentStorageServiceClientConfig
     @Value("${content-storage-service.api.get-ava-img-count-by-gender}")
     String  getAvaImgCountUrl;
 
+    @Value("${content-storage-service.api.reg-object}")
+    String  regObjectUrl;
+
+    @Value("${content-storage-service.api.check-reg-status}")
+    String  checkRegStatusUrl;
+
     @Bean
     public ContentStorageServiceClient contentStorageServiceClient(RestTemplateBuilder restTemplateBuilder)
     {
@@ -30,7 +36,9 @@ public class ContentStorageServiceClientConfig
         return ContentStorageServiceClient.builder()
                 .getAvaImgCountUrl(getAvaImgCountUrl)
                 .getImgAvaUrl(getImgAvaUrl)
-                .restOperations(restTemplate)
+                .client(restTemplate)
+                .regObjectUrl(regObjectUrl)
+                .checkRegStatusUrl(checkRegStatusUrl)
                 .build();
     }
 }

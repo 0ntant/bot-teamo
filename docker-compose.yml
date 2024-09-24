@@ -109,7 +109,7 @@ services:
       - '7900:7900'
 
   img-generator:
-    image: img-generator:1.6.0
+    image: img-generator:1.7.0
     container_name: img-generator
     environment:
       TZ: Europe/Moscow
@@ -122,8 +122,11 @@ services:
       api.pexels.access-key: WIcfbU65AcOO96hi7hY5qbmpFGOEx0MaEawmkUqUpXhzyv1pTJitXS2g
       api.pixabay.search-url: https://pixabay.com/api/
       api.pixabay.access-key: 45793961-b754e262a06e937f9d5242608
+      inner-api.CCS.check: http://content-storage-service:8080/register/check/reg/status
+      inner-api.CCS.reg: http://content-storage-service:8080/register/reg/object
       images.count: 15
       images.dir: /app/images
+      images.temp-dir: /app/images/temp
       spring.application.name: img-generator
       spring.web.resources.static-locations: file:/app/static/
       spring.thymeleaf.check-template: true
@@ -142,7 +145,7 @@ services:
       context: ./img-generator
       dockerfile: Dockerfile
     volumes:
-      - /app/images
+      - /app/images/temp
       - ./img-generator/src/main/resources/static:/app/static:ro
       - ./img-generator/src/main/resources/templates:/app/templates:ro
       - ./resources/logback-spring.xml:/app/logback-spring.xml:ro
@@ -157,7 +160,7 @@ services:
         condition: service_healthy
 
   content-storage-service:
-    image: content-storage-service:1.6.0
+    image: content-storage-service:1.7.0
     container_name: content-storage-service
     environment:
       TZ: Europe/Moscow
@@ -195,7 +198,7 @@ services:
          condition: service_healthy
 
   red-queen:
-    image: red-queen:1.6.0
+    image: red-queen:1.7.0
     container_name: red-queen
     environment:
       TZ: Europe/Moscow
@@ -218,6 +221,9 @@ services:
       content-storage-service.api.root-url: http://content-storage-service:8080
       content-storage-service.api.get-ava-img-base64-by-gender: http://content-storage-service:8080/image-avatar/get/info-base64-struct/by-gender?gender={gender}
       content-storage-service.api.get-ava-img-count-by-gender: http://content-storage-service:8080/image-avatar/get/count/by-gender?gender={gender}
+      content-storage-service.api.reg-object: http://content-storage-service:8080/register/reg/object
+      content-storage-service.api.check-reg-status: http://content-storage-service:8080/register/check/reg/status
+      img-generator.api.horizontal-flip-url:  http://img-generator:8080/img-processing/edit/flip/horizontal
       teamo-auto-reg.api.root-url: http://teamo-auto-reg:8080
       teamo-auto-reg.api.user-queue-size: http://teamo-auto-reg:8080/users-order/get/user-queue-size
       datasource.maximumPoolSize: 10
@@ -263,7 +269,7 @@ services:
       - '8080:8080'
 
   teamo-auto-reg:
-    image: teamo-auto-reg:1.6.0
+    image: teamo-auto-reg:1.7.0
     container_name: teamo-auto-reg
     environment:
       TZ: Europe/Moscow

@@ -1,6 +1,29 @@
 const BASE_URL = window.location.protocol +'//'+ window.location.host
 const user_create_order = BASE_URL+'/user-teamo/create/order';
 
+async function copyUser(userId)
+{
+    executePost(BASE_URL + "/user-teamo/create/clone/user/" + userId)
+}
+
+async function executePost(url)
+{
+    try
+    {
+        const response = await fetch
+            (url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+    }
+    catch(e)
+    {
+         console.log(e)
+    }
+}
+
 async function handleClick(event)
 {
     user_name = document.getElementById("user_name").value

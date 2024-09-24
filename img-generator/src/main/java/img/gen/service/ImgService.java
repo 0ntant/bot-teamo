@@ -1,10 +1,14 @@
 package img.gen.service;
 
 import img.gen.integration.mq.ContentStoragePub;
+import img.gen.integration.rest.CSSClient;
 import img.gen.integration.rest.PersonNotExistImgClient;
+import img.gen.util.Base64Util;
 import img.gen.util.FileUtil;
 import img.gen.util.ImgUtil;
 import img.gen.util.StrUtil;
+import integration.dto.ImgAvaDto.ImgAvaDto;
+import integration.dto.ImgAvaDto.Operation;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -46,12 +49,15 @@ public class ImgService
     @Autowired
     PixabayService pixabayService;
 
+    @Autowired
+    CSSClient cssClient;
+
     @Async
     public void createImg()
     {
-        log.info("Create image");
         if(getImgCurCount() <= getImageCount())
         {
+            log.info("Create image");
             createPENCFile();
             createUnsplashPhotos();
             createPexelsPhotos();
@@ -62,6 +68,11 @@ public class ImgService
     @Async
     public void createPexelsPhotos()
     {
+        if (!pexelsService.isRateLimited())
+        {
+            log.warn("Pexels api request limit is over");
+            return;
+        }
         File femaleImg = saveJpegImage(pexelsService.getFemaleImage());
         File maleImg = saveJpegImage(pexelsService.getMaleImage());
 
@@ -72,33 +83,68 @@ public class ImgService
     @Async
     public void createUnsplashPhotos()
     {
-        File femaleImg = saveJpegImage(unsplashService.getFemaleImage());
-        File maleImg = saveJpegImage(unsplashService.getMaleImage());
+        if(!unsplashService.isRateLimited())
+        {
+            log.warn("Unsplash api request limit is over");
+            return;
+        }
+
+        byte[] maleImgData = unsplashService.getMaleImage();
+        byte[] femaleImgData = unsplashService.getFemaleImage();
+
+        if (isReg(maleImgData) || isReg(femaleImgData) )
+        {
+            log.warn("One of Unsplash image already register");
+            return;
+        }
+
+        File femaleImg = saveJpegImage(femaleImgData);
+        File maleImg = saveJpegImage(maleImgData);
 
         ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
         ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
     }
 
     @Async
-    public void createPENCFile()
-    {
-        File imgToSave = saveJpegImage(imgPENClient.getImage());
-        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
-    }
-
-    @Async
     public void createPixabayPhotos()
     {
+        if(!pixabayService.isRateLimited())
+        {
+            log.warn("Pixabay api request limit is over");
+            return;
+        }
         List<byte[]> photosData = Stream.concat(
                 pixabayService.getFemaleImages().stream(),
                 pixabayService.getMaleImages().stream()
         ).toList();
+
+        for (byte[] photoData: photosData)
+        {
+            if (isReg(photoData))
+            {
+                log.warn("Image Pixabay already register");
+                return;
+            }
+        }
 
         for (byte[] photoData : photosData)
         {
             File file = saveJpegImage(photoData);
             ImgUtil.horizontalFlipImage(file.getAbsolutePath());
         }
+    }
+
+    @Async
+    public void createPENCFile()
+    {
+        byte[] imgData = imgPENClient.getImage();
+        if (isReg(imgData))
+        {
+            log.warn("Image PENCFile already register");
+            return;
+        }
+        File imgToSave = saveJpegImage(imgData);
+        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
     }
 
     public String getRandImgPath()
@@ -122,23 +168,60 @@ public class ImgService
         return FileUtil.fileExits(getFullImgPath(name));
     }
 
-    public String sendToCSS(String gender, String imgName)
+    public String saveToCSS(String gender, String imgName)
     {
-        contentStoragePub.sendMsq(new File(getFullImgPath(imgName)), gender);
+        contentStoragePub.sendMsq(createSaveResponse(gender, imgName));
         deleteByName(imgName);
         return "Success";
     }
 
-    public String deleteByName(String name)
+    public String regToCSS(String imgName)
+    {
+        contentStoragePub.sendMsq(createRegResponse("male", imgName));
+        deleteByName(imgName);
+        return "Success";
+    }
+
+    private ImgAvaDto createRegResponse(String gender, String imgName)
+    {
+        ImgAvaDto regResponse = createGenResponse(gender, imgName);
+        regResponse.setOperation(Operation.REG);
+        return regResponse;
+    }
+
+    private ImgAvaDto createSaveResponse(String gender, String imgName)
+    {
+        ImgAvaDto regResponse = createGenResponse(gender, imgName);
+        regResponse.setOperation(Operation.SAVE);
+        return regResponse;
+    }
+
+    private ImgAvaDto createGenResponse(String gender, String imgName)
+    {
+        File imgFile = new File(getFullImgPath(imgName));
+        ImgAvaDto genResponse = new ImgAvaDto();
+        genResponse.setName(imgName);
+        genResponse.setBase64(
+                new String(
+                        Base64Util.encode(
+                                FileUtil.getFileBytes(
+                                        imgFile.getAbsolutePath()
+                                )
+                        )
+                )
+        );
+        genResponse.setGender(gender);
+        return genResponse;
+    }
+
+    public void deleteByName(String name)
     {
         String namePath = getFullImgPath(name);
         if(FileUtil.fileExits(namePath))
         {
             FileUtil.removeFile(namePath);
             log.info("Removed img {}", namePath);
-            return "Success";
         }
-        return "File not exists";
     }
 
     public Optional<File> getByName(String name)
@@ -155,6 +238,11 @@ public class ImgService
                 .stream()
                 .map(file -> FileUtil.getName(file.getAbsolutePath()))
                 .toList();
+    }
+
+    private boolean isReg(byte[] data)
+    {
+        return cssClient.checkObjectExists(data);
     }
 
     private File saveJpegImage(byte[] imgData)
