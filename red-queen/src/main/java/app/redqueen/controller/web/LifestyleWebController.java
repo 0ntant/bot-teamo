@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "lifestyle")
+@RequestMapping("web/lifestyle")
 public class LifestyleWebController
 {
     @Autowired

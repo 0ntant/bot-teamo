@@ -1,4 +1,4 @@
-const BASE_URL = window.location.protocol +'//'+ window.location.host
+const BASE_URL = window.location.protocol +'//'+ window.location.host + '/red_queen'
 const user_create_bot = BASE_URL+'/user-teamo/send-message';
 const user_get_users_data = BASE_URL+'/user-teamo/get/user-chat-partners/';
 const user_get_chat = BASE_URL + '/teamo-message/get/chat/';

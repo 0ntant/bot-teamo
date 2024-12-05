@@ -23,7 +23,7 @@
     <div th:replace="~{fragments/header :: header}"></div>
     <div class="images">
         <tr th:each="photo: ${photos}">
-            <a th:href="@{'~/user-teamo/get/info/' + ${photo.getUserId()}}">
+            <a th:href="@{'~/red_queen/web/user-teamo/get/info/' + ${photo.getUserId()}}">
                 <img th:src="${photo.getUrl()}">
             </a>
         </tr>

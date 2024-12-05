@@ -18,6 +18,7 @@ import java.util.List;
 public class UserTeamoFullInfoDto
 {
     Long id;
+    Boolean botWritable;
     String createSource;
     String name;
     Integer age;
@@ -45,6 +46,7 @@ public class UserTeamoFullInfoDto
         return UserTeamoFullInfoDto.builder()
                 .id(userTeamo.getId())
                 .createSource(userTeamo.getCreateSource())
+                .botWritable(userTeamo.getBotWritable())
                 .name(userTeamo.getName())
                 .age(userTeamo.getAge())
                 .generalAttributeList(

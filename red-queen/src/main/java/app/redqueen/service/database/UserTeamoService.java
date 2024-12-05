@@ -1,5 +1,6 @@
 package app.redqueen.service.database;
 
+import app.redqueen.dto.input.UserTeamoEditDto;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.repository.UserTeamoRepository;
 import lombok.Getter;
@@ -29,6 +30,15 @@ public class UserTeamoService
     public List<UserTeamo> findUsersWithToken()
     {
         return userTeamoRepository.findUserWithToken();
+    }
+
+    public void editUser(Long userId ,UserTeamoEditDto userEditData)
+    {
+        UserTeamo userToEdit = findById(userId);
+        userToEdit.setBotWritable(userEditData.botWritable());
+
+        log.info("Edit user-teamo id={}", userToEdit.getId());
+        save(userToEdit);
     }
 
     public UserTeamo findById(long id)

@@ -3,7 +3,6 @@ package app.service.controller.rest;
 import app.service.dto.output.ImgDto;
 import app.service.model.ImageAvatar;
 import app.service.service.ImageAvatarService;
-import app.service.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class ImgAvatarController
     @Autowired
     ImageAvatarService imgAvatarServ;
 
-    @GetMapping("get/info-base64-struct/by-gender")
+    @GetMapping("get/info-imgData-struct/by-gender")
     public ImgDto getInfoStrutByGender(@RequestParam("gender") String gender)
     {
         ImageAvatar imageAvatar = imgAvatarServ.getRandByGender(validateGender(gender));

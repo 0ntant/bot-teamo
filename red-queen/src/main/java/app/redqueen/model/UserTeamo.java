@@ -112,6 +112,10 @@ public class UserTeamo implements Cloneable
     @Column(name="create_source")
     private String createSource = "Untraceable create source";
 
+    @Builder.Default
+    @Column(name="bot_writable")
+    private Boolean botWritable = true;
+
     @Override
     public UserTeamo clone()
     {

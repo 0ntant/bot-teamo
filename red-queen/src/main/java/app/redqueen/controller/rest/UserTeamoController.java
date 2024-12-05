@@ -2,6 +2,7 @@ package app.redqueen.controller.rest;
 
 import app.redqueen.dto.input.BotDto;
 import app.redqueen.dto.input.MessageDto;
+import app.redqueen.dto.input.UserTeamoEditDto;
 import app.redqueen.dto.input.UserTeamoOrderDto;
 import app.redqueen.dto.output.TeamoUserDto;
 import app.redqueen.dto.output.UserTeamoDto;
@@ -119,7 +120,7 @@ public class UserTeamoController
     }
 
     @PostMapping("create/clone/user/{id}")
-    private String createClone(@PathVariable("id") long id)
+    public String createClone(@PathVariable("id") long id)
     {
         UserTeamo userTeamo = userTeamoService.findById(id);
         try
@@ -132,6 +133,14 @@ public class UserTeamoController
             ex.printStackTrace();
             return "Failed";
         }
+        return "Success";
+    }
+
+    @PostMapping("edit/user/{id}")
+    public String editUser(@RequestBody UserTeamoEditDto editData,
+                            @PathVariable("id") Long id)
+    {
+        userTeamoService.editUser(id, editData);
         return "Success";
     }
 }

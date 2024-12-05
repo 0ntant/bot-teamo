@@ -29,7 +29,8 @@ public class ImgController
 
         return new ImgDto(
                 FileUtil.getName(imgPath),
-                Base64Util.encode(FileUtil.getFileBytes(imgPath))
+            //    Base64Util.encode(FileUtil.getFileBytes(imgPath))
+                FileUtil.getFileBytes(imgPath)
         );
     }
 

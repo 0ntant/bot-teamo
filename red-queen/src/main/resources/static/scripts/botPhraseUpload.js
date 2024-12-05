@@ -1,4 +1,4 @@
-const BASE_URL = window.location.protocol +'//'+ window.location.host
+const BASE_URL = window.location.protocol +'//'+ window.location.host + '/red_queen'
 const bot_phrase_create = BASE_URL+'/bot-phrases/create';
 
 async function handleClick(event)

@@ -8,7 +8,7 @@
     <div th:replace="~{fragments/header :: header}"></div>
     <h1>Bot phrase type list</h1>
     <tr th:each="botPhraseType: ${botPhraseTypes}">
-        <a th:href="@{~/bot-phrases/get/list/by-type-title(typeTitle=${botPhraseType.getTitle()})}"/>
+        <a th:href="@{~/red_queen/web/bot-phrases/get/list/by-type-title(typeTitle=${botPhraseType.getTitle()})}"/>
             <td th:text="${botPhraseType.getId()}"/>   <td th:text="${botPhraseType.getTitle()}"/> </a><br>
     </tr>
 </body>

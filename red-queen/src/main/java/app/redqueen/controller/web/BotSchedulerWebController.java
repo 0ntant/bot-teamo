@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "scheduler-bot")
+@RequestMapping(path = "web/scheduler-bot")
 public class BotSchedulerWebController
 {
     @Autowired

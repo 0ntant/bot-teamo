@@ -2,37 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Image validator</title>
+    <title>Image Validator</title>
     <style>
-        .button {
-          background-color: #04AA6D; /* Green */
-          border: none;
-          color: white;
-          padding: 15px 32px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 16px;
-          margin: 4px 2px;
-          cursor: pointer;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            margin: 0;
+            padding: 0;
         }
-        .button2 {background-color: #008CBA;} /* Blue */
-        .button3 {background-color: #f44336;  width:250px;} /* Red */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+        .button {
+            background-color: #04AA6D; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .button2 {
+            background-color: #008CBA; /* Blue */
+        }
+        .button3 {
+            background-color: #f44336;
+            width: 250px;
+        }
+        .image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #get_img {
+            width: 80%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .requests {
+            flex: 1;
+            margin-left: 20px;
+        }
+        textarea {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
     </style>
-    <script
-            type="text/javascript" th:src ="@{/js/sendImg.js}">
-    </script>
+    <script type="text/javascript" th:src="@{/js/sendImg.js}"></script>
+    <script type="text/javascript" th:src="@{/js/gengerRequests.js}"></script>
+</head>
 <body onload="setImg()">
-<p>
+<div class="controls">
     <button class="button" onclick="sendFemale()">Female</button>
     <button class="button button2" onclick="sendMale()">Male</button>
     <button class="button button3" onclick="deleteImg()">DELETE</button>
-</p>
+</div>
 
+<div class="image-container">
+    <img id="get_img">
+    <div id="hidden-img-name" hidden="hidden">ImgName</div>
+</div>
 
-<img id="get_img" style="width: 30%; height: auto;">
+<div class="requests">
+    <h2>Male Requests</h2>
+    <textarea id="male_requests" rows="5" cols="33" th:text="${maleRequests}"></textarea>
+    <button onclick="sendMaleReq()">Send</button>
 
-<div id="hidden-img-name" hidden="hidden">ImgName</div>
+    <h2>Female Requests</h2>
+    <textarea id="female_requests" rows="5" cols="33" th:text="${femaleRequests}"></textarea>
+    <button onclick="sendFemaleReq()">Send</button>
+</div>
 </body>
 </html>
-

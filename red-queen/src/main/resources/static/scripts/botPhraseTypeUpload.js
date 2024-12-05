@@ -1,4 +1,4 @@
-const BASE_URL = window.location.protocol +'//'+ window.location.host
+const BASE_URL = window.location.protocol +'//'+ window.location.host + '/red_queen'
 const bot_phrase_type_create = BASE_URL+'/bot-phrases-type/create';
 
 async function handleFile(event)

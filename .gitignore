@@ -4,25 +4,41 @@
 red-queen/target/*
 red-queen/.idea
 red-queen/src/main/resources/application.yml
+red-queen/src/main/resources/application-test.yml.yml
 
 img-generator/.idea
 img-generator/src/main/resources/application.yml
+img-generator/src/main/resources/application-test.yml
+img-generator/test/**/*.jpg
+img-generator/test/**/*.png
 img-generator/target/*
 img-generator/src/main/resources/images/*
 
 content-storage-service/.idea
 content-storage-service/src/main/resources/application.yml
+content-storage-service/src/main/resources/application-test.yml.yml
 content-storage-service/target/*
 content-storage-service/src/main/resources/files/*
 
 teamo-auto-reg/.idea
 teamo-auto-reg/src/main/resources/application.yml
+teamo-auto-reg/src/main/resources/application-test.yml.yml
 teamo-auto-reg/src/main/resources/selenium/chromedriver
 teamo-auto-reg/src/main/resources/temp/*
+teamo-auto-reg/src/test/resources/*/*.png
 teamo-auto-reg/target/*
 
 proxy-provider/.idea
 proxy-provider/.attach_pid*
 proxy-provider/src/main/resources/application.yml
+proxy-provider/src/main/resources/application-test.yml.yml
 proxy-provider/src/main/resources/free-proxy-list/*
 proxy-provider/src/main/resources/free-proxy-list
+
+gateway-api/.idea
+gateway-api/src/main/resources/application.yml
+gateway-api/target/*
+
+docker-compose-local-test.yml
+docker-compose-local.yml
+docker-compose.yml

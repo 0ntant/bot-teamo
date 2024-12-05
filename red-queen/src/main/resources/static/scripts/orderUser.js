@@ -1,4 +1,4 @@
-const BASE_URL = window.location.protocol +'//'+ window.location.host
+const BASE_URL = window.location.protocol +'//'+ window.location.host + '/red_queen'
 const user_create_order = BASE_URL+'/user-teamo/create/order';
 
 async function copyUser(userId)

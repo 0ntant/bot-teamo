@@ -22,6 +22,9 @@
 <script
         th:src ="@{/scripts/orderUser.js}">
 </script>
+<script
+        th:src ="@{/scripts/editUser.js}">
+</script>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
     <p>
@@ -48,7 +51,10 @@
     <p>
         Gender: <td th:text="${userTeamo.getGender()}"></td>
     </p>
-
+    <p>
+        <label for="checked">Writable for bots:</label>
+        <input th:onchange="@{'editUser(' + ${userTeamo.getId()} + ')'}" type="checkbox" th:checked="${userTeamo.getBotWritable()}" id="bot_writable" />
+    </p>
     <p>
         <button th:onclick="@{'copyUser(' + ${userTeamo.getId()} + ')'}" style="height:30px;width:100px">
 

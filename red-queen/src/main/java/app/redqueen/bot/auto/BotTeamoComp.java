@@ -54,6 +54,8 @@ public class BotTeamoComp implements Runnable
             checkMessagesFromUsers(userToSendMessages);
             waitingSec(50, 290);
 
+            userToSendMessages = deleteNotBotWritableUsers(userToSendMessages);
+
             generateDialogs(userToSendMessages);
             waitingSec(34, 99);
 
@@ -79,6 +81,7 @@ public class BotTeamoComp implements Runnable
 
         checkMessagesFromUsers(partners);
     }
+
 
     public List<UserTeamo> getUsersToWriteMessages()
     {
@@ -206,6 +209,22 @@ public class BotTeamoComp implements Runnable
             }
         }
         return usersWithoutToken;
+    }
+
+    public List<UserTeamo> deleteNotBotWritableUsers(List<UserTeamo> userTeamoList)
+    {
+        List<UserTeamo> writableUsers = new ArrayList<>();
+
+        for (UserTeamo user : userTeamoList)
+        {
+            UserTeamo userToCheck = dbService.getUserById(user.getId());
+            if (userToCheck.getBotWritable())
+            {
+                writableUsers.add(userToCheck);
+            }
+        }
+
+        return writableUsers;
     }
 
     public List<UserTeamo> getUserLikeList()

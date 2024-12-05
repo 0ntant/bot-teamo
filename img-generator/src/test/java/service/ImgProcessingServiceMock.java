@@ -101,7 +101,8 @@ public class ImgProcessingServiceMock
     }
 
     @Test
-    public void cutRight_saveImg() throws Exception {
+    public void cutRight_saveImg() throws Exception
+    {
         //given
         File imgToFlip = new File("src/test/java/service/imgInstance.jpg");
         File cutRight = new File("src/test/java/service/cutRight.jpg");
@@ -109,6 +110,7 @@ public class ImgProcessingServiceMock
         {
             Files.delete(Path.of(cutRight.getAbsolutePath()));
         }
+
         //then
         byte [] imgDataToFlip = Files.readAllBytes(
                 Path.of(imgToFlip.getAbsolutePath()
@@ -116,6 +118,7 @@ public class ImgProcessingServiceMock
         );
         byte[] flippedImgData = imgProcessingService.cutRight(imgDataToFlip, 50);
         Files.write(Path.of(cutRight.getAbsolutePath()), flippedImgData);
+
         //expected
         assertNotEquals(flippedImgData, imgDataToFlip);
         assertTrue(imgToFlip.exists());

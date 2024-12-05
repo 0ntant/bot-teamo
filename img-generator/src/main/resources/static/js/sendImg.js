@@ -1,4 +1,4 @@
-const BASE_URL = window.location.protocol +'//'+ window.location.host
+const BASE_URL = window.location.protocol +'//'+ window.location.host + '/img_generator'
 const IMG_DTO_URL = BASE_URL + "/img"
 
 

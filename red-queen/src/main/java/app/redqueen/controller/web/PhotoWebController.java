@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "photo")
+@RequestMapping("web/photo")
 public class PhotoWebController
 {
     @Autowired

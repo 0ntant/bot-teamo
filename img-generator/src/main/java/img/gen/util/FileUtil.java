@@ -62,8 +62,8 @@ public class FileUtil
         catch (Exception ex)
         {
             ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
-        return new byte[0];
     }
 
     public static void removeFile(String path)

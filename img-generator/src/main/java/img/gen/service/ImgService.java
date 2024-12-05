@@ -3,9 +3,7 @@ package img.gen.service;
 import img.gen.integration.mq.ContentStoragePub;
 import img.gen.integration.rest.CSSClient;
 import img.gen.integration.rest.PersonNotExistImgClient;
-import img.gen.util.Base64Util;
 import img.gen.util.FileUtil;
-import img.gen.util.ImgUtil;
 import img.gen.util.StrUtil;
 import integration.dto.ImgAvaDto.ImgAvaDto;
 import integration.dto.ImgAvaDto.Operation;
@@ -52,10 +50,13 @@ public class ImgService
     @Autowired
     CSSClient cssClient;
 
+    @Autowired
+    ImgProcessingService imgProcessingServ;
+
     @Async
     public void createImg()
     {
-        if(getImgCurCount() <= getImageCount())
+        if(getImgCurCount() < getImageCount())
         {
             log.info("Create image");
             createPENCFile();
@@ -73,11 +74,24 @@ public class ImgService
             log.warn("Pexels api request limit is over");
             return;
         }
-        File femaleImg = saveJpegImage(pexelsService.getFemaleImage());
-        File maleImg = saveJpegImage(pexelsService.getMaleImage());
 
-        ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
-        ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
+        byte[] maleImgData = imgProcessingServ.horizontalFlip(
+                pexelsService.getMaleImage());
+        byte[] femaleImgData = imgProcessingServ.horizontalFlip(
+                pexelsService.getFemaleImage()
+        );
+
+        if (isReg(maleImgData) || isReg(femaleImgData) )
+        {
+            log.warn("One of Pexels image already register");
+            return;
+        }
+
+        saveJpegImage(femaleImgData);
+        saveJpegImage(maleImgData);
+
+//        ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
+//        ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
     }
 
     @Async
@@ -89,8 +103,11 @@ public class ImgService
             return;
         }
 
-        byte[] maleImgData = unsplashService.getMaleImage();
-        byte[] femaleImgData = unsplashService.getFemaleImage();
+        byte[] maleImgData = imgProcessingServ.horizontalFlip(
+                unsplashService.getMaleImage());
+        byte[] femaleImgData = imgProcessingServ.horizontalFlip(
+                unsplashService.getFemaleImage()
+        );
 
         if (isReg(maleImgData) || isReg(femaleImgData) )
         {
@@ -98,11 +115,10 @@ public class ImgService
             return;
         }
 
-        File femaleImg = saveJpegImage(femaleImgData);
-        File maleImg = saveJpegImage(maleImgData);
-
-        ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
-        ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
+        saveJpegImage(femaleImgData);
+        saveJpegImage(maleImgData);
+       // ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
+       // ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
     }
 
     @Async
@@ -114,8 +130,12 @@ public class ImgService
             return;
         }
         List<byte[]> photosData = Stream.concat(
-                pixabayService.getFemaleImages().stream(),
-                pixabayService.getMaleImages().stream()
+                pixabayService.getFemaleImages()
+                        .stream()
+                        .map(img -> imgProcessingServ.horizontalFlip(img)),
+                pixabayService.getMaleImages()
+                        .stream()
+                        .map(img -> imgProcessingServ.horizontalFlip(img))
         ).toList();
 
         for (byte[] photoData: photosData)
@@ -130,21 +150,25 @@ public class ImgService
         for (byte[] photoData : photosData)
         {
             File file = saveJpegImage(photoData);
-            ImgUtil.horizontalFlipImage(file.getAbsolutePath());
+//            ImgUtil.horizontalFlipImage(file.getAbsolutePath());
         }
     }
 
     @Async
     public void createPENCFile()
     {
-        byte[] imgData = imgPENClient.getImage();
+        byte[] imgData = imgProcessingServ.cutBottom(
+                imgPENClient.getImage(),
+                25
+        );
+
         if (isReg(imgData))
         {
             log.warn("Image PENCFile already register");
             return;
         }
         File imgToSave = saveJpegImage(imgData);
-        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
+//        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
     }
 
     public String getRandImgPath()
@@ -170,44 +194,59 @@ public class ImgService
 
     public String saveToCSS(String gender, String imgName)
     {
-        contentStoragePub.sendMsq(createSaveResponse(gender, imgName));
+        contentStoragePub.sendMsq(createSaveRequest(gender, imgName));
         deleteByName(imgName);
         return "Success";
     }
 
     public String regToCSS(String imgName)
     {
-        contentStoragePub.sendMsq(createRegResponse("male", imgName));
+        contentStoragePub.sendMsq(createRegRequest("male", imgName));
         deleteByName(imgName);
         return "Success";
     }
 
-    private ImgAvaDto createRegResponse(String gender, String imgName)
+    public void regToCSS(byte[] imgData, String imgName)
     {
-        ImgAvaDto regResponse = createGenResponse(gender, imgName);
+        contentStoragePub.sendMsq(new ImgAvaDto(
+            Operation.REG,
+            imgName,
+            "male",
+            imgData
+        ));
+    }
+
+    private ImgAvaDto createRegRequest(String gender, String imgName)
+    {
+        ImgAvaDto regResponse = createGenRequest(gender, imgName);
         regResponse.setOperation(Operation.REG);
         return regResponse;
     }
 
-    private ImgAvaDto createSaveResponse(String gender, String imgName)
+    private ImgAvaDto createSaveRequest(String gender, String imgName)
     {
-        ImgAvaDto regResponse = createGenResponse(gender, imgName);
+        ImgAvaDto regResponse = createGenRequest(gender, imgName);
         regResponse.setOperation(Operation.SAVE);
         return regResponse;
     }
 
-    private ImgAvaDto createGenResponse(String gender, String imgName)
+    private ImgAvaDto createGenRequest(String gender, String imgName)
     {
         File imgFile = new File(getFullImgPath(imgName));
         ImgAvaDto genResponse = new ImgAvaDto();
         genResponse.setName(imgName);
-        genResponse.setBase64(
-                new String(
-                        Base64Util.encode(
-                                FileUtil.getFileBytes(
-                                        imgFile.getAbsolutePath()
-                                )
-                        )
+//        genResponse.setImgData(
+//                new String(
+//                        Base64Util.encode(
+//                                FileUtil.getFileBytes(
+//                                        imgFile.getAbsolutePath()
+//                                )
+//                        )
+//                )
+//        );
+        genResponse.setImgData(
+                FileUtil.getFileBytes(
+                        imgFile.getAbsolutePath()
                 )
         );
         genResponse.setGender(gender);
@@ -240,7 +279,7 @@ public class ImgService
                 .toList();
     }
 
-    private boolean isReg(byte[] data)
+    public boolean isReg(byte[] data)
     {
         return cssClient.checkObjectExists(data);
     }

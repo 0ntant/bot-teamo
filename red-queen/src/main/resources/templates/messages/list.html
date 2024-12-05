@@ -9,8 +9,8 @@
     <tr th:each="message: ${messages}">
         <div style="border:solid">
             <p>Id :<td th:text="${message.getId()}"></td> </p>
-           <p>Sender:  <a th:href="@{'~/user-teamo/get/info/' + ${message.getSenderId()}}"><b> <td th:text="${message.getSenderName()}"></td></b></a></p>
-            <p>Receiver:  <a th:href="@{'~/user-teamo/get/info/' + ${message.getReceiverId()}}"> <b> <td th:text="${message.getReceiverName()}"></td></b></a></p>
+           <p>Sender:  <a th:href="@{'~/red_queen/web/user-teamo/get/info/' + ${message.getSenderId()}}"><b> <td th:text="${message.getSenderName()}"></td></b></a></p>
+            <p>Receiver:  <a th:href="@{'~/red_queen/web/user-teamo/get/info/' + ${message.getReceiverId()}}"> <b> <td th:text="${message.getReceiverName()}"></td></b></a></p>
            <p>Body:  <td th:text="${message.getBody()}"></td></p>
            <p>Date:  <td th:text="${message.getDate()}"></td></p>
         </div>

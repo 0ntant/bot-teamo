@@ -21,6 +21,6 @@ public class ImgAvaDto implements Serializable
     @JsonProperty("gender")
     String gender;
 
-    @JsonProperty("base64")
-    String base64;
+    @JsonProperty("imgData")
+    byte[] imgData;
 }

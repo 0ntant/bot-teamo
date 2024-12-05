@@ -92,7 +92,7 @@ public class FileUtil
         return false;
     }
 
-    public static File save(String path, byte[] bytes)
+    public static File write(String path, byte[] bytes)
     {
         try
         {

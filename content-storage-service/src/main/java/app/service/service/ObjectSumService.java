@@ -4,9 +4,11 @@ import app.service.model.ImageAvatar;
 import app.service.model.ObjectSum;
 import app.service.repository.ObjectSumRepository;
 import app.service.util.HashUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class ObjectSumService
 {
@@ -25,7 +27,9 @@ public class ObjectSumService
 
     private boolean isObjectReg(String objectHash)
     {
-        return objectSumRep.findByObjectHash(objectHash).isPresent();
+        return objectSumRep
+                .findByObjectHash(objectHash)
+                .isPresent();
     }
 
     public void save(byte[] data)

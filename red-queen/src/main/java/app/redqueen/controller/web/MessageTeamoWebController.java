@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "teamo-message")
+@RequestMapping("web/teamo-message")
 public class MessageTeamoWebController
 {
     @Autowired

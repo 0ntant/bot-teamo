@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("bot-phrases-type")
+@RequestMapping("web/bot-phrases-type")
 public class BotPhrasesTypeWebController
 {
     @Autowired

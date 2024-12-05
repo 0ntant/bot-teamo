@@ -21,7 +21,9 @@
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",
-                        "callerLine": "%line",
+                        "callerClass": "%class",
+                        "callerMethod": "%method",
+                        "callerLine": "#asLong{%line}",
                         "text": "%message",
                         "stack": "%throwable"
                         }

@@ -3,10 +3,8 @@ package app.service.service;
 import app.service.mapper.ImageAvatarMapper;
 import app.service.model.ImageAvatar;
 import app.service.repository.ImageAvatarRepository;
-import app.service.util.Base64Util;
 import app.service.util.FileUtil;
 import integration.dto.ImgAvaDto.ImgAvaDto;
-import integration.dto.ImgAvaDto.Operation;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
-import static integration.dto.ImgAvaDto.Operation.SAVE;
 
 @Slf4j
 @Service
@@ -31,6 +28,9 @@ public class ImageAvatarService
 
     @Autowired
     ObjectSumService objectSumService;
+
+    @Autowired
+    FileValidatorService fileValidatorServ;
 
     int limitSizeMB = 10;
 
@@ -55,18 +55,23 @@ public class ImageAvatarService
                 ImageAvatarMapper.map(imgAvaDto, getFullImgPath(imgAvaDto.getName()));
         save(
                 imageAvatarToSave,
-                Base64Util.decode(imgAvaDto.getBase64().getBytes())
+//                Base64Util.decode(imgAvaDto.getImgData().getBytes())
+                imgAvaDto.getImgData()
         );
     }
 
     private boolean isFileValidForSave(ImgAvaDto imgAvaDto)
     {
-        byte[] fileData = Base64Util.decode(imgAvaDto.getBase64().getBytes());
-        int fileDataSizeMB = fileData.length/1024/1024 ;
+//      byte[] fileData = Base64Util.decode(imgAvaDto.getImgData().getBytes());
+        byte[] fileData = imgAvaDto.getImgData();
+        int fileDataSizeMB = fileData.length/1024/1024;
         if (fileDataSizeMB > limitSizeMB)
         {
             regImageAvatar(imgAvaDto);
-            log.error("File {} too large to be teamo avatar", imgAvaDto.getName());
+            log.error(
+                    "File {} too large to be teamo avatar",
+                    imgAvaDto.getName()
+            );
             return false;
         }
         return true;
@@ -74,12 +79,13 @@ public class ImageAvatarService
 
     private void regImageAvatar(ImgAvaDto imgAvaDto)
     {
-        byte[] dataToReg = Base64Util.decode(
-                imgAvaDto.getBase64().getBytes()
-        );
+//        byte[] dataToReg = Base64Util.decode(
+//                imgAvaDto.getImgData().getBytes()
+//        );
+        byte[] dataToReg = imgAvaDto.getImgData();
         if (objectSumService.isObjectReg(dataToReg))
         {
-            log.warn("Img {} already register" , imgAvaDto.getName());
+            log.warn("Img {} already register", imgAvaDto.getName());
             return;
         }
         log.info("Registration file {}", imgAvaDto.getName());
@@ -88,8 +94,13 @@ public class ImageAvatarService
 
     private void save(ImageAvatar imageAvatar, byte[] imgBytes)
     {
-        objectSumService.save(imgBytes,imageAvatar);
-        FileUtil.save(imageAvatar.getPath(), imgBytes);
+        if(!fileValidatorServ.isImgValid(imgBytes))
+        {
+            log.error("Image avatar file invalid {}", imageAvatar.getPath());
+            return;
+        }
+        objectSumService.save(imgBytes, imageAvatar);
+        FileUtil.write(imageAvatar.getPath(), imgBytes);
     }
 
     public long count()
@@ -115,7 +126,7 @@ public class ImageAvatarService
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("No images in database"));
-        byte[] imgBytes =  FileUtil.getBytes(imageAvatar.getPath());
+        byte[] imgBytes = FileUtil.getBytes(imageAvatar.getPath());
         imageAvatar.getObjectSum().setImageAvatar(null);
         imageRep.delete(imageAvatar);
         FileUtil.remove(imageAvatar.getPath());

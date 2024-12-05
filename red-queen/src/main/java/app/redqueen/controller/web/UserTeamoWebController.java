@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "user-teamo")
+@RequestMapping("web/user-teamo")
 public class UserTeamoWebController
 {
     @Autowired

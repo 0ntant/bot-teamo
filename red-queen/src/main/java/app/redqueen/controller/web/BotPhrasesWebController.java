@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@RequestMapping("bot-phrases")
+@RequestMapping("web/bot-phrases")
 @Controller
 public class BotPhrasesWebController
 {

@@ -1,4 +1,4 @@
-package app.service.integration.mq;
+package app.service.integration.imgGenerator;
 
 
 import app.service.service.ImageAvatarService;

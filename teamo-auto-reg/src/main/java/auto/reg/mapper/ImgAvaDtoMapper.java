@@ -10,7 +10,7 @@ public class ImgAvaDtoMapper
         return new ImgAvaDto(
                 jsonResponse.path("name").asText(),
                 jsonResponse.path("gender").asText(),
-                jsonResponse.path("base64").asText()
+                jsonResponse.path("imgData").asText()
         );
     }
 }

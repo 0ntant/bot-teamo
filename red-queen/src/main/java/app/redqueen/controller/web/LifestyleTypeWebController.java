@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "lifestyle-type")
+@RequestMapping("web/lifestyle-type")
 public class LifestyleTypeWebController
 {
     @Autowired
