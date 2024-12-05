@@ -1,10 +1,10 @@
 .idea
 .docker-compose.yml.kate-swp
 
-red-queen/target/*
 red-queen/.idea
+red-queen/target/*
 red-queen/src/main/resources/application.yml
-red-queen/src/main/resources/application-test.yml.yml
+red-queen/src/main/resources/application-test.yml
 
 img-generator/.idea
 img-generator/src/main/resources/application.yml
@@ -16,7 +16,7 @@ img-generator/src/main/resources/images/*
 
 content-storage-service/.idea
 content-storage-service/src/main/resources/application.yml
-content-storage-service/src/main/resources/application-test.yml.yml
+content-storage-service/src/main/resources/application-test.yml
 content-storage-service/target/*
 content-storage-service/src/main/resources/files/*
 content-storage-service/src/test/**/*.jpg
@@ -33,7 +33,7 @@ teamo-auto-reg/target/*
 proxy-provider/.idea
 proxy-provider/.attach_pid*
 proxy-provider/src/main/resources/application.yml
-proxy-provider/src/main/resources/application-test.yml.yml
+proxy-provider/src/main/resources/application-test.yml
 proxy-provider/src/main/resources/free-proxy-list/*
 proxy-provider/src/main/resources/free-proxy-list
 
