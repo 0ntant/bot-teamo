@@ -9,8 +9,8 @@ red-queen/src/main/resources/application-test.yml.yml
 img-generator/.idea
 img-generator/src/main/resources/application.yml
 img-generator/src/main/resources/application-test.yml
-img-generator/test/**/*.jpg
-img-generator/test/**/*.png
+img-generator/src/test/**/*.jpg
+img-generator/src/test/**/*.png
 img-generator/target/*
 img-generator/src/main/resources/images/*
 
@@ -19,10 +19,12 @@ content-storage-service/src/main/resources/application.yml
 content-storage-service/src/main/resources/application-test.yml.yml
 content-storage-service/target/*
 content-storage-service/src/main/resources/files/*
+content-storage-service/src/test/**/*.jpg
+
 
 teamo-auto-reg/.idea
 teamo-auto-reg/src/main/resources/application.yml
-teamo-auto-reg/src/main/resources/application-test.yml.yml
+teamo-auto-reg/src/main/resources/application-test.yml
 teamo-auto-reg/src/main/resources/selenium/chromedriver
 teamo-auto-reg/src/main/resources/temp/*
 teamo-auto-reg/src/test/resources/*/*.png
