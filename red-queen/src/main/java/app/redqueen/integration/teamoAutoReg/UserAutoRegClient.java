@@ -1,6 +1,5 @@
 package app.redqueen.integration.teamoAutoReg;
 
-import app.redqueen.dto.integration.input.ImgDto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;

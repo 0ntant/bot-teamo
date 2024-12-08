@@ -17,9 +17,9 @@ public class ImgGeneratorClientConfig
     String urlHorizontalFlipUrl;
 
     @Bean
-    ImgGeneratorClient imgGeneratorClient()
+    ImgGeneratorClient imgGeneratorClient(RestTemplateBuilder restTemplateBuilder)
     {
-        RestTemplate restTemplate = new RestTemplateBuilder()
+        RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())

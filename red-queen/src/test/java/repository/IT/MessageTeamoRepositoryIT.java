@@ -1,6 +1,6 @@
 package repository.IT;
 
-import app.redqueen.Main;
+import app.redqueen.RedQueen;
 import app.redqueen.model.MessageTeamo;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.repository.MessageTeamoRepository;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @Sql(scripts = "classpath:sql-script/dao/MessageTeamoDAO-testData.sql")
 public class MessageTeamoRepositoryIT extends AbstractContainerIT
 {

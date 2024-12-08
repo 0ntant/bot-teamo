@@ -27,7 +27,7 @@ public class PixabayClientConfig
     GeneralClient generalClient;
 
     @Bean
-    PixabayClient pixabayClient()
+    PixabayClient pixabayClient(RestTemplateBuilder restTemplateBuilder)
     {
         RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
                 .limitForPeriod(100)
@@ -36,7 +36,7 @@ public class PixabayClientConfig
                 .build();
 
 
-        RestTemplate restTemplate = new RestTemplateBuilder()
+        RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())

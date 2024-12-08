@@ -109,7 +109,7 @@ services:
       - '7900:7900'
 
   img-generator:
-    image: img-generator:1.8.0
+    image: img-generator:1.9.0
     container_name: img-generator
     environment:
       TZ: Europe/Moscow
@@ -138,6 +138,8 @@ services:
       spring.rabbitmq.port: 5672
       spring.rabbitmq.pub.css.route-key: file.img.ava
       spring.rabbitmq.pub.css.exc: img-ava-exc
+      SPRING_RABBITMQ_LISTENER_SIMPLE_OBSERVATION-ENABLED: true
+      SPRING_RABBITMQ_TEMPLATE_OBSERVATION-ENABLED: true
       logging.config: /app/logback-spring.xml
       logback.destination.url: logstash
       logback.destination.port: 5000
@@ -174,6 +176,8 @@ services:
       spring.rabbitmq.host: rabbit-mq
       spring.rabbitmq.port: 5672
       spring.rabbitmq.con.img-gen.que: img-ava-que
+      SPRING_RABBITMQ_LISTENER_SIMPLE_OBSERVATION-ENABLED: true
+      SPRING_RABBITMQ_TEMPLATE_OBSERVATION-ENABLED: true
       datasource.maximumPoolSize: 10
       datasource.driverClassName: org.postgresql.Driver
       datasource.jdbcUrl: jdbc:postgresql://database:5432/content_storage_service_db

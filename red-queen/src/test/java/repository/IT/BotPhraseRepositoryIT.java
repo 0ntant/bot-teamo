@@ -1,6 +1,6 @@
 package repository.IT;
 
-import app.redqueen.Main;
+import app.redqueen.RedQueen;
 import app.redqueen.model.BotPhrase;
 import app.redqueen.repository.BotPhraseRepository;
 import app.redqueen.repository.UserTeamoRepository;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @Sql(scripts = "classpath:sql-script/dao/BotPharaseDAO-testData.sql")
 public class BotPhraseRepositoryIT extends AbstractContainerIT
 {

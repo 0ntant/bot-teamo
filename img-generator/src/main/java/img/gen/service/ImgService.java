@@ -4,6 +4,7 @@ import img.gen.integration.mq.ContentStoragePub;
 import img.gen.integration.rest.CSSClient;
 import img.gen.integration.rest.PersonNotExistImgClient;
 import img.gen.util.FileUtil;
+import img.gen.util.ImgUtil;
 import img.gen.util.StrUtil;
 import integration.dto.ImgAvaDto.ImgAvaDto;
 import integration.dto.ImgAvaDto.Operation;
@@ -15,9 +16,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.nio.file.NoSuchFileException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Service
@@ -67,6 +72,26 @@ public class ImgService
     }
 
     @Async
+    public void createPhotoFromRandChannel()
+    {
+        List<Runnable> photoChannels = List.of(
+                this::createPENCFile,
+                this::createUnsplashPhotos,
+                this::createPexelsPhotos,
+                this::createPixabayPhotos
+        );
+
+        if (getImgCurCount() < getImageCount())
+        {
+            photoChannels.get(
+                    new Random().nextInt(
+                            0,
+                            photoChannels.size())
+            ).run();
+        }
+    }
+
+    @Async
     public void createPexelsPhotos()
     {
         if (!pexelsService.isRateLimited())
@@ -89,9 +114,6 @@ public class ImgService
 
         saveJpegImage(femaleImgData);
         saveJpegImage(maleImgData);
-
-//        ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
-//        ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
     }
 
     @Async
@@ -114,11 +136,8 @@ public class ImgService
             log.warn("One of Unsplash image already register");
             return;
         }
-
         saveJpegImage(femaleImgData);
         saveJpegImage(maleImgData);
-       // ImgUtil.horizontalFlipImage(femaleImg.getAbsolutePath());
-       // ImgUtil.horizontalFlipImage(maleImg.getAbsolutePath());
     }
 
     @Async
@@ -149,8 +168,7 @@ public class ImgService
 
         for (byte[] photoData : photosData)
         {
-            File file = saveJpegImage(photoData);
-//            ImgUtil.horizontalFlipImage(file.getAbsolutePath());
+            saveJpegImage(photoData);
         }
     }
 
@@ -167,8 +185,7 @@ public class ImgService
             log.warn("Image PENCFile already register");
             return;
         }
-        File imgToSave = saveJpegImage(imgData);
-//        ImgUtil.cutImgBottom(imgToSave.getAbsolutePath(), 25);
+        saveJpegImage(imgData);
     }
 
     public String getRandImgPath()
@@ -178,8 +195,19 @@ public class ImgService
 
     public File getRandImg()
     {
-        return FileUtil.getFilesInDir(dir)
-                .get(ThreadLocalRandom.current().nextInt(0, getImgCurCount()));
+        List<File> imgFiles = FileUtil.getFilesInDir(dir)
+                .stream()
+                .filter(file -> !file.isDirectory())
+                .filter(file -> ImgUtil.isFileImgExt(file.getName()))
+                .toList();
+
+        return imgFiles.get(
+                new Random()
+                        .nextInt(
+                                0,
+                                imgFiles.size()
+                        )
+        );
     }
 
     public int getImgCurCount()

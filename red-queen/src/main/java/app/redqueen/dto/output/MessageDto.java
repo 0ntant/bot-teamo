@@ -21,6 +21,7 @@ public class MessageDto
     long receiverId;
     private String body;
     private Date date;
+    private String senderAvatar;
 
     public static MessageDto mapToMessageDto(MessageTeamo messageTeamo)
     {
@@ -32,6 +33,7 @@ public class MessageDto
                 .receiverId(messageTeamo.getUserReceiver().getId())
                 .body(messageTeamo.getBody())
                 .date(messageTeamo.getCreateDate())
+                .senderAvatar(messageTeamo.getUserSender().getPhotos().get(0).getTeamoUrl())
                 .build();
     }
 }

@@ -1,15 +1,13 @@
-package app.redqueen;
+package app.provider;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories
-public class Main
+public class ProxyProvider
 {
     public static void main(String[] args)
     {
-        SpringApplication.run(Main.class,args);
+        SpringApplication.run(ProxyProvider.class, args);
     }
 }

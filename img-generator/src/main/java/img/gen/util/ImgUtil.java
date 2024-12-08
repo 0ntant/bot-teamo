@@ -5,9 +5,12 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.File;
+import java.util.List;
 
 public class ImgUtil
 {
+    static List<String> imgExts = List.of("jpeg", "png", "jpg");
+
     public static void cutImgBottom(String filePath, int size)
     {
         validateImgExt(filePath);
@@ -155,5 +158,11 @@ public class ImgUtil
             case "jpeg","png","jpg": break;
             default: throw new RuntimeException("Invalid image ext");
         }
+    }
+
+    public static boolean isFileImgExt(String filename)
+    {
+        String fileExt = FileUtil.getExt(filename);
+        return imgExts.contains(fileExt);
     }
 }

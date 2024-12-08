@@ -20,9 +20,9 @@ public class CSSClientConfig
     String regUrl;
 
     @Bean
-    CSSClient cssClient()
+    CSSClient cssClient(RestTemplateBuilder restTemplateBuilder)
     {
-        RestTemplate restTemplate = new RestTemplateBuilder()
+        RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())

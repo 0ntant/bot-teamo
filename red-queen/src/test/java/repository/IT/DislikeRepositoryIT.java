@@ -1,6 +1,6 @@
 package repository.IT;
 
-import app.redqueen.Main;
+import app.redqueen.RedQueen;
 import app.redqueen.model.Dislike;
 import app.redqueen.repository.DislikeRepository;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @Sql(scripts = "classpath:sql-script/dao/DislikeDAO-testData.sql")
 public class DislikeRepositoryIT extends AbstractContainerIT
 {

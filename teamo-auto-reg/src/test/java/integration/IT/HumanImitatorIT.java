@@ -1,6 +1,6 @@
 package integration.IT;
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.maker.HumanImitator;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class HumanImitatorIT 
 {
     @Autowired

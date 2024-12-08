@@ -39,4 +39,11 @@ public class ImgServiceIT
                )
        );
     }
+
+    @Test
+    void getCurrImages()
+    {
+        //
+        imgService.createImg();
+    }
 }

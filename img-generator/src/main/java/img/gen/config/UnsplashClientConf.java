@@ -30,7 +30,7 @@ public class UnsplashClientConf
     GeneralClient generalClient;
 
     @Bean
-    public UnsplashClient unsplashClient()
+    public UnsplashClient unsplashClient(RestTemplateBuilder restTemplateBuilder)
     {
         RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
                 .limitForPeriod(50)
@@ -38,7 +38,7 @@ public class UnsplashClientConf
                 .timeoutDuration(Duration.ZERO)
                 .build();
 
-        RestTemplate restTemplate = new RestTemplateBuilder()
+        RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())

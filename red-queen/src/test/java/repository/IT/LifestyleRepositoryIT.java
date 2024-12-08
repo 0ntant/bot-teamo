@@ -1,6 +1,6 @@
 package repository.IT;
 
-import app.redqueen.Main;
+import app.redqueen.RedQueen;
 import app.redqueen.model.Lifestyle;
 import app.redqueen.repository.LifestyleRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @Sql(scripts = "classpath:sql-script/dao/LifestyleDAO-testData.sql")
 public class LifestyleRepositoryIT extends AbstractContainerIT
 {

@@ -14,9 +14,9 @@ import java.time.Duration;
 public class GeneralClientConfig
 {
     @Bean
-    GeneralClient generalClient()
+    GeneralClient generalClient(RestTemplateBuilder restTemplateBuilder)
     {
-        RestTemplate restTemplate = new RestTemplateBuilder()
+        RestTemplate restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())

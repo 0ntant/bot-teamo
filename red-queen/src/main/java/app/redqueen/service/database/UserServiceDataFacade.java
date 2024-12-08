@@ -50,17 +50,15 @@ public class UserServiceDataFacade
         }
         userTeamo.setLikeList(likeList);
 
-        List<Dislike> dislikeList = userTeamo.getDislikeList();
-        for (int i = 0; i < dislikeList.size(); i++) {
-            Dislike dislike = dislikeList.get(i);
+        List<Dislike> dislikeList= new ArrayList<>();
+        for (Dislike dislike : new HashSet<>(userTeamo.getDislikeList()))
+        {
             Optional<Dislike> dislikeInDb =
                     dislikeRep.findByNameAndText(
                             dislike.getName(),
                             dislike.getText()
                     );
-            if (dislikeInDb.isPresent()) {
-                dislikeList.set(i, dislikeInDb.get());
-            }
+            dislikeInDb.ifPresent(dislikeList::add);
         }
         userTeamo.setDislikeList(dislikeList);
 

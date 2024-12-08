@@ -1,6 +1,6 @@
 package integration.IT;
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.maker.LocalStorageReceiver;
 import integration.dto.UserTeamoDto;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class LocalStorageReceiverIT
 {
     @Autowired

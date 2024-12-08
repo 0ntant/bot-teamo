@@ -22,7 +22,7 @@ public class BotSchedulerController
     BotScheduler botScheduler;
 
     @GetMapping("start")
-    private String startScheduler() {
+    public String startScheduler() {
         if (botScheduler.isRunning()) {
             return "Scheduler already started";
         }
@@ -34,7 +34,7 @@ public class BotSchedulerController
         return "Scheduler started";
     }
     @GetMapping("state")
-    private String getState()
+    public String getState()
     {
         if (botScheduler.isRunning())
         {
@@ -47,7 +47,7 @@ public class BotSchedulerController
     }
 
     @GetMapping("stop")
-    private String stopScheduler()
+    public String stopScheduler()
     {
         if (botScheduler.isRunning())
         {
@@ -61,19 +61,19 @@ public class BotSchedulerController
     }
 
     @GetMapping("get/bot-pool-size")
-    private int getSchedulerBotPoolSize()
+    public int getSchedulerBotPoolSize()
     {
         return botScheduler.getUsersInPoolSize();
     }
 
     @GetMapping("get/phrases-type")
-    private List<BotSchedulerPhraseTypeDto> getSchedulerBotPhrasesType()
+    public List<BotSchedulerPhraseTypeDto> getSchedulerBotPhrasesType()
     {
         return getSchedulerBotPhrasesTypeList();
     }
 
     @PostMapping("edit/phrases-type")
-    private List<BotSchedulerPhraseTypeDto> editSchedulerBotPhrasesType(
+    public List<BotSchedulerPhraseTypeDto> editSchedulerBotPhrasesType(
             @RequestBody List<BotSchPhraseTypeDto> botTypePhrases
     )
     {

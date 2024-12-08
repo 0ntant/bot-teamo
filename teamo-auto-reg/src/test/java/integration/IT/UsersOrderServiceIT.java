@@ -1,7 +1,7 @@
 package integration.IT;
 
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.maker.DriverFactory;
 import auto.reg.service.UsersOrderService;
 import auto.reg.util.Base64Util;
@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class UsersOrderServiceIT
 {
 

@@ -39,6 +39,8 @@ public interface UserTeamoRepository extends JpaRepository<UserTeamo, Long>
             """)
     List<UserTeamo> findUserWithToken();
 
+    Page<UserTeamo> findByGender(String gender, Pageable pageable);
+
     Page<UserTeamo> findAll(Pageable pageable);
 
     List<UserTeamo> findByGender(String gender);

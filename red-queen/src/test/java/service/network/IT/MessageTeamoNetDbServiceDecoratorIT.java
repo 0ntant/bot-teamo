@@ -1,7 +1,7 @@
 package service.network.IT;
 
 
-import app.redqueen.Main;
+import app.redqueen.RedQueen;
 import app.redqueen.model.BotPhrase;
 import app.redqueen.model.MessageTeamo;
 import app.redqueen.model.UserTeamo;
@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
 @Sql(scripts = "classpath:sql-script/messageTeamoNetDbServiceDecorator-testData.sql")
 public class MessageTeamoNetDbServiceDecoratorIT extends AbstractContainerIT

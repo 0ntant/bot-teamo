@@ -45,6 +45,14 @@ public class BotTeamoComp implements Runnable
         running.set(true);
         while (isRunning())
         {
+            List<UserTeamo> usersToLike = deleteUserBot(getUserLikeList());
+
+            for(UserTeamo userToLike : usersToLike)
+            {
+                this.sendLike(userToLike);
+                waitingSec(35, 120);
+            }
+
             checkPartnersMessages();
             waitingSec(34, 120);
 
@@ -61,15 +69,6 @@ public class BotTeamoComp implements Runnable
 
             sendMessagesFromMap();
             waitingSec(50, 120);
-
-            List<UserTeamo> usersToLike = deleteUserBot(getUserLikeList());
-
-            for(UserTeamo userToLike : usersToLike)
-            {
-                this.sendLike(userToLike);
-                waitingSec(35, 120);
-            }
-
         }
         log.info("{} stop", thread.getName());
     }

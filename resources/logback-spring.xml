@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+<!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
 
     <springProperty name="LOGBACK_URL" source="logback.destination.url"/>
     <springProperty name="LOGBACK_PORT" source="logback.destination.port"/>
     <springProperty name="APP_NAME" source="spring.application.name"/>
-
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </layout>
+    </appender>
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -17,6 +21,8 @@
                     <pattern>
                         {
                         "level": "%level",
+                        "traceId": "%X{traceId:-}",
+                        "spanId": "%X{spanId:-}",
                         "appName": "${APP_NAME:-}",
                         "pid": "${PID:-}",
                         "thread": "%thread",

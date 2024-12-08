@@ -1,13 +1,13 @@
 package integration.IT;
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.integration.mq.reqQueen.RedQueenPublisher;
 import integration.dto.UserTeamoDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class RedQueenPublisherIT
 {
     @Autowired

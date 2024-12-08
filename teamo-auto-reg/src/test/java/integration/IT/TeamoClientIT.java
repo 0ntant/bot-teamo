@@ -1,6 +1,6 @@
 package integration.IT;
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.integration.rest.teamo.TeamoClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import integration.dto.reg.AgeSeek;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Random;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class TeamoClientIT
 {
     @Autowired

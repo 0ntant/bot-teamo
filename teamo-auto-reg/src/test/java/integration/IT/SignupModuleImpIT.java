@@ -1,6 +1,6 @@
 package integration.IT;
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.maker.DriverFactory;
 import auto.reg.maker.SignupModuleImp;
 import integration.dto.reg.RegTeamoUserDto;
@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class SignupModuleImpIT
 {
     @Autowired

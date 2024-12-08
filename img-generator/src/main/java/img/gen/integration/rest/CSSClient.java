@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
@@ -21,21 +22,21 @@ public class CSSClient
 
     public boolean checkObjectExists(byte[] data)
     {
-        Boolean response = false;
         try
         {
-            response = client.postForObject(
+            ResponseEntity<Boolean> response = client.postForEntity(
                     checkUrl,
                     data,
                     Boolean.class
             );
+            return response.getBody();
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
             log.error(ex.getMessage());
+            throw new RuntimeException(ex);
         }
-        return response;
     }
 
     public String regObject(byte[] data)

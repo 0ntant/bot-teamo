@@ -1,13 +1,11 @@
 package service.network.IT;
 
 
-import app.redqueen.Main;
-import app.redqueen.bot.auto.BotTeamoDBService;
+import app.redqueen.RedQueen;
 import app.redqueen.model.Lifestyle;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.repository.UserTeamoRepository;
 
-import app.redqueen.service.database.UserTeamoService;
 import app.redqueen.service.network.ResultOrError;
 import app.redqueen.service.network.UserNetServiceFactory;
 import app.redqueen.service.network.UserTeamoNetDbServiceDecorator;
@@ -18,8 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.testcontainers.shaded.org.checkerframework.checker.guieffect.qual.UI;
 import repository.IT.AbstractContainerIT;
 import service.network.IT.apiMock.FacesClientFileMock;
 import service.network.IT.apiMock.TeamoClientFileMock;
@@ -33,7 +29,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @Sql(scripts = "classpath:sql-script/dao/UserTeamoDAO-testData.sql")
 public class UserTeamoNetDbServiceDecoratorIT extends AbstractContainerIT
 {

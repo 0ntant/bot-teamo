@@ -65,6 +65,11 @@ public class UserTeamoService
         return userTeamoRepository.findChatPartners(user);
     }
 
+    public Page<UserTeamo> findByGender(String gender, Pageable pageable)
+    {
+        return userTeamoRepository.findByGender(gender,pageable);
+    }
+
     public Page<UserTeamo> findAllPages(Pageable pageable)
     {
         return userTeamoRepository.findAll(pageable);

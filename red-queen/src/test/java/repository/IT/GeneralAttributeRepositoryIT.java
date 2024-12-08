@@ -1,6 +1,6 @@
 package repository.IT;
 
-import app.redqueen.Main;
+import app.redqueen.RedQueen;
 import app.redqueen.model.GeneralAttribute;
 import app.redqueen.repository.GeneralAttributeRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = RedQueen.class)
 @Sql(scripts = "classpath:sql-script/dao/GeneralAttributeDAO-testData.sql")
 public class GeneralAttributeRepositoryIT extends AbstractContainerIT
 {

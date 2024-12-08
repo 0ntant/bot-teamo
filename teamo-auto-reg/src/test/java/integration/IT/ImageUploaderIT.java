@@ -1,6 +1,6 @@
 package integration.IT;
 
-import auto.reg.Main;
+import auto.reg.TeamoAutoReg;
 import auto.reg.maker.ImageUploader;
 import auto.reg.util.Base64Util;
 import integration.dto.reg.ImageAvaDto;
@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = TeamoAutoReg.class)
 public class ImageUploaderIT
 {
     @Autowired

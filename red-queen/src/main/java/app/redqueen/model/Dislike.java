@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "t_dislikes")
 @Data
@@ -37,5 +38,15 @@ public class Dislike
         this.type = type;
         this.name = name;
         this.text = text;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dislike dislike = (Dislike) o;
+        return Objects.equals(text, dislike.text)
+                && Objects.equals(name, dislike.name) ;
     }
 }

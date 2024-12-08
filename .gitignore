@@ -44,3 +44,5 @@ gateway-api/target/*
 docker-compose-local-test.yml
 docker-compose-local.yml
 docker-compose.yml
+
+*.har

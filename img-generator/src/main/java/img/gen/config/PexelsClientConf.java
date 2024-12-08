@@ -27,7 +27,7 @@ public class PexelsClientConf
     GeneralClient generalClient;
 
     @Bean
-    PexelsClient pexelsClient()
+    PexelsClient pexelsClient(RestTemplateBuilder restTemplateBuilder)
     {
         RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
                 .limitForPeriod(200)
@@ -35,7 +35,7 @@ public class PexelsClientConf
                 .timeoutDuration(Duration.ZERO)
                 .build();
 
-        RestTemplate restTemplate = new RestTemplateBuilder()
+        RestTemplate restTemplate = restTemplateBuilder
                 .defaultHeader("Authorization", accessKey)
                 .setConnectTimeout(Duration.ofSeconds(10))
                 .setReadTimeout(Duration.ofSeconds(10))

@@ -21,16 +21,18 @@ public class ImgWebController
     @GetMapping
     public String getIndexValidator(Model model)
     {
+        imgService.createPhotoFromRandChannel();
+        if (imgService.getImgCurCount() == 0)
+        {
+            return "404";
+        }
+
         String femaleRequests = String.join("\n",photoQueryServ.getFemaleRequests());
         String maleRequests = String.join("\n",photoQueryServ.getMaleRequests());
 
         model.addAttribute("maleRequests",maleRequests);
         model.addAttribute("femaleRequests",femaleRequests);
 
-        if (imgService.getImgCurCount() == 0 )
-        {
-            return "404";
-        }
         return "img/index";
     }
 }

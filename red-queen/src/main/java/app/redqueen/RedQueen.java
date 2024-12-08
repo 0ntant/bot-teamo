@@ -1,13 +1,15 @@
-package app.provider;
+package app.redqueen;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-public class Main
+@EnableJpaRepositories
+public class RedQueen
 {
     public static void main(String[] args)
     {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(RedQueen.class,args);
     }
 }

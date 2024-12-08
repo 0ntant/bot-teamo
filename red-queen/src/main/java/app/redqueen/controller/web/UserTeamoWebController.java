@@ -5,7 +5,9 @@ import app.redqueen.dto.output.UserTeamoDto;
 import app.redqueen.dto.output.UserTeamoFullInfo.UserTeamoFullInfoDto;
 import app.redqueen.model.UserTeamo;
 import app.redqueen.service.database.UserTeamoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("web/user-teamo")
 public class UserTeamoWebController
@@ -65,23 +68,31 @@ public class UserTeamoWebController
         {
             sortDirection = Sort.Direction.ASC;
         }
-        List<UserTeamoDto> userTeamoDtoList =  userTeamoService
+
+        Page<UserTeamo> userTeamoDtoPage = userTeamoService
                 .findAllPages(
                         PageRequest.of(
                                 offset,
                                 limit,
                                 Sort.by(
-                                    sortDirection,
-                                    sortBy
+                                        sortDirection,
+                                        sortBy
                                 )
                         )
-                )
-                .get()
-                .map(UserTeamoDto::mapToTeamoUserDto)
-                .toList();
+                );
 
-        model.addAttribute("usersTeamo", userTeamoDtoList);
-        return "user-teamo/listAll";
+        model.addAttribute(
+                "usersTeamo",
+                userTeamoDtoPage
+                        .getContent()
+                        .stream()
+                        .map(UserTeamoDto::mapToTeamoUserDto)
+                .toList()
+        );
+        model.addAttribute("totalPages", userTeamoDtoPage.getTotalPages());
+        model.addAttribute("currentPage", userTeamoDtoPage.getNumber());
+
+        return "user-teamo/listPage";
     }
 
     @GetMapping("get/list-all")

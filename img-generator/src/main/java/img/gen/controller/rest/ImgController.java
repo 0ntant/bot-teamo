@@ -48,7 +48,7 @@ public class ImgController
         {
             return "img not found";
         }
-        imgService.createImg();
+        imgService.createPhotoFromRandChannel();
         return imgService.saveToCSS(gender, imgName);
     }
 
@@ -89,7 +89,7 @@ public class ImgController
     @DeleteMapping("delete/{imgName}")
     public String deleteByName(@PathVariable(name = "imgName") String imgName)
     {
-        imgService.createImg();
+        imgService.createPhotoFromRandChannel();
         return imgService.regToCSS(imgName);
     }
 }
