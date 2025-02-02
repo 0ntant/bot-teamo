@@ -6,5 +6,6 @@ ENV POSTGRES_PASSWORD admin
 ENV POSTGRES_USER admin
 ENV POSTGRES_DB teamo_db
 
-COPY ./initRedQueenDataBase.sql /docker-entrypoint-initdb.d/
-COPY ./initContentStorageServiceDataBase.sql /docker-entrypoint-initdb.d/
+COPY initRedQueenDatabase.sql /docker-entrypoint-initdb.d/
+COPY initContentStorageServiceDatabase.sql /docker-entrypoint-initdb.d/
+COPY initKeycloakDatabase.sql /docker-entrypoint-initdb.d/

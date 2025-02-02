@@ -1,8 +1,7 @@
 package img.gen.controller.rest;
 
 import img.gen.dto.out.ImgDto;
-import img.gen.service.ImgService;
-import img.gen.util.Base64Util;
+import img.gen.service.ImgServiceImpl;
 import img.gen.util.FileUtil;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +20,14 @@ import java.util.List;
 public class ImgController
 {
     @Autowired
-    ImgService imgService;
+    ImgServiceImpl imgServiceImpl;
 
     @GetMapping("get/rand")
     public ImgDto getRandImg() {
-        String imgPath = imgService.getRandImgPath();
+        String imgPath = imgServiceImpl.getRandImgPath();
 
         return new ImgDto(
                 FileUtil.getName(imgPath),
-            //    Base64Util.encode(FileUtil.getFileBytes(imgPath))
                 FileUtil.getFileBytes(imgPath)
         );
     }
@@ -44,30 +42,30 @@ public class ImgController
             return "gender error";
         }
 
-        if(!imgService.imgExists(imgName))
+        if(!imgServiceImpl.imgExists(imgName))
         {
             return "img not found";
         }
-        imgService.createPhotoFromRandChannel();
-        return imgService.saveToCSS(gender, imgName);
+        imgServiceImpl.createPhotoFromRandChannel();
+        return imgServiceImpl.saveToCSS(gender, imgName);
     }
 
     @GetMapping("get/all-img-names")
     public List<String> getAllImgNames()
     {
-        return imgService.getAllImgNames();
+        return imgServiceImpl.getAllImgNames();
     }
 
     @GetMapping("get/rand-img-name")
     public String getRandImgName()
     {
-        return FileUtil.getName(imgService.getRandImgPath());
+        return FileUtil.getName(imgServiceImpl.getRandImgPath());
     }
 
     @GetMapping("get/by-name/{name}")
     public ResponseEntity<Resource> getImageByName(@PathVariable("name") String name) throws Exception
     {
-        File imgPath = imgService.getByName(name).get();
+        File imgPath = imgServiceImpl.getByName(name).get();
         Path path = Paths.get(imgPath.getAbsolutePath());
         Resource resource = new UrlResource(path.toUri());
         return ResponseEntity.ok()
@@ -78,7 +76,7 @@ public class ImgController
     @GetMapping("get/randImg")
     public ResponseEntity<Resource> getImage() throws Exception
     {
-        String imgPath = imgService.getRandImgPath();
+        String imgPath = imgServiceImpl.getRandImgPath();
         Path path = Paths.get(imgPath);
         Resource resource = new UrlResource(path.toUri());
         return ResponseEntity.ok()
@@ -89,7 +87,7 @@ public class ImgController
     @DeleteMapping("delete/{imgName}")
     public String deleteByName(@PathVariable(name = "imgName") String imgName)
     {
-        imgService.createPhotoFromRandChannel();
-        return imgService.regToCSS(imgName);
+        imgServiceImpl.createPhotoFromRandChannel();
+        return imgServiceImpl.regToCSS(imgName);
     }
 }

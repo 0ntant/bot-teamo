@@ -1,5 +1,6 @@
 package app.redqueen.integration.teamo;
 
+import app.redqueen.config.ProxyConfig;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -9,15 +10,18 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.time.Duration;
 
 public class GeneralClientAPI
 {
-    @Autowired
     private RestTemplate restTemplate;
     @Autowired
     private HttpHeaders httpHeaders;
@@ -28,23 +32,27 @@ public class GeneralClientAPI
 
     public GeneralClientAPI(String token)
     {
-        restTemplate = new RestTemplateBuilder()
-                .setConnectTimeout(Duration.ofSeconds(60))
-                .setReadTimeout(Duration.ofSeconds(60))
-                .build();
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setProxy(new Proxy(
+                Proxy.Type.HTTP,
+                new InetSocketAddress(
+                        ProxyConfig.getProxyHost(),
+                        ProxyConfig.getProxyPort()
+                )
+        ));
+        requestFactory.setConnectTimeout(Duration.ofSeconds(10));
+        requestFactory.setReadTimeout(Duration.ofSeconds(10));
+
+        restTemplate = new RestTemplate(requestFactory);
+
         objectMapper = new ObjectMapper();
         locale =  "ru";
         this.token = token;
+
     }
 
     public GeneralClientAPI(String token, String locale)
     {
-//        restTemplate = new RestTemplateBuilder()
-//                .setConnectTimeout(Duration.ofSeconds(60))
-//                .setReadTimeout(Duration.ofSeconds(60))
-//                .build();
-//        objectMapper = new ObjectMapper();
-//        this.token = token;
         this(token);
         this.locale =  locale;
     }

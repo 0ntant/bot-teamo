@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-<!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
-
     <springProperty name="LOGBACK_URL" source="logback.destination.url"/>
     <springProperty name="LOGBACK_PORT" source="logback.destination.port"/>
     <springProperty name="APP_NAME" source="spring.application.name"/>
@@ -24,6 +22,7 @@
                         "traceId": "%X{traceId:-}",
                         "spanId": "%X{spanId:-}",
                         "appName": "${APP_NAME:-}",
+                        "username": "%X{username:-}",
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",

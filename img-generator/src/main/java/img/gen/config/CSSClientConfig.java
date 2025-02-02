@@ -1,6 +1,6 @@
 package img.gen.config;
 
-import img.gen.integration.rest.CSSClient;
+import img.gen.integration.contentStorageService.CSSClient;
 import img.gen.logging.LoggingRestClientInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

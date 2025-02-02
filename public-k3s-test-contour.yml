@@ -1,0 +1,1284 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch
+  namespace: bot-teamo-test
+  labels:
+    type: infra
+    app: opensearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: infra
+      app: opensearch
+  template:
+    metadata:
+      labels:
+        type: infra
+        app: opensearch
+    spec:
+      containers:
+        - name: opensearch
+          image: opensearchproject/opensearch:2.15.0
+          ports:
+            - containerPort: 9200
+          env:
+            - name: TZ
+              value: "Europe/Moscow"
+            - name: OPENSEARCH_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+              value: Elk_admin123
+            - name: cluster.name
+              value: opensearch-cluster
+            - name: node.name
+              value: opensearch
+            - name: discovery.type
+              value: single-node
+          volumeMounts:
+            - mountPath: /usr/share/opensearch/data
+              name: opensearch-storage
+      volumes:
+        - name: opensearch-storage
+          hostPath:
+            path: YOUR_PATH
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    type: infra
+    app: opensearch
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch-dashboard
+  namespace: bot-teamo-test
+  labels:
+    type: infra
+    app: opensearch-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: infra
+      app: opensearch-dashboard
+  template:
+    metadata:
+      labels:
+        type: infra
+        app: opensearch-dashboard
+    spec:
+      containers:
+        - name: opensearch-dashboard
+          image: opensearchproject/opensearch-dashboards:2.15.0
+          ports:
+            - containerPort: 5601
+          env:
+            - name: TZ
+              value: "Europe/Moscow"
+            - name: OPENSEARCH_HOSTS
+              value: '["https://opensearch:9200"]'
+            - name: DISABLE_INSTALL_DEMO_CONFIG
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch-dashboard
+  namespace: bot-teamo-test
+spec:
+  type: NodePort
+  selector:
+    type: infra
+    app: opensearch-dashboard
+  ports:
+    - protocol: TCP
+      port: 5601
+      targetPort: 5601
+      nodePort: 30562
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: bot-teamo-test
+  labels:
+    type: infra
+    app: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: infra
+      app: logstash
+  template:
+    metadata:
+      labels:
+        type: infra
+        app: logstash
+    spec:
+      containers:
+        - name: logstash
+          image: localhost:5000/logstash:1.5.0k
+          ports:
+            - containerPort: 5000
+          env:
+            - name: TZ
+              value: "Europe/Moscow"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    type: infra
+    app: logstash
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit-mq
+  namespace: bot-teamo-test
+  labels:
+    type: infra
+    app: rabbit-mq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: infra
+      app: rabbit-mq
+  template:
+    metadata:
+      labels:
+        type: infra
+        app: rabbit-mq
+    spec:
+      containers:
+        - name: rabbit-mq
+          image: localhost:5000/rabbit-mq:1.11.0k
+          ports:
+            - name: amqp
+              containerPort: 5672
+              protocol: TCP
+            - name: web
+              containerPort: 15672
+              protocol: TCP
+          command:
+            - bash
+            - -c
+            - chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server
+          env:
+            - name: TZ
+              value: "Europe/Moscow"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-mq
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    type: infra
+    app: rabbit-mq
+  ports:
+    - name: amqp
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-mq-web
+  namespace: bot-teamo-test
+spec:
+  type: NodePort
+  selector:
+    type: infra
+    app: rabbit-mq
+  ports:
+    - name: web
+      protocol: TCP
+      port: 15672
+      targetPort: 15672
+      nodePort: 31673
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  namespace: bot-teamo-test
+  labels:
+    type: infra
+    app: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: infra
+      app: database
+  template:
+    metadata:
+      labels:
+        type: infra
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: localhost:5000/database:1.11.0k
+          ports:
+            - containerPort: 5432
+          env:
+            - name: TZ
+              value: "Europe/Moscow"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresql-data
+      volumes:
+        - name: postgresql-data
+          hostPath:
+            path: YOUR_PATH
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: bot-teamo-test
+spec:
+  type: NodePort
+  selector:
+    type: infra
+    app: database
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 30433
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: browser
+  namespace: bot-teamo-test
+  labels:
+    type: infra
+    app: browser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: infra
+      app: browser
+  template:
+    metadata:
+      labels:
+        type: infra
+        app: browser
+    spec:
+      containers:
+        - name: browser
+          image: selenium/standalone-chromium:126.0
+          ports:
+            - containerPort: 4444
+          env:
+            - name: TZ
+              value: "Europe/Moscow"
+            - name: SE_VNC_NO_PASSWORD
+              value: "true"
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "2"
+            requests:
+              memory: "1Gi"
+              cpu: "1"
+          volumeMounts:
+            - name: shm
+              mountPath: /dev/shm
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: browser
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    type: infra
+    app: browser
+  ports:
+    - protocol: TCP
+      port: 4444
+      targetPort: 4444
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wireguard
+  namespace: bot-teamo-test
+type: Opaque
+stringData:
+  wg0.conf.template: |
+    [Interface]
+    Address = 172.16.16.1
+    ListenPort = 51820
+    PrivateKey = YOUR_KEY
+    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ENI -j MASQUERADE
+    PostUp = sysctl -w -q net.ipv4.ip_forward=1
+    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ENI -j MASQUERADE
+    PostDown = sysctl -w -q net.ipv4.ip_forward=0
+
+    [Peer]
+    PublicKey = YOUR_KEY
+    AllowedIPs = 172.16.16.2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wireguard
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: wireguard
+      type: infra
+  template:
+    metadata:
+      labels:
+        name: wireguard
+        type: infra
+    spec:
+      initContainers:
+        - name: "wireguard-template-replacement"
+          image: "busybox"
+          command: ["sh", "-c", "ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" /etc/wireguard-secret/wg0.conf.template > /etc/wireguard/wg0.conf; chmod 400 /etc/wireguard/wg0.conf"]
+          volumeMounts:
+            - name: wireguard-config
+              mountPath: /etc/wireguard/
+            - name: wireguard-secret
+              mountPath: /etc/wireguard-secret/
+      containers:
+        - name: "wireguard"
+          image: "linuxserver/wireguard:arm64v8-1.0.20210914-r4-ls66"
+          ports:
+            - containerPort: 51820
+          env:
+            - name: "TZ"
+              value: "Asia/Vladivostok"
+            - name: "PEERS"
+              value: "example"
+          volumeMounts:
+            - name: wireguard-config
+              mountPath: /etc/wireguard/
+              readOnly: true
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+      volumes:
+        - name: wireguard-config
+          emptyDir: {}
+        - name: wireguard-secret
+          secret:
+            secretName: wireguard
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wireguard-service
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    name: wireguard
+  ports:
+    - name: wireguard
+      port: 51820
+      protocol: UDP
+      targetPort: 51820
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tinyproxy-config
+  namespace: bot-teamo-test
+data:
+  tinyproxy.conf: |
+    User nobody
+    Group nogroup
+    Port 8888
+    Timeout 600
+    DefaultErrorFile "/usr/share/tinyproxy/default.html"
+    LogFile "/var/log/tinyproxy.log"
+    LogLevel Info
+    Allow 0.0.0.0/0
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wireguard-config
+  namespace: bot-teamo-test
+data:
+  wg0.conf: |
+    [Interface]
+    PrivateKey = YOUR_KEY
+    Address = 172.16.16.2
+    DNS = 8.8.8.8
+
+    [Peer]
+    PublicKey = YOUR_KEY
+    Endpoint = wireguard-service:51820
+    AllowedIPs = 0.0.0.0/0, ::/0
+    PersistentKeepalive = 25
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-vpn
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: proxy-vpn
+      type: infra
+  template:
+    metadata:
+      labels:
+        name: proxy-vpn
+        app: gateway-proxy-vpn
+        type: infra
+    spec:
+      containers:
+        - name: vpn-proxy
+          image: localhost:5000/proxy-vpn:1.11.1k
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          volumeMounts:
+            - name: wg-config
+              mountPath: /etc/wireguard
+            - name: tinyproxy-config
+              mountPath: /etc/tinyproxy
+          ports:
+            - containerPort: 8888
+              name: proxy
+            - containerPort: 51820
+              name: vpn-udp
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      volumes:
+        - name: wg-config
+          configMap:
+            name: wireguard-config
+        - name: tinyproxy-config
+          configMap:
+            name: tinyproxy-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vpn-proxy-service
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    app: gateway-proxy-vpn
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wireguard-config-external-1
+  namespace: bot-teamo-test
+data:
+  wg0.conf: |
+    [Interface]
+    PrivateKey = YOUR_KEY
+    Address = 172.16.16.3
+    DNS = 8.8.8.8
+    MTU = 1420
+
+    [Peer]
+    PublicKey = YOUR_KEY
+    Endpoint = YOUR_ADDRESS:51820
+    AllowedIPs = 0.0.0.0/0, ::/0
+    PersistentKeepalive = 25
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-vpn-external-1
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: proxy-vpn-external-1
+      type: infra
+  template:
+    metadata:
+      labels:
+        name: proxy-vpn-external-1
+        app: gateway-proxy-vpn
+        type: infra
+    spec:
+      containers:
+        - name: vpn-proxy
+          image: localhost:5000/proxy-vpn:1.11.1k
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          volumeMounts:
+            - name: wg-config
+              mountPath: /etc/wireguard
+            - name: tinyproxy-config
+              mountPath: /etc/tinyproxy
+          ports:
+            - containerPort: 8888
+              name: proxy
+            - containerPort: 51820
+              name: vpn-udp
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      volumes:
+        - name: wg-config
+          configMap:
+            name: wireguard-config-external-1
+        - name: tinyproxy-config
+          configMap:
+            name: tinyproxy-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logback-config
+  namespace: bot-teamo-test
+data:
+  logback-spring.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+        <springProperty name="LOGBACK_URL" source="logback.destination.url"/>
+        <springProperty name="LOGBACK_PORT" source="logback.destination.port"/>
+        <springProperty name="APP_NAME" source="spring.application.name"/>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </layout>
+        </appender>
+        <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>
+            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                <providers>
+                    <timestamp>
+                        <timeZone>UTC</timeZone>
+                    </timestamp>
+                    <pattern>
+                        <pattern>
+                            {
+                            "level": "%level",
+                            "traceId": "%X{traceId:-}",
+                            "spanId": "%X{spanId:-}",
+                            "appName": "${APP_NAME:-}",
+                            "username": "%X{username:-}",
+                            "pid": "${PID:-}",
+                            "thread": "%thread",
+                            "class": "%logger{40}",
+                            "callerClass": "%class",
+                            "callerMethod": "%method",
+                            "callerLine": "#asLong{%line}",
+                            "text": "%message",
+                            "stack": "%throwable"
+                            }
+                        </pattern>
+                    </pattern>
+                </providers>
+            </encoder>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="LOGSTASH"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </configuration>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-storage-service
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: content-storage-service
+      type: app
+  template:
+    metadata:
+      labels:
+        name: content-storage-service
+        type: app
+    spec:
+      containers:
+        - name: content-storage-service-app
+          image: localhost:5000/content-storage-service:1.11.0k
+          env:
+            - name: TZ
+              value: Europe/Moscow
+            - name: file.temp.dir
+              value: ./temp
+            - name: file.images.avatar.dir
+              value: ./files/images/avatars
+            - name: spring.application.name
+              value: content-storage-service
+            - name: spring.liquibase.enabled
+              value: "true"
+            - name: spring.liquibase.change-log
+              value: file:/app/resources/db/changelog/db.changelog-master.yaml
+            - name: spring.rabbitmq.listener.simple.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.template.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.username
+              value: content_storage_service_app
+            - name: spring.rabbitmq.password
+              value: ;b4ULg7bT9uEe]
+            - name: spring.rabbitmq.host
+              value: rabbit-mq
+            - name: spring.rabbitmq.port
+              value: "5672"
+            - name: spring.rabbitmq.con.img-gen.que
+              value: img-ava-que
+            - name: spring.rabbitmq.con.content-crawler.que
+              value: text-data-que
+            - name: datasource.maximumPoolSize
+              value: "10"
+            - name: datasource.driverClassName
+              value: org.postgresql.Driver
+            - name: datasource.jdbcUrl
+              value: jdbc:postgresql://database:5432/content_storage_service_db
+            - name: datasource.username
+              value: content_storage_service_app
+            - name: datasource.password
+              value: YOUR_PASS
+            - name: logging.config
+              value: /app/logback-spring.xml
+            - name: logback.destination.url
+              value: logstash
+            - name: logback.destination.port
+              value: "5000"
+            - name: server.servlet.context-path
+              value: /content_storage_service
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: temp-dir
+              mountPath: /app/temp
+              subPath: temp
+            - name: content-storage-files
+              mountPath: /app/files
+            - name: logback-config
+              mountPath: /app/logback-spring.xml
+              subPath: logback-spring.xml
+      volumes:
+        - name: temp-dir
+          emptyDir: { }
+        - name: content-storage-files
+          hostPath:
+            path: /home/armbian/bot-teamo/test-contour/content-storage-service/files
+            type: Directory
+        - name: logback-config
+          configMap:
+            name: logback-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-storage-service
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    name: content-storage-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: img-generator
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: img-generator
+      type: app
+  template:
+    metadata:
+      labels:
+        name: img-generator
+        type: app
+    spec:
+      containers:
+        - name: img-generator-app
+          image: localhost:5000/img-generator:1.11.0k
+          env:
+            - name: TZ
+              value: Europe/Moscow
+            - name: api.personotexistimg
+              value: https://thispersondoesnotexist.com/
+            - name: api.unsplash.search-url
+              value: https://api.unsplash.com/search/photos
+            - name: api.unsplash.random-url
+              value: https://api.unsplash.com/photos/random
+            - name: api.unsplash.access-key
+              value: YOUR_KEY
+            - name: api.unsplash.secret-key
+              value: YOUR_KEY
+            - name: api.pexels.search-url
+              value: https://api.pexels.com/v1/search
+            - name: api.pexels.access-key
+              value: YOUR_KEY
+            - name: api.pixabay.search-url
+              value: https://pixabay.com/api/
+            - name: api.pixabay.access-key
+              value: YOUR_KEY
+            - name: inner-api.CCS.check
+              value: http://content-storage-service/content_storage_service/register/check/reg/status
+            - name: inner-api.CCS.reg
+              value: http://content-storage-service/content_storage_service/register/reg/object
+            - name: images.count
+              value: "10"
+            - name: images.dir
+              value: /app/files
+            - name: images.temp-dir
+              value: /app/temp
+            - name: spring.application.name
+              value: img-generator
+            - name: spring.web.resources.static-locations
+              value: file:/app/resources/static/
+            - name: spring.thymeleaf.check-template
+              value: "true"
+            - name: spring.thymeleaf.check-template-location
+              value: "true"
+            - name: spring.thymeleaf.prefix
+              value: file:/app/resources/templates/
+            - name: spring.rabbitmq.listener.simple.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.template.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.username
+              value: img_generator_app
+            - name: spring.rabbitmq.password
+              value: TyQlBQ.315;%O%
+            - name: spring.rabbitmq.host
+              value: rabbit-mq
+            - name: spring.rabbitmq.port
+              value: "5672"
+            - name: spring.rabbitmq.pub.css.route-key
+              value: file.img.ava
+            - name: spring.rabbitmq.pub.css.exc
+              value: img-ava-exc
+            - name: proxy.http.host
+              value: vpn-proxy-service
+            - name: proxy.http.port
+              value: "8888"
+            - name: logging.config
+              value: /app/logback-spring.xml
+            - name: logback.destination.url
+              value: logstash
+            - name: logback.destination.port
+              value: "5000"
+            - name: server.servlet.context-path
+              value: /img_generator
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: temp-dir
+              mountPath: /app/temp
+              subPath: temp
+            - name: images-dir
+              mountPath: /app/files
+            - name: logback-config
+              mountPath: /app/logback-spring.xml
+              subPath: logback-spring.xml
+      volumes:
+        - name: temp-dir
+          emptyDir: { }
+        - name: images-dir
+          emptyDir: { }
+        - name: logback-config
+          configMap:
+            name: logback-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: img-generator
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    name: img-generator
+    type: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teamo-auto-reg
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: teamo-auto-reg
+      type: app
+  template:
+    metadata:
+      labels:
+        name: teamo-auto-reg
+        type: app
+    spec:
+      containers:
+        - name: teamo-auto-reg-app
+          image: localhost:5000/teamo-auto-reg:1.11.0k
+          env:
+            - name: TZ
+              value: Europe/Moscow
+            - name: teamoAPI.baseUrl
+              value: https://api.teamo.ru
+            - name: teamoAPI.nextStep
+              value: https://api.teamo.ru/teamo.getNextStep
+            - name: teamoAPI.cancelPsychoTesting
+              value: https://api.teamo.ru/rtest.cancelPsychoTesting
+            - name: teamoAPI.editMainInfo
+              value: https://api.teamo.ru/user.editMainInfo
+            - name: teamoAPI.skipConfirmation
+              value: https://api.teamo.ru/phone.skipConfirmation
+            - name: content-storage-serviceAPI.baseUrl
+              value: http://content-storage-service/content_storage_service/image-avatar
+            - name: content-storage-serviceAPI.countByGender
+              value: http://content-storage-service/content_storage_service/image-avatar/get/count/by-gender
+            - name: content-storage-serviceAPI.infoBase64ByGender
+              value: http://content-storage-service/content_storage_service/image-avatar/get/info-imgData-struct/by-gender
+            - name: web-driver.type
+              value: remote
+            - name: web-driver.remote-url
+              value: http://browser:4444
+            - name: web-driver.selenium-dir
+              value: /app/resources/selenium
+            - name: file.photos.dir
+              value: /app/temp/photos
+            - name: spring.application.name
+              value: teamo-auto-reg
+            - name: spring.rabbitmq.listener.simple.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.template.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.username
+              value: teamo_auto_reg_app
+            - name: spring.rabbitmq.password
+              value: 027u4JJJqfqmnqdnweNN
+            - name: spring.rabbitmq.host
+              value: rabbit-mq
+            - name: spring.rabbitmq.port
+              value: "5672"
+            - name: spring.rabbitmq.consumer.red-queen.que
+              value: reg-user-teamo-que
+            - name: spring.rabbitmq.consumer.proxy-provider.que
+              value: teamo-auto-reg-proxy-que
+            - name: spring.rabbitmq.producer.red-queen.exc
+              value: user-teamo-exc
+            - name: spring.rabbitmq.producer.red-queen.route-key
+              value: user.teamo.dto
+            - name: proxy.http.host
+              value: "vpn-proxy-service"
+            - name: proxy.http.port
+              value: "8888"
+            - name: logging.config
+              value: /app/logback-spring.xml
+            - name: logback.destination.url
+              value: logstash
+            - name: logback.destination.port
+              value: "5000"
+            - name: server.servlet.context-path
+              value: /teamo_auto_reg
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: temp-dir
+              mountPath: /app/temp/photos
+            - name: logback-config
+              mountPath: /app/logback-spring.xml
+              subPath: logback-spring.xml
+      volumes:
+        - name: temp-dir
+          emptyDir: { }
+        - name: logback-config
+          configMap:
+            name: logback-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teamo-auto-reg
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    name: teamo-auto-reg
+    type: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-crawler
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: content-crawler
+      type: app
+  template:
+    metadata:
+      labels:
+        name: content-crawler
+        type: app
+    spec:
+      containers:
+        - name: content-crawler-app
+          image: localhost:5000/content-crawler:1.11.0k
+          env:
+            - name: TZ
+              value: Europe/Moscow
+            - name: spring.application.name
+              value: content-crawler
+            - name: spring.rabbitmq.listener.simple.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.template.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.username
+              value: content_crawler_app
+            - name: spring.rabbitmq.password
+              value: YOUR_PASS
+            - name: spring.rabbitmq.host
+              value: rabbit-mq
+            - name: spring.rabbitmq.port
+              value: "5762"
+            - name: spring.rabbitmq.producer.content-storage-service.exc
+              value: text-data-exc
+            - name: spring.rabbitmq.producer.content-storage-service.route-key
+              value: text.data.dto
+            - name: proxy.http.host
+              value: "vpn-proxy-service"
+            - name: proxy.http.port
+              value: "8888"
+            - name: logging.config
+              value: /app/logback-spring.xml
+            - name: logback.destination.url
+              value: logstash
+            - name: logback.destination.port
+              value: "5000"
+            - name: server.servlet.context-path
+              value: /content_crawler
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: logback-config
+              mountPath: /app/logback-spring.xml
+              subPath: logback-spring.xml
+      volumes:
+        - name: logback-config
+          configMap:
+            name: logback-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-crawler
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    name: content-crawler
+    type: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: red-queen
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: red-queen
+      type: app
+  template:
+    metadata:
+      labels:
+        name: red-queen
+        type: app
+    spec:
+      containers:
+        - name: red-queen-app
+          image: localhost:5000/red-queen:1.11.0k
+          env:
+            - name: TZ
+              value: Europe/Moscow
+            - name: teamo.api.teamo.post.getLocation
+              value: https://api.teamo.ru/rtest.getLocation
+            - name: teamo.api.teamo.post.specialUsers
+              value: https://api.teamo.ru/teamo.specialUsers
+            - name: teamo.api.teamo.post.searchPersons
+              value: https://api.teamo.ru/teamo.searchPersons
+            - name: teamo.api.teamo.post.income
+              value: https://api.teamo.ru/teamo.getIncome
+            - name: teamo.api.teamo.post.mutual
+              value: https://api.teamo.ru/teamo.getMutual
+            - name: teamo.api.teamo.post.statistic
+              value: https://api.teamo.ru/teamo.getStatistic
+            - name: teamo.api.teamo.post.searchPersonsOthers
+              value: https://api.teamo.ru/teamo.searchPersonsOthers
+            - name: teamo.api.teamo.post.guests
+              value: https://api.teamo.ru/teamo.getGuests
+            - name: teamo.api.teamo.post.signup
+              value: https://teamo.ru/signup
+            - name: teamo.api.teamo.post.signin
+              value: https://teamo.ru/signin
+            - name: teamo.api.faces.post.matches
+              value: https://api.teamo.ru/faces.getMatches
+            - name: teamo.api.faces.post.saveMatchVote
+              value: https://api.teamo.ru/faces.saveMatchVote
+            - name: teamo.api.user.post.profile
+              value: https://api.teamo.ru/user.profile
+            - name: teamo.api.user.post.messagesByUser
+              value: https://api.teamo.ru/user.messagesByUser
+            - name: teamo.api.user.post.sendMessage
+              value: https://api.teamo.ru/user.sendMessage
+            - name: teamo.api.user.post.shardableMessages
+              value: https://api.teamo.ru/user.getShardableMessages
+            - name: content-storage-service.api.root-url
+              value: http://content-storage-service/content_storage_service
+            - name: content-storage-service.api.get-ava-img-base64-by-gender
+              value: http://content-storage-service/content_storage_service/image-avatar/get/info-imgData-struct/by-gender?gender={gender}
+            - name: content-storage-service.api.get-ava-img-count-by-gender
+              value: http://content-storage-service/content_storage_service/image-avatar/get/count/by-gender?gender={gender}
+            - name: content-storage-service.api.reg-object
+              value: http://content-storage-service/content_storage_service/register/reg/object
+            - name: content-storage-service.api.check-reg-status
+              value: http://content-storage-service/content_storage_service/register/check/reg/status
+            - name: img-generator.api.horizontal-flip-url
+              value: http://img-generator/img_generator/img-processing/edit/flip/horizontal
+            - name: teamo-auto-reg.api.root-url
+              value: http://teamo-auto-reg/teamo_auto_reg
+            - name: teamo-auto-reg.api.user-queue-size
+              value: http://teamo-auto-reg/teamo_auto_reg/users-order/get/user-queue-size
+            - name: datasource.maximumPoolSize
+              value: "10"
+            - name: datasource.driverClassName
+              value: org.postgresql.Driver
+            - name: datasource.jdbcUrl
+              value: jdbc:postgresql://database:5432/teamo_db
+            - name: datasource.username
+              value: teamo_app
+            - name: datasource.password
+              value: YOUR_PASS
+            - name: spring.application.name
+              value: red-queen
+            - name: spring.liquibase.enabled
+              value: "true"
+            - name: spring.liquibase.change-log
+              value: file:/app/resource/db/changelog/db.changelog-master.yaml
+            - name: spring.liquibase.default-schema
+              value: public
+            - name: spring.rabbitmq.listener.simple.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.template.observation-enabled
+              value: "true"
+            - name: spring.rabbitmq.username
+              value: red_queen_app
+            - name: spring.rabbitmq.password
+              value: YOUR_PASS
+            - name: spring.rabbitmq.host
+              value: rabbit-mq
+            - name: spring.rabbitmq.port
+              value: "5672"
+            - name: spring.rabbitmq.consumer.teamo-auto-reg.que
+              value: user-teamo-que
+            - name: spring.rabbitmq.consumer.proxy-provider.que
+              value: red-queen-proxy-que
+            - name: spring.rabbitmq.producer.teamo-auto-reg.exc
+              value: reg-user-teamo-exc
+            - name: spring.rabbitmq.producer.teamo-auto-reg.route-key
+              value: reg.user.dto
+            - name: proxy.http.host
+              value: "vpn-proxy-service"
+            - name: proxy.http.port
+              value: "8888"
+            - name: logging.config
+              value: /app/logback-spring.xml
+            - name: logback.destination.url
+              value: logstash
+            - name: logback.destination.port
+              value: "5000"
+            - name: server.servlet.context-path
+              value: /red_queen
+            - name: spring.thymeleaf.prefix
+              value: file:/app/resource/templates/
+            - name: spring.web.resources.static-locations
+              value: file:/app/resource/static/
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: logback-config
+              mountPath: /app/logback-spring.xml
+              subPath: logback-spring.xml
+      volumes:
+        - name: logback-config
+          configMap:
+            name: logback-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: red-queen
+  namespace: bot-teamo-test
+spec:
+  type: ClusterIP
+  selector:
+    name: red-queen
+    type: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-api
+  namespace: bot-teamo-test
+spec:
+  selector:
+    matchLabels:
+      name: gateway-api
+      type: app
+  template:
+    metadata:
+      labels:
+        name: gateway-api
+        type: app
+    spec:
+      containers:
+        - name: gateway-api-app
+          image: localhost:5000/gateway-api:1.11.0k
+          env:
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
+              value: red-queen-route
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_URI
+              value: http://red-queen
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0
+              value: Path=/red_queen/**, /red_queen
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_ID
+              value: content-storage-service-route
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_URI
+              value: http://content-storage-service
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0
+              value: Path=/content_storage_service/**, /content_storage_service
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_ID
+              value: img-generator-route
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_URI
+              value: http://img-generator
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0
+              value: Path=/img_generator/**, /img_generator
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_ID
+              value: teamo-auto-reg-route
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_URI
+              value: http://teamo-auto-reg
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0
+              value: Path=/teamo_auto_reg/**, /teamo_auto_reg
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_ID
+              value: content-crawler-route
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_URI
+              value: http://content-crawler
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_PREDICATES_0
+              value: Path=/content_crawler/**, /content_crawler
+          ports:
+            - containerPort: 8080
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-api
+  namespace: bot-teamo-test
+spec:
+  type: NodePort
+  selector:
+    name: gateway-api
+    type: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30889

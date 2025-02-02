@@ -37,6 +37,12 @@ proxy-provider/src/main/resources/application-test.yml
 proxy-provider/src/main/resources/free-proxy-list/*
 proxy-provider/src/main/resources/free-proxy-list
 
+auth-client/.idea
+auth-client/target/*
+auth-client/target
+auth-client/.attach_pid*
+auth-client/src/main/resources/application.yml
+
 gateway-api/.idea
 gateway-api/src/main/resources/application.yml
 gateway-api/target/*
@@ -46,3 +52,22 @@ docker-compose-local.yml
 docker-compose.yml
 
 *.har
+
+local
+local/*
+.local
+.local/*
+
+ssl-proxy
+ssl-proxy/*
+
+auth-client
+auth-client/*
+
+k3s-*
+
+out
+out/*
+
+privatekey*
+publickey*

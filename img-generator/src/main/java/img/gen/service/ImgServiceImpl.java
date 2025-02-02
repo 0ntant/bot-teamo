@@ -1,7 +1,7 @@
 package img.gen.service;
 
-import img.gen.integration.mq.ContentStoragePub;
-import img.gen.integration.rest.CSSClient;
+import img.gen.integration.contentStorageService.ContentStoragePub;
+import img.gen.integration.contentStorageService.CSSClient;
 import img.gen.integration.rest.PersonNotExistImgClient;
 import img.gen.util.FileUtil;
 import img.gen.util.ImgUtil;
@@ -16,18 +16,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.nio.file.NoSuchFileException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Service
 @Slf4j
-public class ImgService
+public class ImgServiceImpl
 {
     @Getter
     @Value("${images.count}")
@@ -240,7 +236,8 @@ public class ImgService
             Operation.REG,
             imgName,
             "male",
-            imgData
+            imgData,
+            "untracked"
         ));
     }
 
@@ -263,15 +260,7 @@ public class ImgService
         File imgFile = new File(getFullImgPath(imgName));
         ImgAvaDto genResponse = new ImgAvaDto();
         genResponse.setName(imgName);
-//        genResponse.setImgData(
-//                new String(
-//                        Base64Util.encode(
-//                                FileUtil.getFileBytes(
-//                                        imgFile.getAbsolutePath()
-//                                )
-//                        )
-//                )
-//        );
+
         genResponse.setImgData(
                 FileUtil.getFileBytes(
                         imgFile.getAbsolutePath()

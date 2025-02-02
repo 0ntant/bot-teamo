@@ -1,15 +1,11 @@
-package img.gen.integration.mq;
+package img.gen.integration.contentStorageService;
 
-import img.gen.util.Base64Util;
-import img.gen.util.FileUtil;
 import integration.dto.ImgAvaDto.ImgAvaDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
 
 @Slf4j
 @Component

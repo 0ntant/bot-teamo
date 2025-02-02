@@ -21,6 +21,11 @@ public class StrUtil
         return sb.toString();
     }
 
+    public static String genRandImgJpegName()
+    {
+        return "%s.jpeg".formatted(genRandStr());
+    }
+
     public static String genRandStr()
     {
         String pattern = "MMddyyyyHHmmss";

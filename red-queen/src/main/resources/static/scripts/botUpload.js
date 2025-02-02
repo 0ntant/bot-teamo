@@ -14,10 +14,6 @@ async function handleFile(event)
         document.getElementById("email").value=email;
     }
 
-//tovoyo2883@fkcod.com
-//21747203
-//656a87b97299fae021747203
-
     var botCreateDto =
     {
         id          : bot_id,
@@ -38,6 +34,7 @@ async function sendBot(sendData)
         const response = await fetch
             (url, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },

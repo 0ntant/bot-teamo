@@ -2,6 +2,9 @@ DROP DATABASE IF EXISTS content_storage_service_db;
 CREATE DATABASE content_storage_service_db;
 
 \c content_storage_service_db
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 CREATE USER content_storage_service_app  WITH PASSWORD 'r89w42hitjitn23103494WAAAAA';
 
 create table object_sum

@@ -3,16 +3,20 @@ package img.gen.service;
 import img.gen.integration.rest.PexelsClient;
 import img.gen.mapper.PexelsMapper;
 import img.gen.mapper.UnsplashMapper;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
-public class PexelsService
+@Service("Pexels")
+public class PexelsService implements ImgProvideService
 {
     @Autowired
     PexelsClient client;
+
+    @Getter
+    private final String source = "api.pexels.com";
 
     @Autowired
     PhotoQueryService photoQueryServ;

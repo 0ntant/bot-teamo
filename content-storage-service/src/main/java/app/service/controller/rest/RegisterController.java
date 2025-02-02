@@ -13,7 +13,7 @@ public class RegisterController
     ObjectSumService objectSumServ;
 
     @PostMapping("check/reg/status")
-    public Boolean checkRegStatus(@RequestBody  byte[] imgData)
+    public Boolean checkRegStatus(@RequestBody byte[] imgData)
     {
         return objectSumServ.isObjectReg(imgData);
     }

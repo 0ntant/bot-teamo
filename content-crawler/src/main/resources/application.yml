@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: content-crawler
+  rabbitmq:
+    listener:
+      simple:
+        observation-enabled: true
+    template:
+      observation-enabled: true
+    username: content_crawler_app
+    password: OYoX4pHbPN5KVFU
+    host: 192.168.1.152
+    port: 30672
+    producer:
+      content-storage-service:
+        exc: text-data-exc
+        route-key: text.data.dto
+proxy:
+  http:
+    host: "192.168.1.152"
+    port: 30888
+
+logging:
+  config: /home/darpa/coding/Java/bot-teamo/resources/logback-spring.xml
+logback:
+  destination:
+    url: 192.168.1.152
+    port: 30500
+server:
+  port: 8085
+  servlet:
+    context-path: /content_crawler

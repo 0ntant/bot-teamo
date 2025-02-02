@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.Proxy;
 import java.time.Duration;
 
 @Configuration
@@ -26,6 +28,9 @@ public class PexelsClientConf
     @Autowired
     GeneralClient generalClient;
 
+    @Autowired
+    Proxy proxy;
+
     @Bean
     PexelsClient pexelsClient(RestTemplateBuilder restTemplateBuilder)
     {
@@ -35,12 +40,16 @@ public class PexelsClientConf
                 .timeoutDuration(Duration.ZERO)
                 .build();
 
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(Duration.ofSeconds(10));
+        requestFactory.setReadTimeout(Duration.ofSeconds(10));
+        requestFactory.setProxy(proxy);
+
         RestTemplate restTemplate = restTemplateBuilder
                 .defaultHeader("Authorization", accessKey)
-                .setConnectTimeout(Duration.ofSeconds(10))
-                .setReadTimeout(Duration.ofSeconds(10))
                 .interceptors(new LoggingRestClientInterceptor())
                 .build();
+        restTemplate.setRequestFactory(requestFactory);
 
         return PexelsClient.builder()
                 .rateLimiter(RateLimiter.of(

@@ -23,7 +23,7 @@ public class ImgAvatarController
     @GetMapping("get/info-imgData-struct/by-gender")
     public ImgDto getInfoStrutByGender(@RequestParam("gender") String gender)
     {
-        ImageAvatar imageAvatar = imgAvatarServ.getRandByGender(validateGender(gender));
+        ImageAvatar imageAvatar = imgAvatarServ.getRandImgAvatarByGender(validateGender(gender));
         return ImgDto.imageAvatarToImgDto(imageAvatar);
     }
 
@@ -32,13 +32,13 @@ public class ImgAvatarController
     {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
-                .body(imgAvatarServ.getRandByGenderBytes(validateGender(gender)));
+                .body(imgAvatarServ.getRandImgBytesByGender(validateGender(gender)));
     }
 
     @GetMapping("get/image-bytes/by-gender")
     public byte[] getImageBytesByGender(@RequestParam("gender") String gender)
     {
-        return imgAvatarServ.getRandByGenderBytes(validateGender(gender));
+        return imgAvatarServ.getRandImgBytesByGender(validateGender(gender));
     }
 
     @GetMapping("get/count/by-gender")

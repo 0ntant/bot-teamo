@@ -27,6 +27,9 @@ public class ImageAvatar
     @Column(name = "sys_create_date")
     private Date sysCreateDate;
 
+    @Column(name="create_source")
+    String createSource;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "object_sum_id")

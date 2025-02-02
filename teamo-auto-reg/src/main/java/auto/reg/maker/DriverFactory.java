@@ -32,7 +32,10 @@ public class DriverFactory
     @Autowired
     ProxyService proxyService;
 
-    public  WebDriver create()
+    @Autowired
+    Proxy proxy;
+
+    public WebDriver create()
     {
         return switch (type)
         {
@@ -44,8 +47,8 @@ public class DriverFactory
 
     private WebDriver createRemoteDriver()
     {
-//      ChromeOptions options = setProxyChromeOption(new ChromeOptions());
         ChromeOptions options = new ChromeOptions();
+        options.setCapability("proxy", proxy);
         options.addExtensions (new File(seleniumDir + "/capchaRes.crx"));
         try
         {
@@ -68,10 +71,10 @@ public class DriverFactory
         );
 
         //add extension
-        //ChromeOptions options = setProxyChromeOption(new ChromeOptions ());
         ChromeOptions options = new ChromeOptions();
+        options.setCapability("proxy", proxy);
         options.setBinary(seleniumDir + "/chromium");
-        options.addExtensions (new File(seleniumDir + "/capchaRes.crx"));
+        options.addExtensions(new File(seleniumDir + "/capchaRes.crx"));
 
         DesiredCapabilities capabilities = new DesiredCapabilities ();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -83,7 +86,7 @@ public class DriverFactory
     {
         if (proxyService.isProxyEnable())
         {
-            Proxy proxy= new Proxy();
+            Proxy proxy = new Proxy();
             String proxyValue = String.format("%s:%s",
                     proxyService.getProxyIpValue(),
                     proxyService.getProxyPort()
@@ -92,6 +95,6 @@ public class DriverFactory
             proxy.setSslProxy(proxyValue);
             chromeOptions.setCapability("proxy", proxy);
         }
-        return  chromeOptions ;
+        return chromeOptions ;
     }
 }

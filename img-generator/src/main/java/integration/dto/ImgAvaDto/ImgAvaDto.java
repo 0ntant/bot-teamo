@@ -23,4 +23,7 @@ public class ImgAvaDto implements Serializable
 
     @JsonProperty("imgData")
     byte[] imgData;
+
+    @JsonProperty("source")
+    String source;
 }

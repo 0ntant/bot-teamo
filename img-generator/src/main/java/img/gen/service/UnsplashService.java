@@ -2,19 +2,23 @@ package img.gen.service;
 
 import img.gen.integration.rest.UnsplashClient;
 import img.gen.mapper.UnsplashMapper;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
-public class UnsplashService
+@Service("unsplash")
+public class UnsplashService implements ImgProvideService
 {
     @Autowired
     UnsplashClient client;
 
     @Autowired
     PhotoQueryService photoQueryServ;
+
+    @Getter
+    private final String source = "api.unsplash.com";
 
     public byte[] getMaleImage()
     {

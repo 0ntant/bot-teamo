@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/root/.m2  mvn clean package  \
     -DskipTests
 
 
-FROM bellsoft/liberica-openjdk-debian:17.0.12-10
+FROM bellsoft/liberica-openjdk-debian:17.0.13-12
 
 WORKDIR /app
 

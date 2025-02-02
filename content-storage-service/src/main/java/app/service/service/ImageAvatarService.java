@@ -53,16 +53,20 @@ public class ImageAvatarService
 
         ImageAvatar imageAvatarToSave =
                 ImageAvatarMapper.map(imgAvaDto, getFullImgPath(imgAvaDto.getName()));
+
+        if (objectSumService.isObjectReg(imgAvaDto.getImgData()))
+        {
+            log.warn("Element already exists");
+            return;
+        }
         save(
                 imageAvatarToSave,
-//                Base64Util.decode(imgAvaDto.getImgData().getBytes())
                 imgAvaDto.getImgData()
         );
     }
 
     private boolean isFileValidForSave(ImgAvaDto imgAvaDto)
     {
-//      byte[] fileData = Base64Util.decode(imgAvaDto.getImgData().getBytes());
         byte[] fileData = imgAvaDto.getImgData();
         int fileDataSizeMB = fileData.length/1024/1024;
         if (fileDataSizeMB > limitSizeMB)
@@ -79,9 +83,6 @@ public class ImageAvatarService
 
     private void regImageAvatar(ImgAvaDto imgAvaDto)
     {
-//        byte[] dataToReg = Base64Util.decode(
-//                imgAvaDto.getImgData().getBytes()
-//        );
         byte[] dataToReg = imgAvaDto.getImgData();
         if (objectSumService.isObjectReg(dataToReg))
         {
@@ -108,7 +109,7 @@ public class ImageAvatarService
         return imageRep.count();
     }
 
-    public ImageAvatar getRandByGender(String gender)
+    public ImageAvatar getRandImgAvatarByGender(String gender)
     {
         ImageAvatar imageAvatar = imageRep.findByGender(gender)
                 .stream()
@@ -120,7 +121,7 @@ public class ImageAvatarService
     }
 
     @Transactional
-    public byte[] getRandByGenderBytes(String gender)
+    public byte[] getRandImgBytesByGender(String gender)
     {
         ImageAvatar imageAvatar = imageRep.findByGender(gender)
                 .stream()

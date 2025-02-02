@@ -13,6 +13,7 @@ async function executePost(url)
         const response = await fetch
             (url, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -62,6 +63,7 @@ async function sendOrder(sendData)
         const response = await fetch
             (url, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },

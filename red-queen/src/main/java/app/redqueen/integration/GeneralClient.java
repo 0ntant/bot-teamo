@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.Proxy;
 
 @Component
 @NoArgsConstructor
@@ -14,7 +18,7 @@ import org.springframework.web.client.RestOperations;
 public class GeneralClient
 {
     @Setter
-    RestOperations client;
+    RestTemplate client;
 
     public byte[] getFileData(String url)
     {

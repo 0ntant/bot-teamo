@@ -1,6 +1,6 @@
 package img.gen.scheduler;
 
-import img.gen.service.ImgService;
+import img.gen.service.ImgMemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 public class ImgScheduler
 {
     @Autowired
-    ImgService imgService;
+    ImgMemService imgServiceImpl;
 
     @Async
     @Scheduled(initialDelay = 1000, fixedDelay = 1000 * 60 * 60)
     public void checkImages()
     {
-        imgService.createImg();
+        imgServiceImpl.setImages();
     }
 }

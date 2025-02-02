@@ -1,7 +1,7 @@
 package service;
 
 import img.gen.ImgGenerator;
-import img.gen.service.ImgService;
+import img.gen.service.ImgServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +13,10 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = ImgGenerator.class)
-public class ImgServiceIT
+public class ImgProvideServiceImplIT
 {
     @Autowired
-    ImgService imgService;
+    ImgServiceImpl imgServiceImpl;
 
     @Test
     void regImage_CSSReturnTrue() throws IOException
@@ -25,14 +25,14 @@ public class ImgServiceIT
        String imgToSend  = "src/test/java/service/imgInstance.jpg";
 
        //then
-       imgService.regToCSS(
+       imgServiceImpl.regToCSS(
                Files.readAllBytes(Path.of(imgToSend)),
                "imgInstance.jpg"
        );
 
         //expected
        assertTrue(
-               imgService.isReg(
+               imgServiceImpl.isReg(
                         Files.readAllBytes(
                                 Path.of(imgToSend)
                         )
@@ -44,6 +44,6 @@ public class ImgServiceIT
     void getCurrImages()
     {
         //
-        imgService.createImg();
+        imgServiceImpl.createImg();
     }
 }

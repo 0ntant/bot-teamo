@@ -93,6 +93,7 @@ async function getUsersData(url)
    const response = await fetch
         (url, {
             method: "GET",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             }
@@ -120,6 +121,7 @@ async function sendBot(sendData)
         const response = await fetch
             (url, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },

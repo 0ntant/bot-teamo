@@ -19,6 +19,13 @@
       "limits": {}
     },
     {
+      "name": "content_crawler_app",
+      "password_hash": "HlWH31PIkZrrTEDh+AbDwGbpqV/j7a5NeM16fGQRiuEaY9O2",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [],
+      "limits": {}
+    },
+    {
       "name": "content_storage_service_app",
       "password_hash": "csG3pL0a/OjojT016qvdPLUuq7thxK9/MBmORNkhUGwWxQDM",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
@@ -62,13 +69,6 @@
   ],
   "permissions": [
     {
-      "user": "rabbit_admin",
-      "vhost": "/",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "teamo_auto_reg_app",
       "vhost": "/",
       "configure": "",
@@ -76,7 +76,7 @@
       "read": "reg-user-teamo-que|teamo-auto-reg-proxy-que"
     },
     {
-      "user": "img_generator_app",
+      "user": "content_crawler_app",
       "vhost": "/",
       "configure": "",
       "write": ".*",
@@ -90,18 +90,32 @@
       "read": "user-teamo-que|red-queen-proxy-que"
     },
     {
-      "user": "content_storage_service_app",
-      "vhost": "/",
-      "configure": "",
-      "write": "",
-      "read": "img-ava-que"
-    },
-    {
       "user": "proxy_provider_app",
       "vhost": "/",
       "configure": "",
       "write": ".*",
       "read": ""
+    },
+    {
+      "user": "img_generator_app",
+      "vhost": "/",
+      "configure": "",
+      "write": ".*",
+      "read": ""
+    },
+    {
+      "user": "rabbit_admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "content_storage_service_app",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": "img-ava-que|text-data-que"
     }
   ],
   "topic_permissions": [
@@ -113,9 +127,9 @@
       "read": ""
     },
     {
-      "user": "proxy_provider_app",
+      "user": "red_queen_app",
       "vhost": "/",
-      "exchange": "proxy-exc",
+      "exchange": "reg-user-teamo-exc",
       "write": ".*",
       "read": ""
     },
@@ -127,9 +141,16 @@
       "read": ""
     },
     {
-      "user": "red_queen_app",
+      "user": "content_crawler_app",
       "vhost": "/",
-      "exchange": "reg-user-teamo-exc",
+      "exchange": "text-data-exc",
+      "write": ".*",
+      "read": ""
+    },
+    {
+      "user": "proxy_provider_app",
+      "vhost": "/",
+      "exchange": "proxy-exc",
       "write": ".*",
       "read": ""
     }
@@ -144,7 +165,23 @@
   "policies": [],
   "queues": [
     {
-      "name": "red-queen-proxy-que",
+      "name": "text-data-que",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "user-teamo-que",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "reg-user-teamo-que",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -160,16 +197,7 @@
       "arguments": {}
     },
     {
-      "name": "reg-user-teamo-que",
-      "vhost": "/",
-      "durable": true,
-      "auto_delete": false,
-      "arguments": {
-        "x-queue-type": "classic"
-      }
-    },
-    {
-      "name": "user-teamo-que",
+      "name": "red-queen-proxy-que",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -189,6 +217,24 @@
   ],
   "exchanges": [
     {
+      "name": "proxy-exc",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "text-data-exc",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
       "name": "img-ava-exc",
       "vhost": "/",
       "type": "topic",
@@ -199,15 +245,6 @@
     },
     {
       "name": "reg-user-teamo-exc",
-      "vhost": "/",
-      "type": "topic",
-      "durable": true,
-      "auto_delete": false,
-      "internal": false,
-      "arguments": {}
-    },
-    {
-      "name": "proxy-exc",
       "vhost": "/",
       "type": "topic",
       "durable": true,
@@ -256,6 +293,14 @@
       "destination": "reg-user-teamo-que",
       "destination_type": "queue",
       "routing_key": "reg.user.dto",
+      "arguments": {}
+    },
+    {
+      "source": "text-data-exc",
+      "vhost": "/",
+      "destination": "text-data-que",
+      "destination_type": "queue",
+      "routing_key": "text.data.dto",
       "arguments": {}
     },
     {

@@ -15,11 +15,13 @@ async function sendBot(sendData)
 {
     const url = bot_phrase_type_create
     console.log(url)
+    const cookies = document.cookie;
     try
     {
         const response = await fetch
             (url, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },

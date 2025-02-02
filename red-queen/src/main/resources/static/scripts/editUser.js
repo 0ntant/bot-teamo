@@ -17,6 +17,7 @@ async function sendRequest(url)
         const response = await fetch
             (url, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },

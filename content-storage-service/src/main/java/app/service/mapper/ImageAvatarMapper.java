@@ -13,6 +13,7 @@ public class ImageAvatarMapper
         imageAvatar.setGender(imgAvaDto.getGender());
         imageAvatar.setPath(fullPath);
         imageAvatar.setSysCreateDate(new Date());
+        imageAvatar.setCreateSource(imgAvaDto.getSource());
 
         return imageAvatar;
     }

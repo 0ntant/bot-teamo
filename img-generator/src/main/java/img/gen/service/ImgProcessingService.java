@@ -3,7 +3,6 @@ package img.gen.service;
 import img.gen.util.FileUtil;
 import img.gen.util.ImgUtil;
 import img.gen.util.StrUtil;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,17 +71,16 @@ public class ImgProcessingService
 
     private File saveJpegImage(byte[] imgData)
     {
-        File imgToSave  = null;
         String imgName = String.format("%stpdne.jpeg", StrUtil.genRandStr());
         try
         {
-            imgToSave = FileUtil.saveFile(getFullTempPath(imgName), imgData);
+            return FileUtil.saveFile(getFullTempPath(imgName), imgData);
         }
         catch (Exception ex)
         {
             log.error(ex.getMessage());
+            throw new RuntimeException(ex);
         }
-        return imgToSave;
     }
 
     private String getFullTempPath(String imgName)

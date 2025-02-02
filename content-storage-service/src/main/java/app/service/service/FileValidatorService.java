@@ -26,7 +26,6 @@ public class FileValidatorService
                     Path.of(tempDir),
                    "img-",
                    ".jpeg"
-                 //  PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("-r--r--r--"))
            );
            FileUtil.write(String.valueOf(imgTemp.toAbsolutePath()), imgData);
 
